@@ -1,7 +1,7 @@
-﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using Xunit;
-using FC.Codeflix.Catalog.Domain.Exceptions;
+﻿using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
+using Xunit;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.Category;
 
@@ -84,7 +84,7 @@ public class CategoryTest
 
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be not empty or null.");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should be not null.");
 
     }
 
@@ -133,7 +133,7 @@ public class CategoryTest
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Description should be less or equal 10.000 characters long.");
+            .WithMessage("Description should be less or equal 10000 characters long.");
     }
 
     [Trait("Domain", "Category - Aggregates")]
@@ -255,7 +255,7 @@ public class CategoryTest
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Description should be less or equal 10.000 characters long.");
+            .WithMessage("Description should be less or equal 10000 characters long.");
     }
 
     public static IEnumerable<object[]> GetNamesErrorWhenNameIsLessThan3Characters(int numberOfTests = 6)
