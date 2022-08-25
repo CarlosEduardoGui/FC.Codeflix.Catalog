@@ -1,11 +1,12 @@
-﻿using Moq;
-using Xunit;
-using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Domain.Entity;
-using UseCases = FC.Codeflix.Catalog.Application.UseCases.CreateCategory;
 using FC.Codeflix.Catalog.Domain.Repository;
+using FluentAssertions;
+using Moq;
+using Xunit;
+using UseCases = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 
-namespace FC.Codeflix.Catalog.UnitTests.UseCases.CreateCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory;
 public class CreateCategoryTest
 {
     [Trait("Use Cases", "CreateCategory - Use Cases")]
@@ -18,7 +19,7 @@ public class CreateCategoryTest
             repositoryMock.Object,
             unitOfWorkMock.Object
         );
-        var input = new CreateCategoryInput(
+        var input = new UseCases.CreateCategoryInput(
             "Category Name",
             "Category Description",
             true
@@ -30,12 +31,11 @@ public class CreateCategoryTest
             repository => repository.InsertAsync(
                 It.IsAny<Category>(),
                 It.IsAny<CancellationToken>()
-            ), 
+            ),
             Times.Once
         );
         unitOfWorkMock.Verify(
-            unitOfWork => unitOfWork.Commit(
-                It.IsAny<Category>(), 
+            unitOfWork => unitOfWork.CommitAsync(
                 It.IsAny<CancellationToken>()
             ),
             Times.Once
@@ -43,8 +43,8 @@ public class CreateCategoryTest
         outPut.Should().NotBeNull();
         outPut.Name.Should().Be(input.Name);
         outPut.Description.Should().Be(input.Description);
-        outPut.IsActive.Should().Be(input.Category);
-        (outPut.Id != null && outPut.Id != default).Should().BeTrue();
-        (outPut.CreatedAt != default).Should().BeTrue();
+        outPut.IsActive.Should().Be(input.IsActive);
+        outPut.Id.Should().NotBeEmpty();
+        outPut.CreatedAt.Should().NotBeSameDateAs(default);
     }
 }
