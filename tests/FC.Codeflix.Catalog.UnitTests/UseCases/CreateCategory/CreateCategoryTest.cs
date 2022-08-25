@@ -3,6 +3,7 @@ using Xunit;
 using FluentAssertions;
 using FC.Codeflix.Catalog.Domain.Entity;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.CreateCategory;
+using FC.Codeflix.Catalog.Domain.Repository;
 
 namespace FC.Codeflix.Catalog.UnitTests.UseCases.CreateCategory;
 public class CreateCategoryTest
@@ -16,17 +17,17 @@ public class CreateCategoryTest
         var useCase = new UseCases.CreateCategory(
             repositoryMock.Object,
             unitOfWorkMock.Object
-            );
+        );
         var input = new CreateCategoryInput(
             "Category Name",
             "Category Description",
             true
-            );
+        );
 
-        var outPut = await useCase.Handle(input, CancellationToken.None);
+        var outPut = await useCase.HandleAsync(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Create(
+            repository => repository.InsertAsync(
                 It.IsAny<Category>(),
                 It.IsAny<CancellationToken>()
             ), 
