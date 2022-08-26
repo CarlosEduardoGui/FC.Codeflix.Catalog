@@ -14,7 +14,7 @@ public class CreateCategory : ICreateCategory
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateCategoryOutput> HandleAsync(CreateCategoryInput input, CancellationToken cancellationToken)
+    public async Task<CreateCategoryOutput> Handle(CreateCategoryInput input, CancellationToken cancellationToken)
     {
         var category = new DomainEntity.Category(input.Name, input.Description, input.IsActive);
 
@@ -22,12 +22,6 @@ public class CreateCategory : ICreateCategory
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return new CreateCategoryOutput(
-            category.Id,
-            category.Name,
-            category.Description,
-            category.IsActive,
-            category.CreateAt
-        );
+        return CreateCategoryOutput.FromCategory(category);
     }
 }

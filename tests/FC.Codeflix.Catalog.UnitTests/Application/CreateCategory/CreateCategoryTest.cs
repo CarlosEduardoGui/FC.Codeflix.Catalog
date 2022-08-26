@@ -28,7 +28,7 @@ public class CreateCategoryTest
         );
         var input = _fixture.GetInput();
 
-        var outPut = await useCase.HandleAsync(input, CancellationToken.None);
+        var outPut = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
             repository => repository.InsertAsync(
@@ -64,7 +64,7 @@ public class CreateCategoryTest
         );
         var inputOnlyName = new CreateCategoryInput(_fixture.GetValidCategoryName());
 
-        var outPut = await useCase.HandleAsync(inputOnlyName, CancellationToken.None);
+        var outPut = await useCase.Handle(inputOnlyName, CancellationToken.None);
 
         repositoryMock.Verify(
             repository => repository.InsertAsync(
@@ -103,7 +103,7 @@ public class CreateCategoryTest
             _fixture.GetValidCategoryDescription()
         );
 
-        var outPut = await useCase.HandleAsync(inputOnlyNameAndDescription, CancellationToken.None);
+        var outPut = await useCase.Handle(inputOnlyNameAndDescription, CancellationToken.None);
 
         repositoryMock.Verify(
             repository => repository.InsertAsync(
@@ -140,7 +140,7 @@ public class CreateCategoryTest
             _fixture.GetUnitOfWorkMock().Object
         );
 
-        Func<Task> task = async () => await useCase.HandleAsync(input, CancellationToken.None);
+        Func<Task> task = async () => await useCase.Handle(input, CancellationToken.None);
 
         await task.Should()
             .ThrowAsync<EntityValidationException>()
