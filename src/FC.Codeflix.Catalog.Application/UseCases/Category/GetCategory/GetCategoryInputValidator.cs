@@ -7,6 +7,6 @@ public class GetCategoryInputValidator : AbstractValidator<GetCategoryInput>
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage("'Id' must not be empty.");
+            .WithMessage(string.Format(ConstantsMessages.FieldNotEmpty, "Id"));
     }
 }
