@@ -41,6 +41,38 @@ public class UpdateCategoryTestFixture : BaseFixture
         return categoryDescription;
     }
 
+    public UpdateCategoryInput GetInvalidInputShortName()
+    {
+        var invalidInputShortName = GetValidInput();
+        invalidInputShortName.Name = invalidInputShortName.Name[..2];
+
+        return invalidInputShortName;
+    }
+
+    public UpdateCategoryInput GetInvalidInputTooLongName()
+    {
+        var invalidInputTooLongName = GetValidInput();
+        var tooLongNameForCategory = Faker.Commerce.ProductDescription();
+        while (tooLongNameForCategory.Length <= 255)
+            tooLongNameForCategory =
+                $"{tooLongNameForCategory} {Faker.Commerce.ProductDescription()}";
+        invalidInputTooLongName.Name = tooLongNameForCategory;
+
+        return invalidInputTooLongName;
+    }
+
+    public UpdateCategoryInput GetInvalidPutToLongDescription()
+    {
+        var invalidInputTooLongDescription = GetValidInput();
+        var tooLongDescriptionForCategory = Faker.Commerce.ProductDescription();
+        while (tooLongDescriptionForCategory.Length <= 10_000)
+            tooLongDescriptionForCategory =
+                $"{tooLongDescriptionForCategory} {Faker.Commerce.ProductDescription()}";
+        invalidInputTooLongDescription.Description = tooLongDescriptionForCategory;
+
+        return invalidInputTooLongDescription;
+    }
+
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 
     public UpdateCategoryInput GetValidInput(Guid? id = null) =>
