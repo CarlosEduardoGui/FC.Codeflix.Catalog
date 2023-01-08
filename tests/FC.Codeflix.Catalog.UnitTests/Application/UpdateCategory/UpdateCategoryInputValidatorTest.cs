@@ -19,7 +19,7 @@ public class UpdateCategoryInputValidatorTest
         var validator = new UpdateCategoryInputValidator();
 
         var validatResult = validator.Validate(input);
-        
+
         validatResult.Should().NotBeNull();
         validatResult.IsValid.Should().BeFalse();
         validatResult.Errors.Should().HaveCount(1);

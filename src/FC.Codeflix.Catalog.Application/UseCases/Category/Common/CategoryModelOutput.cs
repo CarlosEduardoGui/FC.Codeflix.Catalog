@@ -27,4 +27,9 @@ public class CategoryModelOutput
             category.IsActive,
             category.CreateAt
         );
+
+    internal object ToList()
+    {
+        throw new NotImplementedException();
+    }
 }

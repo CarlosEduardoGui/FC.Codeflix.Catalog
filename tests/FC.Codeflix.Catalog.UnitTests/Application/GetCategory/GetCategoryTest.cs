@@ -1,9 +1,9 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FluentAssertions;
 using Moq;
 using Xunit;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
-using FC.Codeflix.Catalog.Application.Exceptions;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
 
@@ -20,9 +20,9 @@ public class GetCategoryTest
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleCategory = _fixture.GetValidCategory();
-        repositoryMock.Setup(x => 
+        repositoryMock.Setup(x =>
             x.GetByIdAsync(
-                It.IsAny<Guid>(), 
+                It.IsAny<Guid>(),
                 It.IsAny<CancellationToken>()
         )).ReturnsAsync(exampleCategory);
         var input = new GetCategoryInput(exampleCategory.Id);
@@ -30,10 +30,10 @@ public class GetCategoryTest
 
         var outPut = await useCase.Handle(input, CancellationToken.None);
 
-        repositoryMock.Verify(x => 
+        repositoryMock.Verify(x =>
             x.GetByIdAsync(
                 It.IsAny<Guid>(),
-                It.IsAny<CancellationToken>() 
+                It.IsAny<CancellationToken>()
         ), Times.Once);
         outPut.Should().NotBeNull();
         outPut.Name.Should().Be(exampleCategory.Name);
