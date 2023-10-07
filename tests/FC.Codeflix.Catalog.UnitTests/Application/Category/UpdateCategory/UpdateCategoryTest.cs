@@ -7,8 +7,9 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTest
@@ -24,7 +25,7 @@ public class UpdateCategoryTest
         parameters: 10,
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
-    public async Task UpdateCategoryOk(Category exampleCategory, UpdateCategoryInput input)
+    public async Task UpdateCategoryOk(CategoryEntity exampleCategory, UpdateCategoryInput input)
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
@@ -68,7 +69,7 @@ public class UpdateCategoryTest
         parameters: 10,
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
-    public async Task UpdateCategoryWithoutProvidingIsActives(Category exampleCategory, UpdateCategoryInput exampleInput)
+    public async Task UpdateCategoryWithoutProvidingIsActives(CategoryEntity exampleCategory, UpdateCategoryInput exampleInput)
     {
         var input = new UpdateCategoryInput(
             exampleInput.Id,
@@ -117,7 +118,7 @@ public class UpdateCategoryTest
         parameters: 10,
         MemberType = typeof(UpdateCategoryTestDataGenerator)
     )]
-    public async Task UpdateCategoryOnlyName(Category exampleCategory, UpdateCategoryInput exampleInput)
+    public async Task UpdateCategoryOnlyName(CategoryEntity exampleCategory, UpdateCategoryInput exampleInput)
     {
         var input = new UpdateCategoryInput(
             exampleInput.Id,

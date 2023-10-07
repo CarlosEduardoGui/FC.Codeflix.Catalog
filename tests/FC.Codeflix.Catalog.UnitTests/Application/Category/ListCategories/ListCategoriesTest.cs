@@ -1,14 +1,13 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
-using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.UnitTests.Application.ListCategory;
 using FluentAssertions;
 using Moq;
 using Xunit;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.ListCategories;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories;
 
 [Collection(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTest
@@ -24,7 +23,7 @@ public class ListCategoriesTest
         var categoriesExampleList = _fixture.GetExampleCategoriesList();
         var repositoryMock = _fixture.GetRepositoryMock();
         var input = _fixture.GetExampleInput();
-        var outputRepositorySearch = new SearchOutput<Category>(
+        var outputRepositorySearch = new SearchOutput<CategoryEntity>(
             currentPage: input.Page,
             perPage: input.PerPage,
             items: categoriesExampleList,
@@ -70,6 +69,50 @@ public class ListCategoriesTest
         ), Times.Once);
     }
 
+
+    [Fact(DisplayName = nameof(ListOkWhenEmpty))]
+    [Trait("Use Cases", "ListCategories - Use Cases")]
+    public async Task ListOkWhenEmpty()
+    {
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var input = _fixture.GetExampleInput();
+        var outputRepositorySearch = new SearchOutput<CategoryEntity>(
+            currentPage: input.Page,
+            perPage: input.PerPage,
+            items: new List<CategoryEntity>().AsReadOnly(),
+            total: 0
+        );
+        repositoryMock.Setup(x => x.Search(
+            It.Is<SearchInput>(
+                searchInput => searchInput.Page == input.Page
+                && searchInput.PerPage == input.PerPage
+                && searchInput.Search == input.Search
+                && searchInput.OrderBy == input.Sort
+                && searchInput.SearchOrder == input.Dir
+            ),
+            It.IsAny<CancellationToken>()
+        )).ReturnsAsync(outputRepositorySearch);
+        var userase = new UseCase.ListCategories(repositoryMock.Object);
+
+        var outPut = await userase.Handle(input, CancellationToken.None);
+
+        outPut.Should().NotBeNull();
+        outPut.CurrentPage.Should().Be(outputRepositorySearch.CurrentPage);
+        outPut.PerPage.Should().Be(outputRepositorySearch.PerPage);
+        outPut.Total.Should().Be(0);
+        outPut.Items.Should().HaveCount(0);
+        repositoryMock.Verify(x => x.Search(
+            It.Is<SearchInput>(
+                searchInput => searchInput.Page == input.Page
+                && searchInput.PerPage == input.PerPage
+                && searchInput.Search == input.Search
+                && searchInput.OrderBy == input.Sort
+                && searchInput.SearchOrder == input.Dir
+            ),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+    }
+
     [Theory(DisplayName = nameof(ListWithoutAllParameters))]
     [Trait("Use Cases", "ListCategories - Use Cases")]
     [MemberData(
@@ -81,7 +124,7 @@ public class ListCategoriesTest
     {
         var categoriesExampleList = _fixture.GetExampleCategoriesList();
         var repositoryMock = _fixture.GetRepositoryMock();
-        var outputRepositorySearch = new SearchOutput<Category>(
+        var outputRepositorySearch = new SearchOutput<CategoryEntity>(
             currentPage: input.Page,
             perPage: input.PerPage,
             items: categoriesExampleList,
@@ -110,7 +153,7 @@ public class ListCategoriesTest
         {
             var repositoryCategory = outputRepositorySearch.Items.FirstOrDefault(x => x.Id == outputItem.Id);
             outputItem.Should().NotBeNull();
-            outputItem.Name.Should().Be(repositoryCategory.Name);
+            outputItem.Name.Should().Be(repositoryCategory!.Name);
             outputItem.Description.Should().Be(repositoryCategory.Description);
             outputItem.IsActive.Should().Be(repositoryCategory.IsActive);
             outputItem.CreatedAt.Should().Be(repositoryCategory.CreateAt);
