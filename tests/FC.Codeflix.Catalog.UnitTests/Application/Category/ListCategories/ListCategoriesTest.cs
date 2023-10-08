@@ -4,8 +4,8 @@ using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
+using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 
 namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 

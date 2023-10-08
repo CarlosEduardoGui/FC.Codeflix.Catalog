@@ -1,5 +1,4 @@
 ﻿using FC.CodeFlix.Catalog.Application.Interfaces;
-using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.Domain.Repository;
 using FC.CodeFlix.Catalog.UnitTests.Commom;
 using Moq;

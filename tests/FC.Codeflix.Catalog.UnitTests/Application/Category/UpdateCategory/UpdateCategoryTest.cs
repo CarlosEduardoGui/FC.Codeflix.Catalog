@@ -1,13 +1,12 @@
 ﻿using FC.CodeFlix.Catalog.Application.Exceptions;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
+using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 
 namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.UpdateCategory;
 

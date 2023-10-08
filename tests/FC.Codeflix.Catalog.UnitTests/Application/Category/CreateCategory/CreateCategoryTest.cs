@@ -1,11 +1,10 @@
 ﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCases = FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
+using UseCases = FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 
 namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.CreateCategory;
 
