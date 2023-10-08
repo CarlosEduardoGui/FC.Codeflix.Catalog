@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.Application.Exceptions;
-using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
+﻿using FC.CodeFlix.Catalog.Application.Exceptions;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
+using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest
@@ -40,7 +40,7 @@ public class GetCategoryTest
         outPut.Description.Should().Be(exampleCategory.Description);
         outPut.IsActive.Should().Be(exampleCategory.IsActive);
         outPut.Id.Should().Be(exampleCategory.Id);
-        outPut.CreatedAt.Should().Be(exampleCategory.CreateAt);
+        outPut.CreatedAt.Should().Be(exampleCategory.CreatedAt);
     }
 
     [Trait("Use Cases", "GetCategory - Use Cases")]

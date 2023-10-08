@@ -1,6 +1,6 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 public class ListCategoriesTestDataGenerator
 {
     public static IEnumerable<object[]> GetInputsWithoutAllParameter(int times = 14)

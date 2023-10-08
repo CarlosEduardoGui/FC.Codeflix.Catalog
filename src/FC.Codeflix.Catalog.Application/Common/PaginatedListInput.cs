@@ -1,6 +1,6 @@
-﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+﻿using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 
-namespace FC.Codeflix.Catalog.Application.Common;
+namespace FC.CodeFlix.Catalog.Application.Common;
 public abstract class PaginatedListInput
 {
     public PaginatedListInput(

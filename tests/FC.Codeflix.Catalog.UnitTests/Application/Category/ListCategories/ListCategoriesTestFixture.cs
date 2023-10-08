@@ -1,10 +1,10 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
-using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
+﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
+using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.CodeFlix.Catalog.UnitTests.Application.Category.Common;
 using Xunit;
-using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 
 [CollectionDefinition(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTestFixtureCollection : ICollectionFixture<ListCategoriesTestFixture> { }

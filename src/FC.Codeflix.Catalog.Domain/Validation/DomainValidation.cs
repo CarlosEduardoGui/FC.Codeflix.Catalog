@@ -1,6 +1,6 @@
-﻿using FC.Codeflix.Catalog.Domain.Exceptions;
+﻿using FC.CodeFlix.Catalog.Domain.Exceptions;
 
-namespace FC.Codeflix.Catalog.Domain.Validation;
+namespace FC.CodeFlix.Catalog.Domain.Validation;
 public class DomainValidation
 {
     public static void NotNull(object? target, string fieldName)

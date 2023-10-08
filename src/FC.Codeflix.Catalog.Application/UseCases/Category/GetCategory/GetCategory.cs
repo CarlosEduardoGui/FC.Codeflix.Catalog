@@ -1,7 +1,7 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Domain.Repository;
+﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+using FC.CodeFlix.Catalog.Domain.Repository;
 
-namespace FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
+namespace FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
 public class GetCategory : IGetCategory
 {
     private readonly ICategoryRepository _categoryRepository;

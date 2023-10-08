@@ -1,7 +1,7 @@
-﻿using FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
+﻿using FC.CodeFlix.Catalog.UnitTests.Application.Category.Common;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [CollectionDefinition(nameof(GetCategoryTestFixture))]
 public class GetCategoryTestFixtureCollection : ICollectionFixture<GetCategoryTestFixture> { }

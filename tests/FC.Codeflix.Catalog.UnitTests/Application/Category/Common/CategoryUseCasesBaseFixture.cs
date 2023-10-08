@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Domain.Repository;
-using FC.Codeflix.Catalog.UnitTests.Commom;
+﻿using FC.CodeFlix.Catalog.Application.Interfaces;
+using FC.CodeFlix.Catalog.Domain.Entity;
+using FC.CodeFlix.Catalog.Domain.Repository;
+using FC.CodeFlix.Catalog.UnitTests.Commom;
 using Moq;
-using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.Common;
 public abstract class CategoryUseCasesBaseFixture : BaseFixture
 {
     public Mock<ICategoryRepository> GetRepositoryMock() => new();

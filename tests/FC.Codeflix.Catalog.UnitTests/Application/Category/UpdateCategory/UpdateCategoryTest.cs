@@ -1,15 +1,15 @@
-﻿using FC.Codeflix.Catalog.Application.Exceptions;
-using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Domain.Exceptions;
+﻿using FC.CodeFlix.Catalog.Application.Exceptions;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+using FC.CodeFlix.Catalog.Domain.Entity;
+using FC.CodeFlix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTest

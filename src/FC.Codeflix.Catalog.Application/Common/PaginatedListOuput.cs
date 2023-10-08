@@ -1,4 +1,4 @@
-﻿namespace FC.Codeflix.Catalog.Application.Common;
+﻿namespace FC.CodeFlix.Catalog.Application.Common;
 public abstract class PaginatedListOuput<TOutputItem>
 {
     public PaginatedListOuput(

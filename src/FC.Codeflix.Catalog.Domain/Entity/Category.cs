@@ -1,12 +1,12 @@
-﻿using FC.Codeflix.Catalog.Domain.SeedWork;
-using FC.Codeflix.Catalog.Domain.Validation;
+﻿using FC.CodeFlix.Catalog.Domain.SeedWork;
+using FC.CodeFlix.Catalog.Domain.Validation;
 
-namespace FC.Codeflix.Catalog.Domain.Entity;
+namespace FC.CodeFlix.Catalog.Domain.Entity;
 public class Category : AggregateRoot
 {
     public string Name { get; private set; }
     public string Description { get; private set; }
-    public DateTime CreateAt { get; private set; }
+    public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
 
     public Category(string name, string description, bool isActive = true) : base()
@@ -14,7 +14,7 @@ public class Category : AggregateRoot
         Name = name;
         Description = description;
         IsActive = isActive;
-        CreateAt = DateTime.Now;
+        CreatedAt = DateTime.Now;
 
         Validate();
     }

@@ -1,10 +1,10 @@
 ﻿using Bogus;
-using FC.Codeflix.Catalog.Domain.Exceptions;
-using FC.Codeflix.Catalog.Domain.Validation;
+using FC.CodeFlix.Catalog.Domain.Exceptions;
+using FC.CodeFlix.Catalog.Domain.Validation;
 using FluentAssertions;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Domain.Validation;
+namespace FC.CodeFlix.Catalog.UnitTests.Domain.Validation;
 public class DomainValidationTest
 {
     private Faker Faker { get; set; } = new Faker();

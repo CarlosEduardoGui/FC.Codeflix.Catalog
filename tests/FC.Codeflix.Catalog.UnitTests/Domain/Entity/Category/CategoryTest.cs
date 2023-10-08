@@ -1,9 +1,9 @@
-﻿using FC.Codeflix.Catalog.Domain.Exceptions;
+﻿using FC.CodeFlix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Xunit;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using DomainEntity = FC.CodeFlix.Catalog.Domain.Entity;
 
-namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.Category;
+namespace FC.CodeFlix.Catalog.UnitTests.Domain.Entity.Category;
 
 [Collection(nameof(CategoryTestFixture))]
 public class CategoryTest
@@ -26,9 +26,9 @@ public class CategoryTest
         category.Name.Should().Be(validCategory.Name);
         category.Description.Should().Be(validCategory.Description);
         category.Id.Should().NotBeEmpty();
-        category.CreateAt.Should().NotBeSameDateAs(default);
-        (category.CreateAt >= dateTimeBefore).Should().BeTrue();
-        (category.CreateAt <= dateTimeAfter).Should().BeTrue();
+        category.CreatedAt.Should().NotBeSameDateAs(default);
+        (category.CreatedAt >= dateTimeBefore).Should().BeTrue();
+        (category.CreatedAt <= dateTimeAfter).Should().BeTrue();
         category.IsActive.Should().BeTrue();
     }
 
@@ -49,9 +49,9 @@ public class CategoryTest
         category.Name.Should().Be(validCategory.Name);
         category.Description.Should().Be(validCategory.Description);
         category.Id.Should().NotBeEmpty();
-        category.CreateAt.Should().NotBeSameDateAs(default);
-        (category.CreateAt >= dateTimeBefore).Should().BeTrue();
-        (category.CreateAt <= dateTimeAfter).Should().BeTrue();
+        category.CreatedAt.Should().NotBeSameDateAs(default);
+        (category.CreatedAt >= dateTimeBefore).Should().BeTrue();
+        (category.CreatedAt <= dateTimeAfter).Should().BeTrue();
         category.IsActive.Should().Be(isActive);
     }
 

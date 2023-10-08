@@ -1,13 +1,13 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
-using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
+using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
-using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
+using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 
 [Collection(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTest
@@ -29,7 +29,7 @@ public class ListCategoriesTest
             items: categoriesExampleList,
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.Search(
+        repositoryMock.Setup(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -55,9 +55,9 @@ public class ListCategoriesTest
             outputItem.Name.Should().Be(repositoryCategory.Name);
             outputItem.Description.Should().Be(repositoryCategory.Description);
             outputItem.IsActive.Should().Be(repositoryCategory.IsActive);
-            outputItem.CreatedAt.Should().Be(repositoryCategory.CreateAt);
+            outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
         });
-        repositoryMock.Verify(x => x.Search(
+        repositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -82,7 +82,7 @@ public class ListCategoriesTest
             items: new List<CategoryEntity>().AsReadOnly(),
             total: 0
         );
-        repositoryMock.Setup(x => x.Search(
+        repositoryMock.Setup(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -101,7 +101,7 @@ public class ListCategoriesTest
         outPut.PerPage.Should().Be(outputRepositorySearch.PerPage);
         outPut.Total.Should().Be(0);
         outPut.Items.Should().HaveCount(0);
-        repositoryMock.Verify(x => x.Search(
+        repositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -130,7 +130,7 @@ public class ListCategoriesTest
             items: categoriesExampleList,
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.Search(
+        repositoryMock.Setup(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -156,9 +156,9 @@ public class ListCategoriesTest
             outputItem.Name.Should().Be(repositoryCategory!.Name);
             outputItem.Description.Should().Be(repositoryCategory.Description);
             outputItem.IsActive.Should().Be(repositoryCategory.IsActive);
-            outputItem.CreatedAt.Should().Be(repositoryCategory.CreateAt);
+            outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
         });
-        repositoryMock.Verify(x => x.Search(
+        repositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage

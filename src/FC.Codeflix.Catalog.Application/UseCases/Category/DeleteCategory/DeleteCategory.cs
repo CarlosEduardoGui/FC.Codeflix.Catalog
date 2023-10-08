@@ -1,8 +1,8 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Repository;
+﻿using FC.CodeFlix.Catalog.Application.Interfaces;
+using FC.CodeFlix.Catalog.Domain.Repository;
 using MediatR;
 
-namespace FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
+namespace FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 public class DeleteCategory : IDeleteCategory
 {
     private readonly ICategoryRepository _categoryRepository;

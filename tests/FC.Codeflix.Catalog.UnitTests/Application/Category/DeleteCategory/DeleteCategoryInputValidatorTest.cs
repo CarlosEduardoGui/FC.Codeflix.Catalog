@@ -1,8 +1,8 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
+﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 using FluentAssertions;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Category.DeleteCategory;
+namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.DeleteCategory;
 
 [Collection(nameof(DeleteCategoryTestFixture))]
 public class DeleteCategoryInputValidatorTest

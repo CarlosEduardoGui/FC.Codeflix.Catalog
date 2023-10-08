@@ -1,7 +1,7 @@
-﻿using FC.Codeflix.Catalog.Application.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.CodeFlix.Catalog.Application.Common;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
 
-namespace FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+namespace FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 public class ListCategoriesOutput : PaginatedListOuput<CategoryModelOutput>
 {
     public ListCategoriesOutput(

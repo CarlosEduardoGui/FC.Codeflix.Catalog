@@ -1,4 +1,4 @@
-﻿namespace FC.Codeflix.Catalog.Domain.SeedWork;
+﻿namespace FC.CodeFlix.Catalog.Domain.SeedWork;
 public interface IGenericRepository<TAggregate> : IRepository where TAggregate : AggregateRoot
 {
     Task<TAggregate> GetByIdAsync(Guid id, CancellationToken cancellationToken);

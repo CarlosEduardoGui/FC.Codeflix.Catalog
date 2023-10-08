@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-namespace FC.Codeflix.Catalog.UnitTests.Commom;
+namespace FC.CodeFlix.Catalog.UnitTests.Commom;
 public abstract class BaseFixture
 {
     protected BaseFixture()
