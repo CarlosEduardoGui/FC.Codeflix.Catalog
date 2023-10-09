@@ -47,7 +47,7 @@ public class CategoryRepositoryTestFixture : BaseFixture
 
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 
-    public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = true)
+    public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = false)
     {
         var context = new CodeFlixCatelogDbContext(
                 new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
