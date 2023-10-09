@@ -59,6 +59,36 @@ public class CategoryRepositoryTest
     }
 
     [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Fact(DisplayName = nameof(Update))]
+    public async Task Update()
+    {
+        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategory = _fixture.GetExampleCategory();
+        var newCategoryValues = _fixture.GetExampleCategory();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList();
+        exampleCategoriesList.Add(exampleCategory);
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+
+        exampleCategory.Update(newCategoryValues.Name, newCategoryValues.Description);
+        await categoryRepository.UpdateAsync(
+            exampleCategory,
+            CancellationToken.None
+        );
+        await dbContext.SaveChangesAsync();
+
+        var dbCategory = await dbContext.Categories.FindAsync(exampleCategory.Id);
+
+        dbCategory.Should().NotBeNull();
+        dbCategory.Id.Should().Be(exampleCategory.Id);
+        dbCategory.Name.Should().Be(exampleCategory.Name);
+        dbCategory.Description.Should().Be(exampleCategory.Description);
+        dbCategory.IsActive.Should().Be(exampleCategory.IsActive);
+        dbCategory.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+    }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
     [Fact(DisplayName = nameof(GetThrowIfNotFound))]
     public async Task GetThrowIfNotFound()
     {
