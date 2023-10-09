@@ -183,4 +183,47 @@ public class CategoryRepositoryTest
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
     }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Theory(DisplayName = nameof(SearchReturnsPaginated))]
+    [InlineData(10, 1, 5, 5)]
+    [InlineData(10, 2, 5, 5)]
+    [InlineData(7, 2, 5, 2)]
+    [InlineData(7, 3, 5, 0)]
+    public async Task SearchReturnsPaginated(
+            int quantityCategoriesToGenerate,
+            int page,
+            int perPage,
+            int expectedQuantityItems
+    )
+    {
+        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList(quantityCategoriesToGenerate);
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var searchInput = new SearchInput(page, perPage, "", "", SearchOrder.ASC);
+        await dbContext.SaveChangesAsync();
+
+        var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(quantityCategoriesToGenerate);
+        output.Items.Should().HaveCount(expectedQuantityItems);
+        foreach (Category outPutItem in output.Items)
+        {
+            var exampleItem = exampleCategoriesList.Find(category =>
+                category.Id == outPutItem.Id
+            );
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(exampleItem!.Id);
+            outPutItem.Name.Should().Be(exampleItem.Name);
+            outPutItem.Description.Should().Be(exampleItem.Description);
+            outPutItem.IsActive.Should().Be(exampleItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
 }
