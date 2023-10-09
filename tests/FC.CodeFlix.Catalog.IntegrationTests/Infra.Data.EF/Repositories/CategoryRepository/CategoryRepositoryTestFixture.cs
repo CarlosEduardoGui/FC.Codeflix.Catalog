@@ -47,9 +47,17 @@ public class CategoryRepositoryTestFixture : BaseFixture
 
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 
-    public CodeFlixCatelogDbContext CreateDbContext() => new(
-            new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
-              .UseInMemoryDatabase("integration-tests-db")
-              .Options
-        );
+    public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = true)
+    {
+        var context = new CodeFlixCatelogDbContext(
+                new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
+                  .UseInMemoryDatabase("integration-tests-db")
+                  .Options
+            );
+
+        if (preserveData is false)
+            context.Database.EnsureDeleted();
+
+        return context;
+    }
 }

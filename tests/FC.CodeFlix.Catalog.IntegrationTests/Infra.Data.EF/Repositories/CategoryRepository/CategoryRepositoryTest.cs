@@ -1,4 +1,6 @@
 ﻿using FC.CodeFlix.Catalog.Application.Exceptions;
+using FC.CodeFlix.Catalog.Domain.Entity;
+using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.CodeFlix.Catelog.Infra.Data.EF;
 using FluentAssertions;
 using Xunit;
@@ -24,7 +26,7 @@ public class CategoryRepositoryTest
         await categoryRepository.InsertAsync(exampleCategory, CancellationToken.None);
         await dbContext.SaveChangesAsync(CancellationToken.None);
 
-        var dbCategory = await _fixture.CreateDbContext().Categories.FindAsync(exampleCategory.Id);
+        var dbCategory = await _fixture.CreateDbContext(true).Categories.FindAsync(exampleCategory.Id);
 
         dbCategory.Should().NotBeNull();
         dbCategory!.Name.Should().Be(exampleCategory.Name);
@@ -78,7 +80,7 @@ public class CategoryRepositoryTest
         );
         await dbContext.SaveChangesAsync();
 
-        var dbCategory = await _fixture.CreateDbContext().Categories.FindAsync(exampleCategory.Id);
+        var dbCategory = await _fixture.CreateDbContext(true).Categories.FindAsync(exampleCategory.Id);
 
         dbCategory.Should().NotBeNull();
         dbCategory!.Id.Should().Be(exampleCategory.Id);
@@ -125,8 +127,42 @@ public class CategoryRepositoryTest
         );
         await dbContext.SaveChangesAsync();
 
-        var dbCategory = await _fixture.CreateDbContext().Categories.FindAsync(exampleCategory.Id);
+        var dbCategory = await _fixture.CreateDbContext(true).Categories.FindAsync(exampleCategory.Id);
 
         dbCategory.Should().BeNull();
+    }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Fact(DisplayName = nameof(SearchReturnsListAndTotal))]
+    public async Task SearchReturnsListAndTotal()
+    {
+        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList(15);
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var searchInput = new SearchInput(1, 20, "", "", SearchOrder.ASC);
+        await dbContext.SaveChangesAsync();
+
+        var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(exampleCategoriesList.Count);
+        output.Items.Should().HaveCount(exampleCategoriesList.Count);
+        foreach (Category outPutItem in output.Items)
+        {
+            var exampleItem = exampleCategoriesList.Find(category => 
+                category.Id == outPutItem.Id
+            );
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(exampleItem!.Id);
+            outPutItem.Name.Should().Be(exampleItem.Name);
+            outPutItem.Description.Should().Be(exampleItem.Description);
+            outPutItem.IsActive.Should().Be(exampleItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
     }
 }
