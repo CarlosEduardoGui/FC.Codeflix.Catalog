@@ -230,7 +230,7 @@ public class CategoryRepositoryTest
     [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
     [Theory(DisplayName = nameof(SearchByText))]
     [InlineData("Action", 1, 5, 1, 1)]
-    [InlineData("Horror", 1, 5, 3, 2)]
+    [InlineData("Horror", 1, 5, 3, 3)]
     [InlineData("Sci-fi", 1, 5, 5, 6)]
     [InlineData("Sci-fi", 1, 2, 2, 6)]
     [InlineData("Sci-fi", 2, 5, 1, 6)]
@@ -283,6 +283,57 @@ public class CategoryRepositoryTest
             outPutItem.Description.Should().Be(exampleItem.Description);
             outPutItem.IsActive.Should().Be(exampleItem.IsActive);
             outPutItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Theory(DisplayName = nameof(SearchOrdered))]
+    [InlineData("name", "asc")]
+    [InlineData("name", "desc")]
+    [InlineData("id", "asc")]
+    [InlineData("id", "desc")]
+    [InlineData("createdAt", "asc")]
+    [InlineData("createdAt", "desc")]
+    [InlineData("", "asc")]
+    public async Task SearchOrdered(
+        string orderby,
+        string order
+    )
+    {
+        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList(10);
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var searchOrder = order == "asc" ? SearchOrder.ASC : SearchOrder.DESC;
+        var searchInput = new SearchInput(1, 20, "", orderby, searchOrder);
+        await dbContext.SaveChangesAsync();
+
+        var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
+
+        var expectedOrderedList = _fixture.CloneCategoriesListOrdered(
+            exampleCategoriesList,
+            orderby,
+            searchOrder
+        );
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(exampleCategoriesList.Count);
+        output.Items.Should().HaveCount(exampleCategoriesList.Count);
+        for (int i = 0; i < expectedOrderedList.Count; i++)
+        {
+            var expectedItem = expectedOrderedList[i];
+            var outPutItem = output.Items[i];
+
+            expectedItem.Should().NotBeNull();
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(expectedItem!.Id);
+            outPutItem.Name.Should().Be(expectedItem.Name);
+            outPutItem.Description.Should().Be(expectedItem.Description);
+            outPutItem.IsActive.Should().Be(expectedItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(expectedItem.CreatedAt);
         }
     }
 }
