@@ -154,7 +154,7 @@ public class CategoryRepositoryTest
         output.Items.Should().HaveCount(exampleCategoriesList.Count);
         foreach (Category outPutItem in output.Items)
         {
-            var exampleItem = exampleCategoriesList.Find(category => 
+            var exampleItem = exampleCategoriesList.Find(category =>
                 category.Id == outPutItem.Id
             );
             outPutItem.Should().NotBeNull();
@@ -173,7 +173,7 @@ public class CategoryRepositoryTest
         CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
         var categoryRepository = new Repository.CategoryRepository(dbContext);
         var searchInput = new SearchInput(1, 20, "", "", SearchOrder.ASC);
-        
+
         var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
 
         output.Should().NotBeNull();
@@ -213,6 +213,65 @@ public class CategoryRepositoryTest
         output.PerPage.Should().Be(searchInput.PerPage);
         output.Total.Should().Be(quantityCategoriesToGenerate);
         output.Items.Should().HaveCount(expectedQuantityItems);
+        foreach (Category outPutItem in output.Items)
+        {
+            var exampleItem = exampleCategoriesList.Find(category =>
+                category.Id == outPutItem.Id
+            );
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(exampleItem!.Id);
+            outPutItem.Name.Should().Be(exampleItem.Name);
+            outPutItem.Description.Should().Be(exampleItem.Description);
+            outPutItem.IsActive.Should().Be(exampleItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Theory(DisplayName = nameof(SearchByText))]
+    [InlineData("Action", 1, 5, 1, 1)]
+    [InlineData("Horror", 1, 5, 3, 2)]
+    [InlineData("Sci-fi", 1, 5, 5, 6)]
+    [InlineData("Sci-fi", 1, 2, 2, 6)]
+    [InlineData("Sci-fi", 2, 5, 1, 6)]
+    [InlineData("Robots", 1, 5, 2, 2)]
+    public async Task SearchByText(
+            string search,
+            int page,
+            int perPage,
+            int expectedQuantityItemsReturned,
+            int expectedQuantityTotalItems
+    )
+    {
+        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesListWithNames(new List<string>()
+        {
+            "Action",
+            "Horror",
+            "Horror - Robots",
+            "Horror - Based on Real Facts",
+            "Drama",
+            "Sci-fi IA",
+            "Sci-fi Future",
+            "Sci-fi",
+            "Sci-fi Robots",
+            "Sci-fi StarWars",
+            "Sci-fi StarTrek"
+        });
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var searchInput = new SearchInput(page, perPage, search, "", SearchOrder.ASC);
+        await dbContext.SaveChangesAsync();
+
+        var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(expectedQuantityTotalItems);
+        output.Items.Should().HaveCount(expectedQuantityItemsReturned);
         foreach (Category outPutItem in output.Items)
         {
             var exampleItem = exampleCategoriesList.Find(category =>

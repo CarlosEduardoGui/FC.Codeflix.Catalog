@@ -44,6 +44,15 @@ public class CategoryRepositoryTestFixture : BaseFixture
         Enumerable.Range(1, lengh)
         .Select(_ => GetExampleCategory()).ToList();
 
+    public List<Category> GetExampleCategoriesListWithNames(List<string> names) =>
+    names.Select(name =>
+    {
+        var category = GetExampleCategory();
+        category.Update(name);
+        return category;
+    }
+    ).ToList();
+
 
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 
