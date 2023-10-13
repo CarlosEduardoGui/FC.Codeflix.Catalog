@@ -30,4 +30,10 @@
     <ProjectReference Include="..\..\src\FC.CodeFlix.Catelog.Infra.Data.EF\FC.CodeFlix.Catelog.Infra.Data.EF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

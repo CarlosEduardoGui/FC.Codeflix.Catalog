@@ -12,39 +12,6 @@ public class CategotyRepositoryTestFitureCollection : ICollectionFixture<Categor
 
 public class CategoryRepositoryTestFixture : BaseFixture
 {
-    public string GetValidCategoryName()
-    {
-        var categoryName = "";
-        while (categoryName.Length < 3)
-            categoryName = Faker.Commerce.Categories(1)[0];
-
-        if (categoryName.Length > 255)
-            categoryName = categoryName[..255];
-
-        return categoryName;
-    }
-
-    public string GetValidCategoryDescription()
-    {
-        var categoryDescription = Faker.Commerce.ProductDescription();
-
-        if (categoryDescription.Length > 10_000)
-            categoryDescription = categoryDescription[..10_000];
-
-        return categoryDescription;
-    }
-
-    public Category GetExampleCategory() =>
-        new(
-            GetValidCategoryName(),
-            GetValidCategoryDescription(),
-            GetRandomBoolean()
-            );
-
-    public List<Category> GetExampleCategoriesList(int lengh = 10) =>
-        Enumerable.Range(1, lengh)
-        .Select(_ => GetExampleCategory()).ToList();
-
     public List<Category> GetExampleCategoriesListWithNames(List<string> names) =>
     names.Select(name =>
     {
@@ -53,9 +20,6 @@ public class CategoryRepositoryTestFixture : BaseFixture
         return category;
     }
     ).ToList();
-
-
-    public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 
     public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = false)
     {
