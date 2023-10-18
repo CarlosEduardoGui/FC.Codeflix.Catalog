@@ -1,6 +1,6 @@
-﻿using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
 using UnitOfWorkInfra = FC.CodeFlix.Catelog.Infra.Data.EF.UnitOfWork;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.UnitOfWork;

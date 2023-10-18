@@ -1,9 +1,4 @@
 ﻿using FC.CodeFlix.Catalog.IntegrationTests.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.UnitOfWork;
