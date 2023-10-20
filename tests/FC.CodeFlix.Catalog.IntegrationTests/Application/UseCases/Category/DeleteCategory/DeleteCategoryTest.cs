@@ -4,7 +4,6 @@ using FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
 using UoW = FC.CodeFlix.Catelog.Infra.Data.EF.UnitOfWork.UnitOfWork;
 using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 
