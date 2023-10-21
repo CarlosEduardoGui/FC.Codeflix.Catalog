@@ -13,9 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FC.CodeFlix.Catalog.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FC.CodeFlix.Catalog.Application", "src\FC.CodeFlix.Catalog.Application\FC.CodeFlix.Catalog.Application.csproj", "{F4650761-A295-4EBE-964E-F4E6F38492C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.CodeFlix.Catalog.IntegrationTests", "tests\FC.CodeFlix.Catalog.IntegrationTests\FC.CodeFlix.Catalog.IntegrationTests.csproj", "{7E177FC9-2F14-4589-A6AA-8C6453818715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FC.CodeFlix.Catalog.IntegrationTests", "tests\FC.CodeFlix.Catalog.IntegrationTests\FC.CodeFlix.Catalog.IntegrationTests.csproj", "{7E177FC9-2F14-4589-A6AA-8C6453818715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.CodeFlix.Catelog.Infra.Data.EF", "src\FC.CodeFlix.Catelog.Infra.Data.EF\FC.CodeFlix.Catelog.Infra.Data.EF.csproj", "{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FC.CodeFlix.Catelog.Infra.Data.EF", "src\FC.CodeFlix.Catelog.Infra.Data.EF\FC.CodeFlix.Catelog.Infra.Data.EF.csproj", "{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.CodeFlix.Catalog.EndToEndTests", "tests\FC.CodeFlix.Catalog.EndToEndTests\FC.CodeFlix.Catalog.EndToEndTests.csproj", "{9C4DD88D-FC83-47B4-B425-621B81C00744}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.CodeFlix.Catelog.Api", "src\FC.CodeFlix.Catelog.Api\FC.CodeFlix.Catelog.Api.csproj", "{9A65EEE3-949F-4423-93C2-50E7EC72DB3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,14 @@ Global
 		{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4DD88D-FC83-47B4-B425-621B81C00744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4DD88D-FC83-47B4-B425-621B81C00744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C4DD88D-FC83-47B4-B425-621B81C00744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4DD88D-FC83-47B4-B425-621B81C00744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A65EEE3-949F-4423-93C2-50E7EC72DB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A65EEE3-949F-4423-93C2-50E7EC72DB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A65EEE3-949F-4423-93C2-50E7EC72DB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A65EEE3-949F-4423-93C2-50E7EC72DB3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +65,8 @@ Global
 		{F4650761-A295-4EBE-964E-F4E6F38492C9} = {690E9593-47EF-491E-B599-C84E4528D136}
 		{7E177FC9-2F14-4589-A6AA-8C6453818715} = {1918CCE4-1704-4673-B6A8-C66A38552667}
 		{3265324B-CD46-439C-B4BC-B8EDD9FE7CF9} = {690E9593-47EF-491E-B599-C84E4528D136}
+		{9C4DD88D-FC83-47B4-B425-621B81C00744} = {1918CCE4-1704-4673-B6A8-C66A38552667}
+		{9A65EEE3-949F-4423-93C2-50E7EC72DB3D} = {690E9593-47EF-491E-B599-C84E4528D136}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2FF7C8C3-D408-4896-B611-B4C025B892CF}
