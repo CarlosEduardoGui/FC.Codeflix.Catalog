@@ -1,11 +1,11 @@
 ﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 using FC.CodeFlix.Catalog.Domain.Exceptions;
-using FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 using CreateCategoryUseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory.CreateCategory;
-using UoW = FC.CodeFlix.Catelog.Infra.Data.EF.UnitOfWork.UnitOfWork;
+using UoW = FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 

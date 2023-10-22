@@ -1,10 +1,10 @@
 ﻿using FC.CodeFlix.Catalog.Application.Exceptions;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
-using FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using UoW = FC.CodeFlix.Catelog.Infra.Data.EF.UnitOfWork.UnitOfWork;
+using UoW = FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
 using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.DeleteCategory;

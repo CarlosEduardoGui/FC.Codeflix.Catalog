@@ -1,5 +1,4 @@
 ﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.EndToEndTests.Api.Common;
 using FluentAssertions;
 using System.Net;

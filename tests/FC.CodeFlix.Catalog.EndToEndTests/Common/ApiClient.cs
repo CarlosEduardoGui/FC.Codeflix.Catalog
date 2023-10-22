@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using System.Text;
 using System.Text.Json;
 
 namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
@@ -22,19 +23,16 @@ public class ApiClient
             )
         );
 
-        TOutPut? outputObject = null;
         var outputString = await response.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(outputString))
-        {
-            outputObject = JsonSerializer.Deserialize<TOutPut>(
-                outputString,
+        TOutPut? output = null;
+        if (!string.IsNullOrWhiteSpace(outputString))
+            output = JsonSerializer.Deserialize<TOutPut>(outputString,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 }
             );
-        }
 
-        return (response!, outputObject!);
+        return (response!, output!);
     }
 }

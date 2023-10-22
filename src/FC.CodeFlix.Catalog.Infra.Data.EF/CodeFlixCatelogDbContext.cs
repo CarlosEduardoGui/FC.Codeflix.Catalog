@@ -1,8 +1,8 @@
 ﻿using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catelog.Infra.Data.EF.Configurations;
+using FC.CodeFlix.Catalog.Infra.Data.EF.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catelog.Infra.Data.EF;
+namespace FC.CodeFlix.Catalog.Infra.Data.EF;
 public class CodeFlixCatelogDbContext : DbContext
 {
     public DbSet<Category> Categories => Set<Category>();

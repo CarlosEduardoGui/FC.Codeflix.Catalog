@@ -1,9 +1,8 @@
-﻿using FC.CodeFlix.Catelog.Infra.Data.EF;
+﻿using FC.CodeFlix.Catalog.Infra.Data.EF;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 
 namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
 public class CustomWebApplicationFactory<TStartup>

@@ -1,7 +1,7 @@
 ﻿using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.CodeFlix.Catalog.IntegrationTests.Base;
-using FC.CodeFlix.Catelog.Infra.Data.EF;
+using FC.CodeFlix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

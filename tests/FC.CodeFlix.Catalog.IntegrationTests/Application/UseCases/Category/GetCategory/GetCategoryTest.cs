@@ -1,6 +1,6 @@
 ﻿using FC.CodeFlix.Catalog.Application.Exceptions;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
-using FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Xunit;
 using GetCategoryUseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory.GetCategory;

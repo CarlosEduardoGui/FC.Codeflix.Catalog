@@ -4,7 +4,7 @@ using FC.CodeFlix.Catalog.Domain.Repository;
 using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+namespace FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly CodeFlixCatelogDbContext _dbContext;

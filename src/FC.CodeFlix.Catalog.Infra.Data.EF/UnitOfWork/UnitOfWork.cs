@@ -1,6 +1,6 @@
 ﻿using FC.CodeFlix.Catalog.Application.Interfaces;
 
-namespace FC.CodeFlix.Catelog.Infra.Data.EF.UnitOfWork;
+namespace FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly CodeFlixCatelogDbContext _codeFlixCatelogDbContext;

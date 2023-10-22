@@ -1,10 +1,9 @@
 ﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.CodeFlix.Catalog.Domain.SeedWork;
 using FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Common;
-using FC.CodeFlix.Catelog.Infra.Data.EF;
-using FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+using FC.CodeFlix.Catalog.Infra.Data.EF;
+using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Xunit;
 using ListCategoriesUseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories.ListCategories;

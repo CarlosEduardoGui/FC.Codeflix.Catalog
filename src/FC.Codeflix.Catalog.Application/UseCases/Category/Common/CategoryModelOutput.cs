@@ -3,13 +3,13 @@
 namespace FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
 public class CategoryModelOutput
 {
-    public CategoryModelOutput(Guid id, string name, string description, bool isActive, DateTime createAt)
+    public CategoryModelOutput(Guid id, string name, string description, bool isActive, DateTime createdAt)
     {
         Id = id;
         Name = name;
         Description = description;
         IsActive = isActive;
-        CreatedAt = createAt;
+        CreatedAt = createdAt;
     }
 
     public Guid Id { get; set; }
@@ -27,9 +27,4 @@ public class CategoryModelOutput
             category.IsActive,
             category.CreatedAt
         );
-
-    internal object ToList()
-    {
-        throw new NotImplementedException();
-    }
 }

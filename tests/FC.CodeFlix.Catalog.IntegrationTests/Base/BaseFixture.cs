@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catelog.Infra.Data.EF;
+using FC.CodeFlix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.Base;

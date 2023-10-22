@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FC.CodeFlix.Catelog.Infra.Data.EF.Configurations;
+namespace FC.CodeFlix.Catalog.Infra.Data.EF.Configurations;
 internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)

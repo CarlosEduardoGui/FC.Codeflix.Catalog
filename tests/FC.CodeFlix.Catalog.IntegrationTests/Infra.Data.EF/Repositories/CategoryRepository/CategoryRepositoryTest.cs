@@ -1,10 +1,10 @@
 ﻿using FC.CodeFlix.Catalog.Application.Exceptions;
 using FC.CodeFlix.Catalog.Domain.Entity;
 using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.CodeFlix.Catelog.Infra.Data.EF;
+using FC.CodeFlix.Catalog.Infra.Data.EF;
 using FluentAssertions;
 using Xunit;
-using Repository = FC.CodeFlix.Catelog.Infra.Data.EF.Repositories;
+using Repository = FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
 
 namespace FC.CodeFlix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
 
