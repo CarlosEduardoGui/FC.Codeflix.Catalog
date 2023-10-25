@@ -1,5 +1,5 @@
 ﻿using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.EndToEndTests.Base;
+using FC.CodeFlix.Catalog.EndToEndTests.Common;
 
 namespace FC.CodeFlix.Catalog.EndToEndTests.Api.Common;
 public class CategoryBaseFixture : BaseFixture

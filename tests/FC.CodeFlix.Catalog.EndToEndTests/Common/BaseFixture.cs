@@ -1,9 +1,8 @@
 ﻿using Bogus;
-using FC.CodeFlix.Catalog.EndToEndTests.Common;
 using FC.CodeFlix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Base;
+namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
 public class BaseFixture
 {
     protected BaseFixture()
@@ -27,4 +26,26 @@ public class BaseFixture
                   .UseInMemoryDatabase("endtoend-tests-db")
                   .Options
             );
+
+    public string GetInvalidNameTooLong()
+    {
+        var tooLongNameForCategory = Faker.Commerce.ProductName();
+        while (tooLongNameForCategory.Length <= 255)
+            tooLongNameForCategory = $"{tooLongNameForCategory} {Faker.Commerce.ProductName()}";
+
+        return tooLongNameForCategory;
+    }
+
+    public string GetInvalidDescriptionTooLong()
+    {
+        var tooLongDescriptionForCategory = Faker.Commerce.ProductDescription();
+        while (tooLongDescriptionForCategory.Length <= 10_000)
+            tooLongDescriptionForCategory =
+                $"{tooLongDescriptionForCategory} {Faker.Commerce.ProductDescription()}";
+
+        return tooLongDescriptionForCategory;
+    }
+
+    public string GetInvalidNameTooShort() => 
+        Faker.Commerce.ProductName()[..2];
 }

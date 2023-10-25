@@ -1,8 +1,12 @@
 using FC.CodeFlix.Catalog.Api.Configurations;
+using FC.CodeFlix.Catalog.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(ApiGlobalExceptionFilter));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services
