@@ -10,8 +10,16 @@ public class CategoryPersistence
     public CategoryPersistence(CodeFlixCatelogDbContext context) =>
         _context = context;
 
-    public async Task<Category?> GetById(Guid id) =>
+    public async Task<Category?> GetByIdAsync(Guid id) =>
         await _context.Categories
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
+
+    public async Task InsertListAsync(List<Category> categories)
+    {
+        await _context.Categories
+            .AddRangeAsync(categories);
+
+        await _context.SaveChangesAsync();
+    }
 }

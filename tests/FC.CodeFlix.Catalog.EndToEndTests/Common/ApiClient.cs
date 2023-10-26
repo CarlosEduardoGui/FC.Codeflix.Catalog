@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
@@ -21,6 +20,27 @@ public class ApiClient
                 Encoding.UTF8,
                 "application/json"
             )
+        );
+
+        var outputString = await response.Content.ReadAsStringAsync();
+        TOutPut? output = null;
+        if (!string.IsNullOrWhiteSpace(outputString))
+            output = JsonSerializer.Deserialize<TOutPut>(outputString,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }
+            );
+
+        return (response!, output!);
+    }
+
+    public async Task<(HttpResponseMessage message, TOutPut output)> Get<TOutPut>
+        (string route)
+        where TOutPut : class
+    {
+        var response = await _httpClient.GetAsync(
+            route
         );
 
         var outputString = await response.Content.ReadAsStringAsync();

@@ -37,5 +37,14 @@ public class CategoryBaseFixture : BaseFixture
             GetValidCategoryDescription(),
             GetRandomBoolean()
             );
+
+    public List<Category> GetExampleCategoriesList(int listLenght = 15)
+        => Enumerable.Range(1, listLenght).Select(_ => new Category(
+            GetValidCategoryName(),
+            GetValidCategoryDescription(),
+            GetRandomBoolean()
+            )
+        ).ToList();
+
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
 }

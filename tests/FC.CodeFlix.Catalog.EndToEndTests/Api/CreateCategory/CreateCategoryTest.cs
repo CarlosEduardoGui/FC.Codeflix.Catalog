@@ -16,7 +16,7 @@ public class CreateCategoryTest : CategoryBaseFixture
     public CreateCategoryTest(CreateCategoryTestFixture fixture) =>
         _fixture = fixture;
 
-    [Trait("EndToEnd/Api", "Category - Endpoints")]
+    [Trait("EndToEnd/Api", "Category/Create - Endpoints")]
     [Fact(DisplayName = nameof(CreateCategoryOk))]
     public async Task CreateCategoryOk()
     {
@@ -37,7 +37,7 @@ public class CreateCategoryTest : CategoryBaseFixture
         output.CreatedAt.Should().NotBeSameDateAs(default);
         var dbCategory = await _fixture
             .Persistence
-            .GetById(output.Id);
+            .GetByIdAsync(output.Id);
         dbCategory.Should().NotBeNull();
         dbCategory!.Id.Should().NotBeEmpty();
         dbCategory.Name.Should().Be(input.Name);
@@ -46,7 +46,7 @@ public class CreateCategoryTest : CategoryBaseFixture
         dbCategory.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
-    [Trait("EndToEnd/Api", "Category - Endpoints")]
+    [Trait("EndToEnd/Api", "Category/Create - Endpoints")]
     [Theory(DisplayName = nameof(ThrowWhenCantInstanciateAggregate))]
     [MemberData(
         nameof(CreateCategoryTestDataGenerator.GetInvalidInputs),
