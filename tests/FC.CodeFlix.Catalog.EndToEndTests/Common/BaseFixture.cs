@@ -46,6 +46,6 @@ public class BaseFixture
         return tooLongDescriptionForCategory;
     }
 
-    public string GetInvalidNameTooShort() => 
+    public string GetInvalidNameTooShort() =>
         Faker.Commerce.ProductName()[..2];
 }

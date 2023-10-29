@@ -1,5 +1,6 @@
 ﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
@@ -34,5 +35,27 @@ public class GetCategoryByIdTest
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
         output.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+    }
+
+    [Trait("EndToEnd/API", "Category/GetCategory - Endpoints")]
+    [Fact(DisplayName = nameof(ThrowWhenNotFound))]
+    public async Task ThrowWhenNotFound()
+    {
+        var exampleCategoryList = _fixture.GetExampleCategoriesList();
+        await _fixture.Persistence.InsertListAsync(exampleCategoryList);
+        var randomGuid = Guid.NewGuid();
+
+        var (response, output) = await
+            _fixture.ApiClient.Get<ProblemDetails>(
+                $"/categories/{randomGuid}"
+            );
+
+        response.Should().NotBeNull();
+        response!.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        output.Should().NotBeNull();
+        output!.Status.Should().Be((int)HttpStatusCode.NotFound);
+        output.Title.Should().Be("Not Found");
+        output.Detail.Should().Be($"Category '{randomGuid}' not found.");
+        output.Type.Should().Be("NotFound");
     }
 }
