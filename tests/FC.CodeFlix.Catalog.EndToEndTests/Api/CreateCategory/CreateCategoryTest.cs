@@ -47,12 +47,12 @@ public class CreateCategoryTest : CategoryBaseFixture
     }
 
     [Trait("EndToEnd/Api", "Category/Create - Endpoints")]
-    [Theory(DisplayName = nameof(ThrowWhenCantInstanciateAggregate))]
+    [Theory(DisplayName = nameof(ErrorWhenCantInstanciateAggregate))]
     [MemberData(
         nameof(CreateCategoryTestDataGenerator.GetInvalidInputs),
         MemberType = typeof(CreateCategoryTestDataGenerator)
     )]
-    public async Task ThrowWhenCantInstanciateAggregate(
+    public async Task ErrorWhenCantInstanciateAggregate(
         CreateCategoryInput input,
         string expectedDetail
     )

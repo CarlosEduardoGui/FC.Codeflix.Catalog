@@ -38,8 +38,8 @@ public class GetCategoryByIdTest
     }
 
     [Trait("EndToEnd/API", "Category/GetCategory - Endpoints")]
-    [Fact(DisplayName = nameof(ThrowWhenNotFound))]
-    public async Task ThrowWhenNotFound()
+    [Fact(DisplayName = nameof(ErrorWhenNotFound))]
+    public async Task ErrorWhenNotFound()
     {
         var exampleCategoryList = _fixture.GetExampleCategoriesList();
         await _fixture.Persistence.InsertListAsync(exampleCategoryList);
