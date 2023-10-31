@@ -2,6 +2,7 @@
 using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 using FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
+using FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,4 +48,16 @@ public class CategoriesController : ControllerBase
         await _mediator.Send(new DeleteCategoryInput(id), cancellationToken);
         return NoContent();
     }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> PutById([FromBody] UpdateCategoryInput input, CancellationToken cancellationToken)
+    {
+        var output = await _mediator.Send(input, cancellationToken);
+        return Ok(output);
+    }
+
 }

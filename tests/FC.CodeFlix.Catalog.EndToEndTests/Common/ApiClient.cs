@@ -22,15 +22,7 @@ public class ApiClient
             )
         );
 
-        var outputString = await response.Content.ReadAsStringAsync();
-        TOutPut? output = null;
-        if (!string.IsNullOrWhiteSpace(outputString))
-            output = JsonSerializer.Deserialize<TOutPut>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
-            );
+        TOutPut? output = await GetContentObject<TOutPut>(response);
 
         return (response!, output!);
     }
@@ -43,15 +35,7 @@ public class ApiClient
             route
         );
 
-        var outputString = await response.Content.ReadAsStringAsync();
-        TOutPut? output = null;
-        if (!string.IsNullOrWhiteSpace(outputString))
-            output = JsonSerializer.Deserialize<TOutPut>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
-            );
+        TOutPut? output = await GetContentObject<TOutPut>(response);
 
         return (response!, output!);
     }
@@ -64,6 +48,31 @@ public class ApiClient
             route
         );
 
+        TOutPut? output = await GetContentObject<TOutPut>(response);
+
+        return (response!, output!);
+    }
+
+    public async Task<(HttpResponseMessage message, TOutPut output)> Put<TOutPut>
+        (string route, object payload)
+        where TOutPut : class
+    {
+        var response = await _httpClient.PutAsync(
+            route,
+            new StringContent(
+                JsonSerializer.Serialize(payload),
+                Encoding.UTF8,
+                "application/json"
+            )
+        );
+
+        TOutPut? output = await GetContentObject<TOutPut>(response);
+
+        return (response!, output!);
+    }
+
+    private static async Task<TOutPut?> GetContentObject<TOutPut>(HttpResponseMessage response) where TOutPut : class
+    {
         var outputString = await response.Content.ReadAsStringAsync();
         TOutPut? output = null;
         if (!string.IsNullOrWhiteSpace(outputString))
@@ -73,7 +82,6 @@ public class ApiClient
                     PropertyNameCaseInsensitive = true
                 }
             );
-
-        return (response!, output!);
+        return output;
     }
 }
