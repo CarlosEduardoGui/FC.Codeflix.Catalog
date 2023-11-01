@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "FC.CodeFlix.Catalog.UnitTests": {
+    "FC.Codeflix.Catalog.UnitTests": {
       "commandName": "Project"
     },
     "Docker": {

@@ -1,13 +1,13 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.CodeFlix.Catalog.Domain.Exceptions;
-using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using CreateCategoryUseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory.CreateCategory;
-using UoW = FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
+using CreateCategoryUseCase = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory.CreateCategory;
+using UoW = FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
+namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 
 [Collection(nameof(CreateCategoryTestFixture))]
 public class CreateCategoryTest

@@ -1,18 +1,18 @@
-﻿using FC.CodeFlix.Catalog.Application.Exceptions;
-using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.Domain.Repository;
-using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.Repository;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
+namespace FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 public class CategoryRepository : ICategoryRepository
 {
-    private readonly CodeFlixCatelogDbContext _dbContext;
+    private readonly CodeflixCatelogDbContext _dbContext;
     private DbSet<Category> _categories =>
         _dbContext.Set<Category>();
 
     public CategoryRepository(
-        CodeFlixCatelogDbContext dbContext)
+        CodeflixCatelogDbContext dbContext)
     {
         _dbContext = dbContext;
     }

@@ -1,6 +1,6 @@
-﻿using DomainEntity = FC.CodeFlix.Catalog.Domain.Entity;
+﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 public class CategoryModelOutput
 {
     public CategoryModelOutput(Guid id, string name, string description, bool isActive, DateTime createdAt)

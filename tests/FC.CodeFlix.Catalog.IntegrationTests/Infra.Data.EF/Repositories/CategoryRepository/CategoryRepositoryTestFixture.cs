@@ -1,11 +1,11 @@
-﻿using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.CodeFlix.Catalog.Infra.Data.EF;
-using FC.CodeFlix.Catalog.IntegrationTests.Base;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.IntegrationTests.Base;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
+namespace FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.Repositories.CategoryRepository;
 
 [CollectionDefinition(nameof(CategoryRepositoryTestFixture))]
 public class CategotyRepositoryTestFitureCollection : ICollectionFixture<CategoryRepositoryTestFixture> { }
@@ -21,10 +21,10 @@ public class CategoryRepositoryTestFixture : BaseFixture
     }
     ).ToList();
 
-    public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = false)
+    public CodeflixCatelogDbContext CreateDbContext(bool preserveData = false)
     {
-        var context = new CodeFlixCatelogDbContext(
-                new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
+        var context = new CodeflixCatelogDbContext(
+                new DbContextOptionsBuilder<CodeflixCatelogDbContext>()
                   .UseInMemoryDatabase("integration-tests-db")
                   .Options
             );

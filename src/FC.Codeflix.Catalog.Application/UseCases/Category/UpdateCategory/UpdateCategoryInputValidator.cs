@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 public class UpdateCategoryInputValidator : AbstractValidator<UpdateCategoryInput>
 {
     public UpdateCategoryInputValidator()

@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.Domain.SeedWork;
-using FC.CodeFlix.Catalog.Domain.Validation;
+﻿using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.Domain.Validation;
 
-namespace FC.CodeFlix.Catalog.Domain.Entity;
+namespace FC.Codeflix.Catalog.Domain.Entity;
 public class Category : AggregateRoot
 {
     public string Name { get; private set; }

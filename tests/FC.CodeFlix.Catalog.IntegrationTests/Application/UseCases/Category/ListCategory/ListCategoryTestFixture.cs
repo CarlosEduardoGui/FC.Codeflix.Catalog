@@ -1,9 +1,9 @@
-﻿using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Common;
+﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
 using Xunit;
-using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.ListCategory;
+namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.ListCategory;
 
 [CollectionDefinition(nameof(ListCategoryTestFixture))]
 public class ListCategoryTestFixtureCollection : ICollectionFixture<ListCategoryTestFixture> { }

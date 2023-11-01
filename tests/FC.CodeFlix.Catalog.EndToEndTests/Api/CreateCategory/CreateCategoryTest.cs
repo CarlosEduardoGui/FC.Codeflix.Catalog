@@ -1,12 +1,12 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.CodeFlix.Catalog.EndToEndTests.Api.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Common;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Api.CreateCategory;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.CreateCategory;
 
 [Collection(nameof(CreateCategoryTestFixture))]
 public class CreateCategoryTest : CategoryBaseFixture

@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using MediatR;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 public class UpdateCategoryInput : IRequest<CategoryModelOutput>
 {
     public Guid Id { get; set; }

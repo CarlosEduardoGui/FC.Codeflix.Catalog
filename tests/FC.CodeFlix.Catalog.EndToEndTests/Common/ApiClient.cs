@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
+namespace FC.Codeflix.Catalog.EndToEndTests.Common;
 public class ApiClient
 {
     private readonly HttpClient _httpClient;

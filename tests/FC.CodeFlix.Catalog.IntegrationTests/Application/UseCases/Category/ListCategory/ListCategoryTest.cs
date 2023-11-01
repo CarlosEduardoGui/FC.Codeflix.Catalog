@@ -1,14 +1,14 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
-using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.CodeFlix.Catalog.Infra.Data.EF;
-using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
-using FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
 using FluentAssertions;
 using Xunit;
-using ListCategoriesUseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories.ListCategories;
+using ListCategoriesUseCase = FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories.ListCategories;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.ListCategory;
+namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.ListCategory;
 
 [Collection(nameof(ListCategoryTestFixture))]
 public class ListCategoryTest : CategoryUseCaseBaseFixture
@@ -191,7 +191,7 @@ public class ListCategoryTest : CategoryUseCaseBaseFixture
         string order
     )
     {
-        CodeFlixCatelogDbContext dbContext = _fixture.CreateDbContext();
+        CodeflixCatelogDbContext dbContext = _fixture.CreateDbContext();
         var exampleCategoriesList = _fixture.GetExampleCategoriesList(10);
         await dbContext.AddRangeAsync(exampleCategoriesList);
         await dbContext.SaveChangesAsync(CancellationToken.None);

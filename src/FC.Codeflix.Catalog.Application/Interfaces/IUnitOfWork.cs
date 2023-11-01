@@ -1,4 +1,4 @@
-﻿namespace FC.CodeFlix.Catalog.Application.Interfaces;
+﻿namespace FC.Codeflix.Catalog.Application.Interfaces;
 public interface IUnitOfWork
 {
     Task CommitAsync(CancellationToken cancellationToken);

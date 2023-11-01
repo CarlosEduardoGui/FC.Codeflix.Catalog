@@ -1,8 +1,8 @@
-﻿using FC.CodeFlix.Catalog.UnitTests.Commom;
+﻿using FC.Codeflix.Catalog.UnitTests.Commom;
 using Xunit;
-using DomainEntity = FC.CodeFlix.Catalog.Domain.Entity;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
-namespace FC.CodeFlix.Catalog.UnitTests.Domain.Entity.Category;
+namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.Category;
 
 [CollectionDefinition(nameof(CategoryTestFixture))]
 public class CategoryFixtureCollection : ICollectionFixture<CategoryTestFixture> { }

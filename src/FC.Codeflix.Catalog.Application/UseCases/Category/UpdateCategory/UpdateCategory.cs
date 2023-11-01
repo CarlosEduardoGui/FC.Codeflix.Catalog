@@ -1,8 +1,8 @@
-﻿using FC.CodeFlix.Catalog.Application.Interfaces;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Domain.Repository;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Domain.Repository;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 public class UpdateCategory : IUpdateCategory
 {
     private readonly ICategoryRepository _categoryRepository;

@@ -1,5 +1,5 @@
-using FC.CodeFlix.Catalog.Api.Configurations;
-using FC.CodeFlix.Catalog.Api.Filters;
+using FC.Codeflix.Catalog.Api.Configurations;
+using FC.Codeflix.Catalog.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

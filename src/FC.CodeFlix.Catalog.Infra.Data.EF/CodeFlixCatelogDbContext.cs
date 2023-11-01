@@ -1,14 +1,14 @@
-﻿using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.Infra.Data.EF.Configurations;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.Infra.Data.EF;
-public class CodeFlixCatelogDbContext : DbContext
+namespace FC.Codeflix.Catalog.Infra.Data.EF;
+public class CodeflixCatelogDbContext : DbContext
 {
     public DbSet<Category> Categories => Set<Category>();
 
-    public CodeFlixCatelogDbContext(
-        DbContextOptions<CodeFlixCatelogDbContext> options
+    public CodeflixCatelogDbContext(
+        DbContextOptions<CodeflixCatelogDbContext> options
     ) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)

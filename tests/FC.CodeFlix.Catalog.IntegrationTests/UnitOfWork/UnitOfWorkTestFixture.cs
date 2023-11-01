@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.IntegrationTests.Base;
+﻿using FC.Codeflix.Catalog.IntegrationTests.Base;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.UnitOfWork;
+namespace FC.Codeflix.Catalog.IntegrationTests.UnitOfWork;
 
 [CollectionDefinition(nameof(UnitOfWorkTestFixture))]
 public class UnitOfWorkCollection : ICollectionFixture<UnitOfWorkTestFixture> { }

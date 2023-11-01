@@ -1,11 +1,11 @@
-﻿using FC.CodeFlix.Catalog.Application.Exceptions;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 
-namespace FC.CodeFlix.Catalog.UnitTests.Application.Category.GetCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest

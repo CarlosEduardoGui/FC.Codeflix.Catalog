@@ -1,10 +1,10 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Api.GetCategoryById;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.GetCategoryById;
 
 [Collection(nameof(GetCategoryByIdTestFixture))]
 public class GetCategoryByIdTest

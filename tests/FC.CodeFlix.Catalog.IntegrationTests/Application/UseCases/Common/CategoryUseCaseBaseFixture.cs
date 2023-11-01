@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.IntegrationTests.Base;
-using CategoryEntity = FC.CodeFlix.Catalog.Domain.Entity.Category;
+﻿using FC.Codeflix.Catalog.IntegrationTests.Base;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Common;
+namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
 public class CategoryUseCaseBaseFixture : BaseFixture
 {
     public string GetValidCategoryName()

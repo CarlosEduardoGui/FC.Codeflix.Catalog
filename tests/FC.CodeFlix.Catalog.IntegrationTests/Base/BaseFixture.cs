@@ -1,19 +1,19 @@
 ﻿using Bogus;
-using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.IntegrationTests.Base;
+namespace FC.Codeflix.Catalog.IntegrationTests.Base;
 public abstract class BaseFixture
 {
     protected Faker Faker { get; set; }
 
     protected BaseFixture() => Faker = new Faker("pt_BR");
 
-    public CodeFlixCatelogDbContext CreateDbContext(bool preserveData = false)
+    public CodeflixCatelogDbContext CreateDbContext(bool preserveData = false)
     {
-        var context = new CodeFlixCatelogDbContext(
-                new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
+        var context = new CodeflixCatelogDbContext(
+                new DbContextOptionsBuilder<CodeflixCatelogDbContext>()
                   .UseInMemoryDatabase("integration-tests-db")
                   .Options
             );

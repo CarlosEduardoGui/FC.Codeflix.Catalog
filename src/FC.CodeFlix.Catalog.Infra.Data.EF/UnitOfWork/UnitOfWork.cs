@@ -1,11 +1,11 @@
-﻿using FC.CodeFlix.Catalog.Application.Interfaces;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
 
-namespace FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork;
+namespace FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly CodeFlixCatelogDbContext _codeFlixCatelogDbContext;
+    private readonly CodeflixCatelogDbContext _codeFlixCatelogDbContext;
 
-    public UnitOfWork(CodeFlixCatelogDbContext codeFlixCatelogDbContext) =>
+    public UnitOfWork(CodeflixCatelogDbContext codeFlixCatelogDbContext) =>
         _codeFlixCatelogDbContext = codeFlixCatelogDbContext;
 
     public Task CommitAsync(CancellationToken cancellationToken) =>

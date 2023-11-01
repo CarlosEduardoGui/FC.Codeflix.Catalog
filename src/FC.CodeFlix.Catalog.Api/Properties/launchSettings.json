@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "FC.CodeFlix.Catalog.Api": {
+    "FC.Codeflix.Catalog.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

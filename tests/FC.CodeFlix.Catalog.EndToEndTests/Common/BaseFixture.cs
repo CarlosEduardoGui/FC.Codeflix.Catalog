@@ -1,8 +1,8 @@
 ﻿using Bogus;
-using FC.CodeFlix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Common;
+namespace FC.Codeflix.Catalog.EndToEndTests.Common;
 public class BaseFixture
 {
     protected BaseFixture()
@@ -21,8 +21,8 @@ public class BaseFixture
 
     public HttpClient HttpClient { get; set; }
 
-    public CodeFlixCatelogDbContext CreateDbContext() => new(
-                new DbContextOptionsBuilder<CodeFlixCatelogDbContext>()
+    public CodeflixCatelogDbContext CreateDbContext() => new(
+                new DbContextOptionsBuilder<CodeflixCatelogDbContext>()
                   .UseInMemoryDatabase("endtoend-tests-db")
                   .Options
             );

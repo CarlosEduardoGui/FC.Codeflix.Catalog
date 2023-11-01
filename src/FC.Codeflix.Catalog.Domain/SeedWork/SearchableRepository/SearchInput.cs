@@ -1,4 +1,4 @@
-﻿namespace FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
+﻿namespace FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 public class SearchInput
 {
     public SearchInput(

@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.Domain.Entity;
-using FC.CodeFlix.Catalog.EndToEndTests.Common;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.EndToEndTests.Common;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Api.Common;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.Common;
 public class CategoryBaseFixture : BaseFixture
 {
     public CategoryPersistence Persistence;

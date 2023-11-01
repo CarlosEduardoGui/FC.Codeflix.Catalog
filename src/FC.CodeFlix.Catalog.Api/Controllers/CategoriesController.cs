@@ -1,12 +1,12 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FC.CodeFlix.Catalog.Api.Controllers;
+namespace FC.Codeflix.Catalog.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

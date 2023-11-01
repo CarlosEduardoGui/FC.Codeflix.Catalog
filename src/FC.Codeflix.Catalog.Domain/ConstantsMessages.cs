@@ -1,4 +1,4 @@
-﻿namespace FC.CodeFlix.Catalog.Domain;
+﻿namespace FC.Codeflix.Catalog.Domain;
 public static class ConstantsMessages
 {
     public const string fieldNotNull = "{0} should be not null.";

@@ -1,7 +1,7 @@
-﻿using FC.CodeFlix.Catalog.Infra.Data.EF;
+﻿using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace FC.CodeFlix.Catalog.Api.Configurations;
+namespace FC.Codeflix.Catalog.Api.Configurations;
 
 public static class ConnectionsConfiguration
 {
@@ -14,7 +14,7 @@ public static class ConnectionsConfiguration
 
     private static IServiceCollection AddDbConnection(this IServiceCollection services)
     {
-        services.AddDbContext<CodeFlixCatelogDbContext>(options =>
+        services.AddDbContext<CodeflixCatelogDbContext>(options =>
         {
             options.UseInMemoryDatabase("InMemory-DSV-Database");
         });

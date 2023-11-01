@@ -1,11 +1,11 @@
-﻿using FC.CodeFlix.Catalog.Application.Interfaces;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.CodeFlix.Catalog.Domain.Repository;
-using FC.CodeFlix.Catalog.Infra.Data.EF.Repositories;
-using FC.CodeFlix.Catalog.Infra.Data.EF.UnitOfWork;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Domain.Repository;
+using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
+using FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork;
 using MediatR;
 
-namespace FC.CodeFlix.Catalog.Api.Configurations;
+namespace FC.Codeflix.Catalog.Api.Configurations;
 
 public static class UseCasesConfiguration
 {

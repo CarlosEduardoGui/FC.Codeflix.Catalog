@@ -1,4 +1,4 @@
-﻿namespace FC.CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
+﻿namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs(int numberOfTest = 12)

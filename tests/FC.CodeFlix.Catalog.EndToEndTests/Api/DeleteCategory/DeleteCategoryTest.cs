@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Api.DeleteCategory;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.DeleteCategory;
 
 [Collection(nameof(DeleteCategoryFixture))]
 public class DeleteCategoryTest

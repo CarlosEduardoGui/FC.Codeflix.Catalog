@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FC.CodeFlix.Catalog.Application\FC.CodeFlix.Catalog.Application.csproj" />
-    <ProjectReference Include="..\..\src\FC.CodeFlix.Catalog.Domain\FC.CodeFlix.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\..\src\FC.Codeflix.Catalog.Application\FC.Codeflix.Catalog.Application.csproj" />
+    <ProjectReference Include="..\..\src\FC.Codeflix.Catalog.Domain\FC.Codeflix.Catalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>

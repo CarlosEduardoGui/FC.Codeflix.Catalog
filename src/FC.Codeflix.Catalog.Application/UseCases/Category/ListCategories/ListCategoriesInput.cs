@@ -1,8 +1,8 @@
-﻿using FC.CodeFlix.Catalog.Application.Common;
-using FC.CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
+﻿using FC.Codeflix.Catalog.Application.Common;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using MediatR;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 public class ListCategoriesInput : PaginatedListInput, IRequest<ListCategoriesOutput>
 {
     public ListCategoriesInput(

@@ -1,9 +1,9 @@
-﻿using FC.CodeFlix.Catalog.Application.Interfaces;
-using FC.CodeFlix.Catalog.Application.UseCases.Category.Common;
-using FC.CodeFlix.Catalog.Domain.Repository;
-using DomainEntity = FC.CodeFlix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Domain.Repository;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 public class CreateCategory : ICreateCategory
 {
     private readonly ICategoryRepository _categoryRepository;

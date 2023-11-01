@@ -1,8 +1,8 @@
-﻿using FC.CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.CodeFlix.Catalog.EndToEndTests.Api.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Common;
 using Xunit;
 
-namespace FC.CodeFlix.Catalog.EndToEndTests.Api.UpdateCategory;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.UpdateCategory;
 
 [CollectionDefinition(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTestFixtureCollection : ICollectionFixture<UpdateCategoryTestFixture> { }

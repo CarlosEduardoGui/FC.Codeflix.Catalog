@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace FC.CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
+namespace FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 public interface IDeleteCategory : IRequestHandler<DeleteCategoryInput>
 {
 }
