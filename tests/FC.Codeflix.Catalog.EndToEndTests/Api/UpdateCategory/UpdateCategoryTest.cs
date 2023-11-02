@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
+using FC.Codeflix.Catalog.EndToEndTests.Api.CreateCategory;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -134,5 +135,36 @@ public class UpdateCategoryTest
         output.Title.Should().Be("Not Found");
         output.Detail.Should().Be($"Category '{randomGuid}' not found.");
         output.Type.Should().Be("NotFound");
+    }
+
+    [Trait("EndToEnd/API", "Category/Update - Endpoints")]
+    [Theory(DisplayName = nameof(ErrorWhenCantInstantiateAggregate))]
+    [MemberData(
+        nameof(UpdateCategoryTestDataGenerator.GetInvalidInputs),
+        MemberType = typeof(UpdateCategoryTestDataGenerator)
+    )]
+    public async Task ErrorWhenCantInstantiateAggregate(
+        UpdateCategoryInput input,
+        string expectedDetail
+    )
+    {
+        var exampleCategoryList = _fixture.GetExampleCategoriesList();
+        await _fixture.Persistence.InsertListAsync(exampleCategoryList);
+        var exampleCategory = exampleCategoryList[10];
+        input.Id = exampleCategory.Id;
+
+        var (response, output) = await
+            _fixture.ApiClient.Put<ProblemDetails>(
+                $"/categories/{exampleCategory.Id}",
+                input
+            );
+
+        response.Should().NotBeNull();
+        response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        output.Should().NotBeNull();
+        output.Title.Should().Be("One or more validation errors occurred");
+        output.Type.Should().Be("UnprocessableEntity");
+        output.Status.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+        output.Detail.Should().Be(expectedDetail);
     }
 }
