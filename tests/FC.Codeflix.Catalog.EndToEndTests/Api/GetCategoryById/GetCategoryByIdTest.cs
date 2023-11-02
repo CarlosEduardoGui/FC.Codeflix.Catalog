@@ -7,7 +7,7 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.GetCategoryById;
 
 [Collection(nameof(GetCategoryByIdTestFixture))]
-public class GetCategoryByIdTest
+public class GetCategoryByIdTest : IDisposable
 {
     private readonly GetCategoryByIdTestFixture _fixture;
 
@@ -57,5 +57,10 @@ public class GetCategoryByIdTest
         output.Title.Should().Be("Not Found");
         output.Detail.Should().Be($"Category '{randomGuid}' not found.");
         output.Type.Should().Be("NotFound");
+    }
+
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }

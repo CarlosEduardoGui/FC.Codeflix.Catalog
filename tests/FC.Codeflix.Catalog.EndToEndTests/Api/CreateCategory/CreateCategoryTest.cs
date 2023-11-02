@@ -9,7 +9,7 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.CreateCategory;
 
 [Collection(nameof(CreateCategoryTestFixture))]
-public class CreateCategoryTest : CategoryBaseFixture
+public class CreateCategoryTest : IDisposable
 {
     private readonly CreateCategoryTestFixture _fixture;
 
@@ -46,6 +46,7 @@ public class CreateCategoryTest : CategoryBaseFixture
         dbCategory.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
+
     [Trait("EndToEnd/Api", "Category/Create - Endpoints")]
     [Theory(DisplayName = nameof(ErrorWhenCantInstanciateAggregate))]
     [MemberData(
@@ -69,5 +70,9 @@ public class CreateCategoryTest : CategoryBaseFixture
         output.Type.Should().Be("UnprocessableEntity");
         output.Status.Should().Be((int)HttpStatusCode.UnprocessableEntity);
         output.Detail.Should().Be(expectedDetail);
+    }
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }
