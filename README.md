@@ -2,7 +2,7 @@
 
 - Basta clonar o Repositório:
 ```sh
-git clone https://github.com/CarlosEduardoGui/FC.CodeFix.Catalog
+git clone https://github.com/CarlosEduardoGui/FC.Codefix.Catalog
 ```
 
 - Então executar o arquivo da solution com Visual Studio 2022
