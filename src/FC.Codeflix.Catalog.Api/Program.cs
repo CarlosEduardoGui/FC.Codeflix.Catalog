@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services
     .AddUseCases()
-    .AddConnectionsDI();
+    .AddConnectionsDI(builder.Configuration);
 
 var app = builder.Build();
 

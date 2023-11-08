@@ -10,9 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.EndToEndTest.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.EndToEndTest.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.23" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

@@ -5,7 +5,12 @@ services:
     container_name: catalogdb
     hostname: catalogdb
     image: mysql
+    environment:
+      MYSQL_TCP_PORT: 3307
+      MYSQL_ROOT_PASSWORD: codeflix
     ports:
       - 3307:3307   
-    environment:
-      MYSQL_ROOT_PASSWORD: codeflix
+
+networks:
+  default:
+    name: service_catalog  

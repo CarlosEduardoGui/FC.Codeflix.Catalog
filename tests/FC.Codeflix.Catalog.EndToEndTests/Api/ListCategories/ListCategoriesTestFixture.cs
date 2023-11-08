@@ -25,15 +25,15 @@ public class ListCategoriesTestFixture : CategoryBaseFixture
         var listClone = new List<CategoryEntity>(categoriesList);
         var orderEnumerable = (orderBy.ToLower(), order) switch
         {
-            ("name", SearchOrder.ASC) => listClone.OrderBy(x => x.Name),
-            ("name", SearchOrder.DESC) => listClone.OrderByDescending(x => x.Name),
+            ("name", SearchOrder.ASC) => listClone.OrderBy(x => x.Name).ThenBy(x => x.Id),
+            ("name", SearchOrder.DESC) => listClone.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
             ("id", SearchOrder.ASC) => listClone.OrderBy(x => x.Id),
             ("id", SearchOrder.DESC) => listClone.OrderByDescending(x => x.Id),
             ("createdat", SearchOrder.ASC) => listClone.OrderBy(x => x.CreatedAt),
             ("createdat", SearchOrder.DESC) => listClone.OrderByDescending(x => x.CreatedAt),
-            _ => listClone.OrderBy(x => x.Name),
+            _ => listClone.OrderBy(x => x.Name).ThenBy(x => x.Id),
         };
 
-        return orderEnumerable.ThenBy(x => x.CreatedAt).ToList();
+        return orderEnumerable.ToList();
     }
 }

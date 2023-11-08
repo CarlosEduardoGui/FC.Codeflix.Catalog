@@ -1,4 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.EndToEndTests.Extensions.Date;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -34,7 +35,7 @@ public class GetCategoryByIdTest : IDisposable
         output.Name.Should().Be(exampleCategory.Name);
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
-        output.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+        output.CreatedAt.TrimMillisseconds().Should().Be(exampleCategory.CreatedAt.TrimMillisseconds());
     }
 
     [Trait("EndToEnd/API", "Category/GetCategory - Endpoints")]
