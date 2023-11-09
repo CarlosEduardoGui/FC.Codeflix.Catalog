@@ -12,7 +12,7 @@ public class UpdateCategoryTestDataGenerator
             switch (i % totalInvalidCases)
             {
                 case 0:
-                    var input1 = fixture.GetExampleInput();
+                    var input1 = fixture.GetExampleApiInput();
                     input1.Name = fixture.GetInvalidNameTooShort();
                     invalidInputList.Add(new object[] {
                         input1,
@@ -20,7 +20,7 @@ public class UpdateCategoryTestDataGenerator
                     });
                     break;
                 case 1:
-                    var input2 = fixture.GetExampleInput();
+                    var input2 = fixture.GetExampleApiInput();
                     input2.Name = fixture.GetInvalidNameTooLong();
                     invalidInputList.Add(new object[] {
                         input2,
@@ -28,7 +28,7 @@ public class UpdateCategoryTestDataGenerator
                     });
                     break;
                 case 2:
-                    var input3 = fixture.GetExampleInput();
+                    var input3 = fixture.GetExampleApiInput();
                     input3.Description = fixture.GetInvalidDescriptionTooLong();
                     invalidInputList.Add(new object[] {
                         input3,
