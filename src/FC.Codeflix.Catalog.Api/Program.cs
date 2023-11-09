@@ -1,26 +1,15 @@
 using FC.Codeflix.Catalog.Api.Configurations;
-using FC.Codeflix.Catalog.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(typeof(ApiGlobalExceptionFilter));
-});
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services
+    .AddConfigurationController()
     .AddUseCases()
     .AddConnectionsDI(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseDocumentation();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

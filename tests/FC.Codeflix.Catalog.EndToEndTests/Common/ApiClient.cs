@@ -1,14 +1,33 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using FC.Codeflix.Catalog.EndToEndTests.Extensions.String;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Text.Json;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Common;
+
+class SnakeCaseNamingPolicy : JsonNamingPolicy
+{
+    public override string ConvertName(string name)
+    {
+        return name.ToSnakeCase();
+    }
+}
+
 public class ApiClient
 {
     private readonly HttpClient _httpClient;
+    private readonly JsonSerializerOptions _defaultJsonSerializerOptions;
 
-    public ApiClient(HttpClient httpClient) =>
+    public ApiClient(
+        HttpClient httpClient)
+    {
         _httpClient = httpClient;
+        _defaultJsonSerializerOptions = new JsonSerializerOptions()
+        {
+            PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
+            PropertyNameCaseInsensitive = true
+        };
+    }
 
     public async Task<(HttpResponseMessage message, TOutPut output)> Post<TOutPut>
         (string route, object payload)
@@ -17,7 +36,7 @@ public class ApiClient
         var response = await _httpClient.PostAsync(
             route,
             new StringContent(
-                JsonSerializer.Serialize(payload),
+                JsonSerializer.Serialize(payload, _defaultJsonSerializerOptions),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -65,7 +84,7 @@ public class ApiClient
         var response = await _httpClient.PutAsync(
             route,
             new StringContent(
-                JsonSerializer.Serialize(payload),
+                JsonSerializer.Serialize(payload, _defaultJsonSerializerOptions),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -76,16 +95,14 @@ public class ApiClient
         return (response!, output!);
     }
 
-    private static async Task<TOutPut?> GetContentObject<TOutPut>(HttpResponseMessage response) where TOutPut : class
+    private async Task<TOutPut?> GetContentObject<TOutPut>(HttpResponseMessage response) where TOutPut : class
     {
         var outputString = await response.Content.ReadAsStringAsync();
         TOutPut? output = null;
         if (!string.IsNullOrWhiteSpace(outputString))
-            output = JsonSerializer.Deserialize<TOutPut>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
+            output = JsonSerializer.Deserialize<TOutPut>(
+                outputString,
+                _defaultJsonSerializerOptions
             );
         return output;
     }
@@ -95,7 +112,7 @@ public class ApiClient
         if (queryStringParametersObject is null)
             return route;
 
-        var parametersJon = JsonSerializer.Serialize(queryStringParametersObject);
+        var parametersJon = JsonSerializer.Serialize(queryStringParametersObject, _defaultJsonSerializerOptions);
         var parametersDictionary = Newtonsoft.Json.JsonConvert
             .DeserializeObject<Dictionary<string, string>>(parametersJon);
 
