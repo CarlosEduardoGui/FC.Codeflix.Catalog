@@ -2,12 +2,12 @@
 internal static class DateTimeExtensions
 {
     public static DateTime TrimMillisseconds(this DateTime dateTime) =>
-        new(dateTime.Year, 
-            dateTime.Month, 
-            dateTime.Day, 
-            dateTime.Hour, 
+        new(dateTime.Year,
+            dateTime.Month,
+            dateTime.Day,
+            dateTime.Hour,
             dateTime.Minute,
-            dateTime.Second, 
+            dateTime.Second,
             0,
             dateTime.Kind);
 }

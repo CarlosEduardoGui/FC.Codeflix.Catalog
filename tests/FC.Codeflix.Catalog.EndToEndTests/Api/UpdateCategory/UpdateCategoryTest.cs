@@ -1,6 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.EndToEndTests.Api.CreateCategory;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

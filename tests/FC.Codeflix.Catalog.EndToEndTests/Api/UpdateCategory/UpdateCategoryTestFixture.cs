@@ -9,7 +9,7 @@ public class UpdateCategoryTestFixtureCollection : ICollectionFixture<UpdateCate
 
 public class UpdateCategoryTestFixture : CategoryBaseFixture
 {
-    public UpdateCategoryInput GetExampleInput(Guid? id = null) => 
+    public UpdateCategoryInput GetExampleInput(Guid? id = null) =>
         new(
             id ?? Guid.NewGuid(),
             GetValidCategoryName(),

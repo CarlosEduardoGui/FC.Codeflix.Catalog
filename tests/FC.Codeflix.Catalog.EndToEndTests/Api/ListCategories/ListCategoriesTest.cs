@@ -1,14 +1,9 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.EndToEndTests.Extensions.Date;
-using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
 using System.Net;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.ListCategories;
 
