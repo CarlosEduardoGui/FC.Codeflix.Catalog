@@ -1,5 +1,4 @@
-﻿using FC.Codeflix.Catalog.Api.ApiModels.Response;
-using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.EndToEndTests.ApiModels;
