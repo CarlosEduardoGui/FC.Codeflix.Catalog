@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Api.ApiModels.Response;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.EndToEndTests.Extensions.Date;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -24,18 +25,18 @@ public class GetCategoryByIdTest : IDisposable
         var exampleCategory = exampleCategoryList[10];
 
         var (response, output) = await
-            _fixture.ApiClient.Get<CategoryModelOutput>(
+            _fixture.ApiClient.Get<ApiResponse<CategoryModelOutput>>(
                 $"/categories/{exampleCategory.Id}"
             );
 
         response.Should().NotBeNull();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        output.Should().NotBeNull();
-        output.Id.Should().Be(exampleCategory.Id);
-        output.Name.Should().Be(exampleCategory.Name);
-        output.Description.Should().Be(exampleCategory.Description);
-        output.IsActive.Should().Be(exampleCategory.IsActive);
-        output.CreatedAt.TrimMillisseconds().Should().Be(exampleCategory.CreatedAt.TrimMillisseconds());
+        output.Data.Should().NotBeNull();
+        output.Data.Id.Should().Be(exampleCategory.Id);
+        output.Data.Name.Should().Be(exampleCategory.Name);
+        output.Data.Description.Should().Be(exampleCategory.Description);
+        output.Data.IsActive.Should().Be(exampleCategory.IsActive);
+        output.Data.CreatedAt.TrimMillisseconds().Should().Be(exampleCategory.CreatedAt.TrimMillisseconds());
     }
 
     [Trait("EndToEnd/API", "Category/GetCategory - Endpoints")]

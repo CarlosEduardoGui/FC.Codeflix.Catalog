@@ -21,20 +21,6 @@ public class CategoryRepositoryTestFixture : BaseFixture
     }
     ).ToList();
 
-    public CodeflixCatelogDbContext CreateDbContext(bool preserveData = false)
-    {
-        var context = new CodeflixCatelogDbContext(
-                new DbContextOptionsBuilder<CodeflixCatelogDbContext>()
-                  .UseInMemoryDatabase("integration-tests-db")
-                  .Options
-            );
-
-        if (preserveData is false)
-            context.Database.EnsureDeleted();
-
-        return context;
-    }
-
     public List<Category> CloneCategoriesListOrdered(List<Category> categoriesList, string orderBy, SearchOrder order)
     {
         var listClone = new List<Category>(categoriesList);
