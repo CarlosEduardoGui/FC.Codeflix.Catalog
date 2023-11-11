@@ -70,7 +70,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponseList<CategoryModelOutput>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(
         CancellationToken cancellationToken,
         [FromQuery] int? page = null,
@@ -88,6 +88,9 @@ public class CategoriesController : ControllerBase
         if (dir is not null) input.Dir = dir.Value;
 
         var result = await _mediator.Send(input, cancellationToken);
-        return Ok(result);
+
+        var response = new ApiResponseList<CategoryModelOutput>(result);
+
+        return Ok(response);
     }
 }
