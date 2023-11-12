@@ -30,11 +30,9 @@ public static class ControllersConfiguration
         this WebApplication app
     )
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
         return app;
     }
 }

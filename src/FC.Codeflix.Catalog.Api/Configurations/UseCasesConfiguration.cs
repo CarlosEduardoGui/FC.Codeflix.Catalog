@@ -4,6 +4,7 @@ using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FC.Codeflix.Catalog.Api.Configurations;
 
@@ -11,7 +12,7 @@ public static class UseCasesConfiguration
 {
     public static IServiceCollection AddUseCases(this IServiceCollection services)
     {
-        services.AddMediatR(typeof(CreateCategory));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateCategory>());
 
         AddRepositories(services);
 

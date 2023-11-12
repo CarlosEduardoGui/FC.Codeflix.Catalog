@@ -1,6 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Domain.Repository;
-using MediatR;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 public class DeleteCategory : IDeleteCategory
@@ -14,7 +13,7 @@ public class DeleteCategory : IDeleteCategory
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(DeleteCategoryInput request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCategoryInput request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -22,6 +21,5 @@ public class DeleteCategory : IDeleteCategory
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Unit.Value;
     }
 }

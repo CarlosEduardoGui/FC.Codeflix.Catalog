@@ -14,7 +14,7 @@ public static class ConnectionsConfiguration
 
     private static IServiceCollection AddDbConnection(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("CatalogDb");
+        var connectionString = configuration["ConnectionStrings:CatalogDb"];
 
         services.AddDbContext<CodeflixCatelogDbContext>(options =>
         {
