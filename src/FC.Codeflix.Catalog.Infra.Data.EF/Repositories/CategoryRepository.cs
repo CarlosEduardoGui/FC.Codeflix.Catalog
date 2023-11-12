@@ -67,13 +67,13 @@ public class CategoryRepository : ICategoryRepository
     {
         var orderedQuery = (orderProperty.ToLower(), order) switch
         {
-            ("name", SearchOrder.ASC) => query.OrderBy(x => x.Name).ThenBy(x => x.Id),
-            ("name", SearchOrder.DESC) => query.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
-            ("id", SearchOrder.ASC) => query.OrderBy(x => x.Id),
-            ("id", SearchOrder.DESC) => query.OrderByDescending(x => x.Id),
+            ("name", SearchOrder.ASC) => query.OrderBy(x => x.Name).ThenBy(x => x.Id.ToString()),
+            ("name", SearchOrder.DESC) => query.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id.ToString()),
+            ("id", SearchOrder.ASC) => query.OrderBy(x => x.Id.ToString()),
+            ("id", SearchOrder.DESC) => query.OrderByDescending(x => x.Id.ToString()),
             ("createdat", SearchOrder.ASC) => query.OrderBy(x => x.CreatedAt),
             ("createdat", SearchOrder.DESC) => query.OrderByDescending(x => x.CreatedAt),
-            _ => query.OrderBy(x => x.Name).ThenBy(x => x.Id)
+            _ => query.OrderBy(x => x.Name).ThenBy(x => x.Id.ToString())
         };
 
         return orderedQuery;

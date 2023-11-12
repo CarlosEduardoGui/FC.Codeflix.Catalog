@@ -33,9 +33,8 @@ public class BaseFixture
 
     public CodeflixCatelogDbContext CreateDbContext() => new(
                 new DbContextOptionsBuilder<CodeflixCatelogDbContext>()
-                  .UseMySql(
-                        _dbConnectionString,
-                        ServerVersion.AutoDetect(_dbConnectionString)
+                  .UseSqlServer(
+                        _dbConnectionString
                     )
                   .Options
             );

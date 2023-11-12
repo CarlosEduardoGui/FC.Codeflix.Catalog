@@ -18,9 +18,9 @@ public static class ConnectionsConfiguration
 
         services.AddDbContext<CodeflixCatelogDbContext>(options =>
         {
-            options.UseMySql(
+            options.UseSqlServer(
                 connectionString,
-                ServerVersion.AutoDetect(connectionString)
+                b => b.MigrationsAssembly("FC.Codeflix.Catalog.Api")
             );
         });
 

@@ -4,12 +4,12 @@ services:
   fc.codeflix.catalog.db:
     container_name: catalogdb
     hostname: catalogdb
-    image: mysql
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      MYSQL_TCP_PORT: 3307
-      MYSQL_ROOT_PASSWORD: codeflix
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: )q,A2,0*t+(w]FU
     ports:
-      - 3307:3307   
+      - 1433:1433   
 
 networks:
   default:

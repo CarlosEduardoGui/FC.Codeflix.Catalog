@@ -1,11 +1,10 @@
-version: '3.4'
-
 services:
   fc.codeflix.catalog.db:
     container_name: catalogdb-e2e
     hostname: catalogdb-e2e
-    image: mysql
-    ports:
-      - 33060:3306   
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      MYSQL_ROOT_PASSWORD: codeflix
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: )q,A2,0*t+(w]FU
+    ports:
+      - 1434:1433   
