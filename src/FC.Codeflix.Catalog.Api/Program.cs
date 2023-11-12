@@ -9,6 +9,7 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseCors("*");
 app.UseDocumentation();
 app.UseHttpsRedirection();
 app.UseAuthorization();

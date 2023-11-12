@@ -7,6 +7,17 @@ public static class ControllersConfiguration
 {
     public static IServiceCollection AddConfigurationController(this IServiceCollection services)
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("*",
+            policy =>
+            {
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+                policy.AllowAnyOrigin();
+            });
+        });
+
         services
             .AddControllers(options => options.Filters.Add(typeof(ApiGlobalExceptionFilter)))
             .AddJsonOptions(options =>
