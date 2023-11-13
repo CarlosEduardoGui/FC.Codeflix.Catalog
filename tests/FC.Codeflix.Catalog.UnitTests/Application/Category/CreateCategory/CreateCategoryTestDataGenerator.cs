@@ -26,7 +26,7 @@ public class CreateCategoryTestDataGenerator
                 case 2:
                     invalidInputList.Add(new object[] {
                         fixture.GetInvalidPutDescriptionNull(),
-                        "Description should be not null."
+                        "Description should not be null."
                     });
                     break;
                 case 3:

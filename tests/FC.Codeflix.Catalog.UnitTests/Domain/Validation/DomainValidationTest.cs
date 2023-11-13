@@ -33,7 +33,7 @@ public class DomainValidationTest
             DomainValidation.NotNull(value, fieldName);
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage($"{fieldName} should be not null.");
+            .WithMessage($"{fieldName} should not be null.");
     }
 
     [Trait("Domain", "DomainValidation - Validation")]
@@ -49,7 +49,7 @@ public class DomainValidationTest
             DomainValidation.NotNullOrEmpty(target, fieldName);
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage($"{fieldName} should be not empty or null.");
+            .WithMessage($"{fieldName} should not be empty or null.");
     }
 
     [Trait("Domain", "DomainValidation - Validation")]

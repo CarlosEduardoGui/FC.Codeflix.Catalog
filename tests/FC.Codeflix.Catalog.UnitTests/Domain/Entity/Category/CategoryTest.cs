@@ -71,7 +71,7 @@ public class CategoryTest
 
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Name should be not empty or null.");
+        action.Should().Throw<EntityValidationException>().WithMessage("Name should not be empty or null.");
     }
 
     [Trait("Domain", "Category - Aggregates")]
@@ -84,7 +84,7 @@ public class CategoryTest
 
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be not null.");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should not be null.");
 
     }
 
@@ -202,7 +202,7 @@ public class CategoryTest
         var exception = Assert.Throws<EntityValidationException>(() => action());
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Name should be not empty or null.");
+            .WithMessage("Name should not be empty or null.");
     }
 
     [Trait("Domain", "Category - Aggregates")]
