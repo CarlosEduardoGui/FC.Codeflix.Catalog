@@ -4,7 +4,7 @@ services:
   fc.codeflix.catalog.db:
     container_name: catalogdb-e2e
     hostname: catalogdb-e2e
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       ACCEPT_EULA: Y
       MSSQL_SA_PASSWORD: )q,A2,0*t+(w]FU
