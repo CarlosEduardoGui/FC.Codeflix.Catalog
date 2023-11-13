@@ -14,8 +14,8 @@ public class GenreTest
         _fixture = fixture;
 
     [Trait("Domain", "Genre - Aggregate")]
-    [Fact(DisplayName = nameof(Instantiate))]
-    public void Instantiate()
+    [Fact(DisplayName = nameof(InstantiateOk))]
+    public void InstantiateOk()
     {
         var genreName = _fixture.GetValidName();
 
@@ -109,8 +109,8 @@ public class GenreTest
     }
 
     [Trait("Domain", "Genre - Aggregate")]
-    [Fact(DisplayName = nameof(Update))]
-    public void Update()
+    [Fact(DisplayName = nameof(UpdateOk))]
+    public void UpdateOk()
     {
         var genre = _fixture.GetValidGenre();
         var newGenreName = _fixture.GetValidName();
@@ -121,5 +121,74 @@ public class GenreTest
         genre.Name.Should().Be(newGenreName);
         genre.IsActive.Should().Be(oldIsActive);
         genre.CreatedAt.Should().NotBeSameDateAs(default);
+    }
+
+    [Trait("Domain", "Genre - Aggregate")]
+    [Fact(DisplayName = nameof(AddCategory))]
+    public void AddCategory()
+    {
+        var genre = _fixture.GetValidGenre();
+        var categoryId = Guid.NewGuid();
+
+        genre.AddCategory(categoryId);
+
+        genre.Categories.Should().HaveCount(1);
+        genre.Categories.Should().Contain(categoryId);
+    }
+
+    [Trait("Domain", "Genre - Aggregate")]
+    [Fact(DisplayName = nameof(AddTwoCategories))]
+    public void AddTwoCategories()
+    {
+        var genre = _fixture.GetValidGenre();
+        var categoryIdOne = Guid.NewGuid();
+        var categoryIdTwo = Guid.NewGuid();
+
+        genre.AddCategory(categoryIdOne);
+        genre.AddCategory(categoryIdTwo);
+
+        genre.Categories.Should().HaveCount(2);
+        genre.Categories.Should().Contain(categoryIdOne);
+        genre.Categories.Should().Contain(categoryIdTwo);
+    }
+
+    [Trait("Domain", "Genre - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveCategory))]
+    public void RemoveCategory()
+    {
+        var exampleGuid = Guid.NewGuid();
+        var genre = _fixture.GetValidGenre(
+            categoriesIdsList: new List<Guid>()
+            {
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                exampleGuid,
+                Guid.NewGuid()
+            }
+        );
+
+        genre.RemoveCategory(exampleGuid);
+
+        genre.Categories.Should().HaveCount(3);
+        genre.Categories.Should().NotContain(exampleGuid);
+    }
+
+    [Trait("Domain", "Genre - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveCategories))]
+    public void RemoveCategories()
+    {
+        var genre = _fixture.GetValidGenre(
+            categoriesIdsList: new List<Guid>()
+            {
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid()
+            }
+        );
+
+        genre.RemoveAllCategories();
+
+        genre.Categories.Should().HaveCount(0);
     }
 }

@@ -11,6 +11,16 @@ public class GenreTestFixture : BaseFixture
 {
     public string GetValidName() => Faker.Commerce.Categories(1)[0];
 
-    public DomainEntity.Genre GetValidGenre(bool isActive = true) => 
-        new(GetValidName(), isActive);
+    public DomainEntity.Genre GetValidGenre(bool isActive = true, List<Guid>? categoriesIdsList = null)
+    {
+        var genre = new DomainEntity.Genre(GetValidName(), isActive);
+
+        if (categoriesIdsList is not null)
+            foreach (var item in categoriesIdsList)
+            {
+                genre.AddCategory(item);
+            }
+
+        return genre;
+    }
 }
