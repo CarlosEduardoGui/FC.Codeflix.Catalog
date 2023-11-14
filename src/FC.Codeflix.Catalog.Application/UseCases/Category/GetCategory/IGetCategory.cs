@@ -4,5 +4,5 @@ using MediatR;
 namespace FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 public interface IGetCategory : IRequestHandler<GetCategoryInput, CategoryModelOutput>
 {
-    Task<CategoryModelOutput> Handle(GetCategoryInput input, CancellationToken cancellationToken);
+    new Task<CategoryModelOutput> Handle(GetCategoryInput input, CancellationToken cancellationToken);
 }
