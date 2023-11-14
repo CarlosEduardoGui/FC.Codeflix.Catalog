@@ -29,10 +29,10 @@ jobs:
     - name: Start containers
       run: docker-compose -f "tests/FC.Codeflix.Catalog.EndToEndTests/docker-compose.yml" up -d --build 
 
-    - name: Sleep for 50 seconds
+    - name: Sleep for 30 seconds to wait SQL base be ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '50s'
+        time: '30s'
     
     - name: Restore dependencies
       run: dotnet restore 
