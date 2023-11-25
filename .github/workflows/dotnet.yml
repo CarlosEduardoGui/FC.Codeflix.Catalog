@@ -42,3 +42,7 @@ jobs:
     
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
+            
