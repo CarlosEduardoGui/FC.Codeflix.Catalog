@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
@@ -36,9 +37,25 @@ public class GenreRepository : IGenreRepository
         throw new NotImplementedException();
     }
 
-    public Task<Genre> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Genre> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var genre = await _genres
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        NotFoundException.ThrowIfNull(
+            genre,
+            string.Format(ConstantsMessages.GenreIdNotFound, id)
+        );
+
+        var categoryIds = await _genresCategories
+            .Where(relation => relation.Genre!.Id == genre!.Id)
+            .Select(categoryId => categoryId.CategoryId)
+            .ToListAsync(cancellationToken);
+
+        categoryIds.ForEach(genre!.AddCategory);
+
+        return genre;
     }
 
 

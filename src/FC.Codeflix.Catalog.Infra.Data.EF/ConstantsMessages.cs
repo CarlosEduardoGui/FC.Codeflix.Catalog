@@ -2,4 +2,5 @@
 public static class ConstantsMessages
 {
     public const string CategoryIdNotFound = "Category '{0}' not found.";
+    public const string GenreIdNotFound = "Genre '{0}' not found.";
 }

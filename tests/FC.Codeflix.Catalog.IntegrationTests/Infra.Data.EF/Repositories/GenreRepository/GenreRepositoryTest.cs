@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Infra.Data.EF.Models;
+using FluentAssertions;
 using Xunit;
 using Repository = FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 
@@ -28,17 +30,82 @@ public class GenreRepositoryTest
         await dbContext.SaveChangesAsync(CancellationToken.None);
 
         var assertsDbContext = _fixture.CreateDbContext(true);
-        var dbCategory = await assertsDbContext.Genres.FindAsync(exampleGenre.Id);
+        var dbGenre = await assertsDbContext.Genres.FindAsync(exampleGenre.Id);
 
-        dbCategory.Should().NotBeNull();
-        dbCategory!.Name.Should().Be(exampleGenre.Name);
-        dbCategory.IsActive.Should().Be(exampleGenre.IsActive);
-        dbCategory.CreatedAt.Should().Be(exampleGenre.CreatedAt);
+        dbGenre.Should().NotBeNull();
+        dbGenre!.Name.Should().Be(exampleGenre.Name);
+        dbGenre.IsActive.Should().Be(exampleGenre.IsActive);
+        dbGenre.CreatedAt.Should().Be(exampleGenre.CreatedAt);
         var genreCategoriesRelation = assertsDbContext.GenresCategories.Where(r => r.GenreId == exampleGenre.Id).ToList();
         genreCategoriesRelation.Should().HaveCount(categoriesListExample.Count);
         genreCategoriesRelation.ForEach(relation =>
         {
             var expectedCategory = categoriesListExample.FirstOrDefault(x => x.Id == relation.CategoryId);
         });
+    }
+
+    [Trait("Integration/Infra.Data", "GenreRepository - Repositories")]
+    [Fact(DisplayName = nameof(Get))]
+    public async Task Get()
+    {
+        var dbContext = _fixture.CreateDbContext();
+        var exampleGenre = _fixture.GetExampleGenre();
+        var categoriesListExample = _fixture.GetExampleCategoriesList(3);
+        categoriesListExample.ForEach(category => exampleGenre.AddCategory(category.Id));
+        await dbContext.Categories.AddRangeAsync(categoriesListExample);
+        await dbContext.Genres.AddAsync(exampleGenre);
+        await dbContext
+            .GenresCategories
+            .AddRangeAsync(
+                exampleGenre.Categories
+                    .Select(categoryId =>
+                        new GenresCategories(categoryId, exampleGenre.Id)
+                    )
+            );
+        await dbContext.SaveChangesAsync();
+        var genreRepository = new Repository.GenreRepository(_fixture.CreateDbContext(true));
+
+        var genre = await genreRepository.GetByIdAsync(exampleGenre.Id, CancellationToken.None);
+
+        genre.Should().NotBeNull();
+        genre!.Name.Should().Be(exampleGenre.Name);
+        genre.IsActive.Should().Be(exampleGenre.IsActive);
+        genre.CreatedAt.Should().Be(exampleGenre.CreatedAt);
+        genre.Categories.Should().HaveCount(categoriesListExample.Count);
+        genre.Categories.ToList().ForEach(categoryId =>
+        {
+            var expectedCategory = categoriesListExample.FirstOrDefault(x => x.Id == categoryId);
+            expectedCategory.Should().NotBeNull();
+        });
+    }
+
+    [Trait("Integration/Infra.Data", "GenreRepository - Repositories")]
+    [Fact(DisplayName = nameof(GetThrowWhenNotFound))]
+    public async Task GetThrowWhenNotFound()
+    {
+        var dbContext = _fixture.CreateDbContext();
+        var exampleGuid = Guid.NewGuid();
+        var exampleGenre = _fixture.GetExampleGenre();
+        var categoriesListExample = _fixture.GetExampleCategoriesList(3);
+        categoriesListExample.ForEach(category => exampleGenre.AddCategory(category.Id));
+        await dbContext.Categories.AddRangeAsync(categoriesListExample);
+        await dbContext.Genres.AddAsync(exampleGenre);
+        await dbContext
+            .GenresCategories
+            .AddRangeAsync(
+                exampleGenre.Categories
+                    .Select(categoryId =>
+                        new GenresCategories(categoryId, exampleGenre.Id)
+                    )
+            );
+        await dbContext.SaveChangesAsync();
+        var genreRepository = new Repository.GenreRepository(_fixture.CreateDbContext(true));
+
+        var action = async () => await genreRepository.GetByIdAsync(exampleGuid, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<NotFoundException>()
+            .WithMessage($"Genre '{exampleGuid}' not found.");
     }
 }
