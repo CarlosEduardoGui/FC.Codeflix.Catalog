@@ -34,7 +34,13 @@ public class GenreRepository : IGenreRepository
 
     public Task DeleteAsync(Genre aggregate, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        _genresCategories.RemoveRange(
+            _genresCategories.Where(x => x.GenreId == aggregate.Id)
+        );
+
+        _genres.Remove(aggregate);
+
+        return Task.CompletedTask;
     }
 
     public async Task<Genre> GetByIdAsync(Guid id, CancellationToken cancellationToken)
