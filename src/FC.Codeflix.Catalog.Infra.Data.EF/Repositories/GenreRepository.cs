@@ -70,8 +70,20 @@ public class GenreRepository : IGenreRepository
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Genre aggregate, CancellationToken cancellation)
+    public async Task UpdateAsync(Genre aggregate, CancellationToken cancellation)
     {
-        throw new NotImplementedException();
+        _genres.Update(aggregate);
+        _genresCategories.RemoveRange(
+            _genresCategories.Where(x => x.GenreId == aggregate.Id)
+        );
+        if (aggregate.Categories.Count > 0)
+        {
+            var relations = aggregate.Categories
+                .Select(categoryId =>
+                    new GenresCategories(categoryId, aggregate.Id)
+                );
+
+            await _genresCategories.AddRangeAsync(relations);
+        }
     }
 }
