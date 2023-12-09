@@ -19,6 +19,12 @@ public class GenreRepositoryTestFixture : BaseFixture
         return genre;
     }
 
+    public List<Genre> GetExampleListGenres(int count = 10)
+        => Enumerable
+            .Range(1, count)
+            .Select(_ => GetExampleGenre())
+            .ToList();
+
     public List<Guid> GetRandomIdsList(int? count = null) =>
         Enumerable
             .Range(1, count ?? (new Random().Next(1, 10)))

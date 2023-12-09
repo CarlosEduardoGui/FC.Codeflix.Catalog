@@ -65,9 +65,11 @@ public class GenreRepository : IGenreRepository
     }
 
 
-    public Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken)
+    public async Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var genres = await _genres.ToListAsync(cancellationToken);
+
+        return new SearchOutput<Genre>(input.Page, input.PerPage, genres, genres.Count);
     }
 
     public async Task UpdateAsync(Genre aggregate, CancellationToken cancellation)
