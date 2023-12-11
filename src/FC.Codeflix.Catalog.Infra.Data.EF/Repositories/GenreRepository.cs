@@ -68,11 +68,17 @@ public class GenreRepository : IGenreRepository
     public async Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken)
     {
         var toSkip = (input.Page - 1) * input.PerPage;
-        var genres = await _genres
+        
+        var query = _genres.AsNoTracking();
+        if (string.IsNullOrEmpty(input.Search) is not true)
+            query = query.Where(genre => genre.Name.Contains(input.Search));
+
+        var total = await query.CountAsync(cancellationToken);
+        
+        var genres = await query
             .Skip(toSkip)
             .Take(input.PerPage)
             .ToListAsync(cancellationToken);
-        var total = await _genres.CountAsync(cancellationToken);
 
         var genresIds = genres.Select(genre => genre.Id);
 
