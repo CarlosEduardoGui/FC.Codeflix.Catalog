@@ -1,5 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.Common;
 using Xunit;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 

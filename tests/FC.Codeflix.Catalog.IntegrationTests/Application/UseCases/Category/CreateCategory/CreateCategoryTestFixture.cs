@@ -1,5 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.Common;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;

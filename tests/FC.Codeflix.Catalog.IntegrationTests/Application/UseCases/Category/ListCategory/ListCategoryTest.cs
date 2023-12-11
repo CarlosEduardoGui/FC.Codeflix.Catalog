@@ -3,7 +3,7 @@ using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Infra.Data.EF;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
-using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Common;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.Common;
 using FluentAssertions;
 using Xunit;
 using ListCategoriesUseCase = FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories.ListCategories;
