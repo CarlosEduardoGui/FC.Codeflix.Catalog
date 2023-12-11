@@ -1,5 +1,4 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FluentAssertions;
@@ -16,7 +15,7 @@ public class ListGenreTest
 {
     private readonly ListGenreTestFixture _fixture;
 
-    public ListGenreTest(ListGenreTestFixture fixture) => 
+    public ListGenreTest(ListGenreTestFixture fixture) =>
         _fixture = fixture;
 
     [Fact(DisplayName = nameof(List))]

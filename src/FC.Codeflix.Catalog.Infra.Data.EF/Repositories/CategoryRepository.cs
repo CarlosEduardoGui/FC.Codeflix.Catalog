@@ -11,7 +11,7 @@ public class CategoryRepository : ICategoryRepository
     private DbSet<Category> _categories =>
         _dbContext.Set<Category>();
 
-    public CategoryRepository(CodeflixCatelogDbContext dbContext) 
+    public CategoryRepository(CodeflixCatelogDbContext dbContext)
         => _dbContext = dbContext;
 
     public async Task InsertAsync(Category aggregate, CancellationToken cancellationToken) =>

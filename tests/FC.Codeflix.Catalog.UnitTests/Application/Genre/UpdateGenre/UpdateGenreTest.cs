@@ -1,5 +1,4 @@
 ﻿using FC.Codeflix.Catalog.Application.Exceptions;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;

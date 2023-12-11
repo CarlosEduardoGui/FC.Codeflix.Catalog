@@ -1,5 +1,4 @@
 ﻿using FC.Codeflix.Catalog.Application.Exceptions;
-using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
@@ -505,6 +504,51 @@ public class GenreRepositoryTest
             item.IsActive.Should().Be(exampleGenre.IsActive);
             item.CreatedAt.Should().Be(exampleGenre.CreatedAt);
             item.Categories.Should().BeEquivalentTo(exampleGenre.Categories);
+        }
+    }
+
+    [Trait("Integration/Infra.Data", "GenreRepository - Repositories")]
+    [Theory(DisplayName = nameof(SearchOrdered))]
+    [InlineData("name", "asc")]
+    [InlineData("name", "desc")]
+    [InlineData("id", "asc")]
+    [InlineData("id", "desc")]
+    [InlineData("createdAt", "asc")]
+    [InlineData("createdAt", "desc")]
+    [InlineData("", "asc")]
+    public async Task SearchOrdered(string orderby, string order)
+    {
+        var dbContext = _fixture.CreateDbContext();
+        var exampleGenresList = _fixture.GetExampleListGenres();
+        await dbContext.Genres.AddRangeAsync(exampleGenresList);
+        await dbContext.SaveChangesAsync();
+        var genreRepository = new Repository.GenreRepository(dbContext);
+        var searchOrder = order.ToLower() == "asc" ? SearchOrder.ASC : SearchOrder.DESC;
+        var searchInput = new SearchInput(1, 20, "", orderby, searchOrder);
+
+        var searchResult = await genreRepository.SearchAsync(searchInput, CancellationToken.None);
+
+        var expectedOrderedList = _fixture.CloneGenresListOrdered(
+            exampleGenresList,
+            orderby,
+            searchOrder
+        );
+        searchResult.Should().NotBeNull();
+        searchResult.CurrentPage.Should().Be(searchInput.Page);
+        searchResult.PerPage.Should().Be(searchResult.PerPage);
+        searchResult.Total.Should().Be(exampleGenresList.Count);
+        searchResult.Items.Should().HaveCount(exampleGenresList.Count);
+        for (int i = 0; i < expectedOrderedList.Count; i++)
+        {
+            var expectedItem = expectedOrderedList[i];
+            var outPutItem = searchResult.Items[i];
+
+            expectedItem.Should().NotBeNull();
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(expectedItem!.Id);
+            outPutItem.Name.Should().Be(expectedItem.Name);
+            outPutItem.IsActive.Should().Be(expectedItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(expectedItem.CreatedAt);
         }
     }
 }

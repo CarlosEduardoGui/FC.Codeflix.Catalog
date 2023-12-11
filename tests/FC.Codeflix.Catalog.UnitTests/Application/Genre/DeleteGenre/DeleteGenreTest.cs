@@ -12,7 +12,7 @@ public class DeleteGenreTest
 {
     private readonly DeleteGenreTestFixture _fixture;
 
-    public DeleteGenreTest(DeleteGenreTestFixture fixture) => 
+    public DeleteGenreTest(DeleteGenreTestFixture fixture) =>
         _fixture = fixture;
 
     [Trait("Use Cases", "DeleteGenre - Use Cases")]

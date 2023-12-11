@@ -1,4 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.IntegrationTests.Base;
 using Xunit;
 
@@ -42,10 +43,27 @@ public class GenreRepositoryTestFixture : BaseFixture
 
     public string GetValidGenreName()
     {
-        var categoryName = "";
-        while (categoryName.Length < 3)
-            categoryName = Faker.Commerce.Categories(1)[0];
+        var genreName = "";
+        while (genreName.Length < 3)
+            genreName = Faker.Commerce.Categories(1)[0];
 
-        return categoryName;
+        return genreName;
+    }
+
+    public List<Genre> CloneGenresListOrdered(List<Genre> genreList, string orderBy, SearchOrder order)
+    {
+        var listClone = new List<Genre>(genreList);
+        var orderEnumerable = (orderBy.ToLower(), order) switch
+        {
+            ("name", SearchOrder.ASC) => listClone.OrderBy(x => x.Name).ThenBy(x => x.Id),
+            ("name", SearchOrder.DESC) => listClone.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
+            ("id", SearchOrder.ASC) => listClone.OrderBy(x => x.Id),
+            ("id", SearchOrder.DESC) => listClone.OrderByDescending(x => x.Id),
+            ("createdat", SearchOrder.ASC) => listClone.OrderBy(x => x.CreatedAt),
+            ("createdat", SearchOrder.DESC) => listClone.OrderByDescending(x => x.CreatedAt),
+            _ => listClone.OrderBy(x => x.Name).ThenBy(x => x.Id),
+        };
+
+        return orderEnumerable.ToList();
     }
 }

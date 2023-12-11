@@ -2,7 +2,6 @@
 using FluentAssertions;
 using Moq;
 using Xunit;
-using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.Genre.GetGenre;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.GetGenre;
