@@ -67,9 +67,29 @@ public class GenreRepository : IGenreRepository
 
     public async Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken)
     {
-        var genres = await _genres.ToListAsync(cancellationToken);
+        var toSkip = (input.Page - 1) * input.PerPage;
+        var genres = await _genres
+            .Skip(toSkip)
+            .Take(input.PerPage)
+            .ToListAsync(cancellationToken);
+        var total = await _genres.CountAsync(cancellationToken);
 
-        return new SearchOutput<Genre>(input.Page, input.PerPage, genres, genres.Count);
+        var genresIds = genres.Select(genre => genre.Id);
+
+        var relations = await _genresCategories
+            .Where(relation => genresIds.Contains(relation.GenreId))
+            .ToArrayAsync(cancellationToken);
+
+        var relationsByGenreIdGroup = relations.GroupBy(x => x.GenreId).ToList();
+        relationsByGenreIdGroup.ForEach(relationGroup =>
+        {
+            var genre = genres.Find(genre => genre.Id == relationGroup.Key);
+            if (genre is null) return;
+
+            relationGroup.ToList().ForEach(relation => genre.AddCategory(relation.CategoryId));
+        });
+
+        return new SearchOutput<Genre>(input.Page, input.PerPage, genres, total);
     }
 
     public async Task UpdateAsync(Genre aggregate, CancellationToken cancellation)
