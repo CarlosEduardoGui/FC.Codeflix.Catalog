@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Api.Configurations.Policies;
 using FC.Codeflix.Catalog.Api.Filters;
+using FluentValidation;
 
 namespace FC.Codeflix.Catalog.Api.Configurations;
 
@@ -17,6 +18,8 @@ public static class ControllersConfiguration
                 policy.AllowAnyOrigin();
             });
         });
+
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
 
         services
             .AddControllers(options => options.Filters.Add(typeof(ApiGlobalExceptionFilter)))
