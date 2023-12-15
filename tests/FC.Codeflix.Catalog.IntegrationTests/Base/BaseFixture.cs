@@ -1,7 +1,9 @@
 ﻿using Bogus;
 using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using Microsoft.EntityFrameworkCore;
+using UoW = FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Base;
 public abstract class BaseFixture
@@ -9,6 +11,12 @@ public abstract class BaseFixture
     protected Faker Faker { get; set; }
 
     protected BaseFixture() => Faker = new Faker("pt_BR");
+
+    public UoW CreateUnitOfWork(CodeflixCatelogDbContext dbContext)
+        => new(dbContext);
+
+    public CategoryRepository CreateCategoryRepository(CodeflixCatelogDbContext dbContext)
+        => new(dbContext);
 
     public CodeflixCatelogDbContext CreateDbContext(bool preserveData = false)
     {

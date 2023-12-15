@@ -1,9 +1,14 @@
-﻿using FC.Codeflix.Catalog.IntegrationTests.Base;
+﻿using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
+using FC.Codeflix.Catalog.IntegrationTests.Base;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Genre.Common;
 public class GenreUseCaseBaseFixture : BaseFixture
 {
+    public GenreRepository GenreRepository(CodeflixCatelogDbContext dbContext)
+        => new(dbContext);
+
     public List<GenreEntity> GetExampleListGenres(int count = 10)
         => Enumerable
             .Range(1, count)
@@ -32,4 +37,5 @@ public class GenreUseCaseBaseFixture : BaseFixture
 
         return genreName;
     }
+
 }
