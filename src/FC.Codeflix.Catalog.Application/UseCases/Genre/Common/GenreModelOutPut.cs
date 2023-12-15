@@ -3,7 +3,7 @@
 namespace FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
 public class GenreModelOutPut
 {
-    public GenreModelOutPut(Guid id, string name, bool isActive, DateTime createdAt, List<Guid> categories)
+    public GenreModelOutPut(Guid id, string name, bool isActive, DateTime createdAt, IReadOnlyList<GenreModelOutputCategory> categories)
     {
         Id = id;
         Name = name;
@@ -16,7 +16,7 @@ public class GenreModelOutPut
     public string Name { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }
-    public List<Guid> Categories { get; set; }
+    public IReadOnlyList<GenreModelOutputCategory> Categories { get; set; }
 
     public static GenreModelOutPut FromGenre(DomainEntity.Genre genre) =>
         new(
@@ -24,6 +24,22 @@ public class GenreModelOutPut
             genre.Name,
             genre.IsActive,
             genre.CreatedAt,
-            genre.Categories.ToList()
+            genre.Categories
+                .Select(categoryId => new GenreModelOutputCategory(categoryId))
+                .ToList()
+                .AsReadOnly()
         );
+
+}
+
+public class GenreModelOutputCategory
+{
+    public GenreModelOutputCategory(Guid id, string? name = null)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    public Guid Id { get; set; }
+    public string? Name { get; set; }
 }

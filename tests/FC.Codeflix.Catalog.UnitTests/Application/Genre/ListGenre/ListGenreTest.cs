@@ -59,7 +59,7 @@ public class ListGenreTest
             outputItem.CreatedAt.Should().Be(repositoryGenre.CreatedAt);
             outputItem.Categories.Should().HaveCount(repositoryGenre.Categories.Count);
             foreach (var expectedId in repositoryGenre.Categories)
-                outputItem.Categories.Should().Contain(expectedId);
+                outputItem.Categories.Should().Contain(x => x.Id == expectedId);
         });
         repositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(

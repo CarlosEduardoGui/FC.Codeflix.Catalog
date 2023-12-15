@@ -99,7 +99,7 @@ public class CreateGenreTest
         outPut.Categories.Should().HaveCount(input.CategoriesIds!.Count);
         input.CategoriesIds.ForEach(id =>
         {
-            outPut.Categories.Should().Contain(id);
+            outPut.Categories.Should().Contain(x => x.Id == id);
         });
         outPut.CreatedAt.Should().NotBeSameDateAs(default);
     }

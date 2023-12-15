@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.UseCases.Genre.GetGenre;
+using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Xunit;
@@ -54,5 +55,42 @@ public class GetGenreTest
 
         await action.Should().ThrowExactlyAsync<NotFoundException>()
             .WithMessage($"Genre '{randomGuid}' not found.");
+    }
+
+    [Trait("Integration/Application", "GetGenre - Use Cases")]
+    [Fact(DisplayName = nameof(GetGenreWithCategoryRelations))]
+    public async Task GetGenreWithCategoryRelations()
+    {
+        var categoriesExampleList = _fixture.GetExampleCategoriesList(5);
+        var genresExampleList = _fixture.GetExampleListGenres();
+        var expectedGenre = genresExampleList[5];
+        categoriesExampleList.ForEach(category => expectedGenre.AddCategory(category.Id));
+        var dbArrangeContext = _fixture.CreateDbContext();
+        await dbArrangeContext.Categories.AddRangeAsync(categoriesExampleList);
+        await dbArrangeContext.Genres.AddRangeAsync(genresExampleList);
+        await dbArrangeContext.GenresCategories
+            .AddRangeAsync(
+                expectedGenre
+                .Categories
+                .Select(categoryId => new GenresCategories(categoryId, expectedGenre.Id))
+        );
+        await dbArrangeContext.SaveChangesAsync();
+        var genreRepository = new GenreRepository(_fixture.CreateDbContext(true));
+        var useCase = new GetGenreUseCase(genreRepository);
+        var input = new GetGenreInput(expectedGenre.Id);
+
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Id.Should().Be(expectedGenre.Id);
+        output.Name.Should().Be(expectedGenre.Name);
+        output.IsActive.Should().Be(expectedGenre.IsActive);
+        output.CreatedAt.Should().Be(expectedGenre.CreatedAt);
+        output.Categories.Should().HaveCount(expectedGenre.Categories.Count);
+        output.Categories.ToList().ForEach(relationModel =>
+        {
+            expectedGenre.Categories.Should().Contain(relationModel.Id);
+            relationModel.Name.Should().BeNull();
+        });
     }
 }

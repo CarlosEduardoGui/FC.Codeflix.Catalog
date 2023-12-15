@@ -38,7 +38,7 @@ public class GetGenreTest
         output.IsActive.Should().Be(exampleGenre.IsActive);
         output.CreatedAt.Should().BeSameDateAs(exampleGenre.CreatedAt);
         output.Categories.Should().HaveCount(exampleGenre.Categories.Count);
-        exampleGenre.Categories.ToList().ForEach(expectedId => output.Categories.Should().Contain(expectedId));
+        exampleGenre.Categories.ToList().ForEach(expectedId => output.Categories.Should().Contain(x => x.Id == expectedId));
         genreRepositoryMock.Verify(
             x => x.GetByIdAsync(
                 It.Is<Guid>(x => x == exampleGenre.Id),
