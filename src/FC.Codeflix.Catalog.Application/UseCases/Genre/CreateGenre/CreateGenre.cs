@@ -47,7 +47,8 @@ public class CreateGenre : ICreateGenre
 
         if (idsInPersistence.Count < input.CategoriesIds!.Count)
         {
-            var notFounds = input.CategoriesIds.FindAll(x => idsInPersistence.Contains(x));
+            var notFounds = input.CategoriesIds
+                .FindAll(x => !idsInPersistence.Contains(x));
 
             var notFoundIdsAsString = string.Join(", ", notFounds);
 
