@@ -1,3 +1,31 @@
+## Technologies
+
+- .Net 6.*/C# 10^
+- MediatoR
+- Fluent Validations
+- Entity Framework Core
+- Polly
+- Bogus
+- Fluent Validations
+- Xunit
+
+### Infrastructure
+
+- Docker
+- Github Actions
+- RabbitMQ
+- Kafka
+- Keycloack
+
+### Concepts
+
+- Test Driven Development
+- Domain Driven Design
+- Clean architecture
+- SOLID
+- Unit of work
+- Triple A (Arrange, Act, Assert)
+
 ## How to run?
 
 - Just clone the repository:
@@ -13,6 +41,7 @@ git clone https://github.com/CarlosEduardoGui/FC.Codefix.Catalog
 
 - .NET 6 SDK
 - Docker Desktop (for Docker integration with Visual Studio) or using Docker.
+- 
 
 ## Complete application diagram.
 
