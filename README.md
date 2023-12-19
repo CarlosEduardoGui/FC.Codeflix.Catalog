@@ -1,3 +1,4 @@
+[![.NET](https://github.com/CarlosEduardoGui/FC.Codeflix.Catalog/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/CarlosEduardoGui/FC.Codeflix.Catalog/actions/workflows/dotnet.yml)
 ## Technologies
 
 - .Net 6.*/C# 10^
