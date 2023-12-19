@@ -50,7 +50,7 @@ public class ListGenresTest
     public async Task ListGenresReturnsEmptyWhenPersistenceIsEmpty()
     {
         var useCase = new ListGenresUseCase(
-            _fixture.GenreRepository(_fixture.CreateDbContext(true))
+            _fixture.GenreRepository(_fixture.CreateDbContext())
         );
         var input = new ListGenresInput(1, 20);
 
