@@ -1,8 +1,8 @@
-﻿using Xunit;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
 using CreateGenreUseCase = FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre.CreateGenre;
-using FC.Codeflix.Catalog.Application.Exceptions;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Genre.CreateGenre;
 
