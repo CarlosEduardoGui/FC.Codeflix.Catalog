@@ -1,4 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Infra.Data.EF;
+using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
@@ -12,7 +13,12 @@ public class GenrePersistence
     public async Task InsertListAsync(List<GenreEntity> categories)
     {
         await _context.Genres.AddRangeAsync(categories);
+        await _context.SaveChangesAsync();
+    }
 
+    public async Task InsertGenresCategoriesRelationsListAsync(List<GenresCategories> relations)
+    {
+        await _context.GenresCategories.AddRangeAsync(relations);
         await _context.SaveChangesAsync();
     }
 }

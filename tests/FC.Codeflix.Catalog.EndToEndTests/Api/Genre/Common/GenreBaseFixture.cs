@@ -1,19 +1,37 @@
 ﻿using FC.Codeflix.Catalog.EndToEndTests.Common;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
 public class GenreBaseFixture : BaseFixture
 {
     public GenrePersistence Persistence;
+    public CategoryPersistence CategoriesPersistence;
 
-    public GenreBaseFixture() : base() =>
-        Persistence = new GenrePersistence(CreateDbContext());
+    public GenreBaseFixture() : base() 
+    {
+        var dbContext = CreateDbContext();
+        Persistence = new GenrePersistence(dbContext);
+        CategoriesPersistence = new CategoryPersistence(dbContext);
+    }
 
     public List<GenreEntity> GetExampleListGenres(int count = 10)
         => Enumerable
             .Range(1, count)
             .Select(_ => GetExampleGenre())
             .ToList();
+
+    public List<CategoryEntity> GetExampleCategoriesList(int lengh = 10) =>
+       Enumerable.Range(1, lengh)
+       .Select(_ => GetExampleCategory()).ToList();
+
+    public CategoryEntity GetExampleCategory() =>
+        new(
+            GetValidCategoryName(),
+            GetValidCategoryDescription(),
+            GetRandomBoolean()
+            );
 
     public GenreEntity GetExampleGenre(bool? isActive = null, List<Guid>? categoriesIds = null,
       string? name = null)
@@ -39,5 +57,27 @@ public class GenreBaseFixture : BaseFixture
     }
 
     public bool GetRandomBoolean() => new Random().NextDouble() <= 0.5;
+
+    public string GetValidCategoryName()
+    {
+        var categoryName = "";
+        while (categoryName.Length < 3)
+            categoryName = Faker.Commerce.Categories(1)[0];
+
+        if (categoryName.Length > 255)
+            categoryName = categoryName[..255];
+
+        return categoryName;
+    }
+
+    public string GetValidCategoryDescription()
+    {
+        var categoryDescription = Faker.Commerce.ProductDescription();
+
+        if (categoryDescription.Length > 10_000)
+            categoryDescription = categoryDescription[..10_000];
+
+        return categoryDescription;
+    }
 
 }
