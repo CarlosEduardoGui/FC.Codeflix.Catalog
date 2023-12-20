@@ -5,12 +5,12 @@ using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.DeleteCategory;
 
-[Collection(nameof(DeleteCategoryFixture))]
+[Collection(nameof(DeleteCategoryTestFixture))]
 public class DeleteCategoryTest : IDisposable
 {
-    private readonly DeleteCategoryFixture _fixture;
+    private readonly DeleteCategoryTestFixture _fixture;
 
-    public DeleteCategoryTest(DeleteCategoryFixture fixture) =>
+    public DeleteCategoryTest(DeleteCategoryTestFixture fixture) =>
         _fixture = fixture;
 
     [Trait("EndToEnd/Api", "Category/Delete - Endpoints")]
