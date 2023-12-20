@@ -167,6 +167,40 @@ public class CategoryRepositoryTest
     }
 
     [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [Fact(DisplayName = nameof(ListByIds))]
+    public async Task ListByIds()
+    {
+        var dbContext = _fixture.CreateDbContext();
+        var exampleCategoriesList = _fixture.GetExampleCategoriesList(15);
+        var targetCategories = Enumerable.Range(1, 3).Select(_ =>
+        {
+            var index = new Random().Next(0, exampleCategoriesList.Count - 1);
+            return exampleCategoriesList[index].Id;
+        }).Distinct().ToList();
+        await dbContext.AddRangeAsync(exampleCategoriesList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        await dbContext.SaveChangesAsync();
+
+        var output = await categoryRepository.GetListByIdsAsync(targetCategories, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Should().HaveCount(targetCategories.Count);
+        foreach (Category outPutItem in output)
+        {
+            var exampleItem = exampleCategoriesList.Find(category =>
+                category.Id == outPutItem.Id
+            );
+            outPutItem.Should().NotBeNull();
+            outPutItem!.Id.Should().Be(exampleItem!.Id);
+            outPutItem.Name.Should().Be(exampleItem.Name);
+            outPutItem.Description.Should().Be(exampleItem.Description);
+            outPutItem.IsActive.Should().Be(exampleItem.IsActive);
+            outPutItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
+
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
     [Fact(DisplayName = nameof(SearchReturnsEmptyWhenPersistenceIsEmpty))]
     public async Task SearchReturnsEmptyWhenPersistenceIsEmpty()
     {

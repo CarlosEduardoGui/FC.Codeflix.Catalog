@@ -188,7 +188,7 @@ public class UpdateGenreTest
             )
         ).ReturnsAsync(genreExample);
         categoryRepository.Setup(x =>
-            x.GetIdsListByIds(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
+            x.GetIdsListByIdsAsync(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategoriesIds);
         var useCase = new UseCases.UpdateGenre(
             genreRepositoryMock.Object,
@@ -240,7 +240,7 @@ public class UpdateGenreTest
             )
         ).ReturnsAsync(genreExample);
         categoryRepository.Setup(x =>
-            x.GetIdsListByIds(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
+            x.GetIdsListByIdsAsync(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategoriesIds);
         var useCase = new UseCases.UpdateGenre(
             genreRepositoryMock.Object,
@@ -295,7 +295,7 @@ public class UpdateGenreTest
             It.Is<Guid>(x => x == exampleGenre.Id),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(exampleGenre);
-        categoryRepositoryMock.Setup(x => x.GetIdsListByIds(
+        categoryRepositoryMock.Setup(x => x.GetIdsListByIdsAsync(
             It.IsAny<List<Guid>>(),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(listReturnedByCategoryRepository);

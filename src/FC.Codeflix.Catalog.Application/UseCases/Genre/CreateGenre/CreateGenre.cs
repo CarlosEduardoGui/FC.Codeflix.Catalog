@@ -43,7 +43,7 @@ public class CreateGenre : ICreateGenre
 
     private async Task ValidateCategoriesIds(CreateGenreInput input, CancellationToken cancellationToken)
     {
-        var idsInPersistence = await _categoryRepository.GetIdsListByIds(input.CategoriesIds!, cancellationToken);
+        var idsInPersistence = await _categoryRepository.GetIdsListByIdsAsync(input.CategoriesIds!, cancellationToken);
 
         if (idsInPersistence.Count < input.CategoriesIds!.Count)
         {

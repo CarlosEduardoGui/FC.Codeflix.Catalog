@@ -63,7 +63,7 @@ public class CreateGenreTest
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         categoryRepositoryMock.Setup(x =>
-            x.GetIdsListByIds(
+            x.GetIdsListByIdsAsync(
                 It.IsAny<List<Guid>>(),
                 It.IsAny<CancellationToken>()
             )
@@ -114,7 +114,7 @@ public class CreateGenreTest
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         categoryRepositoryMock.Setup(x =>
-            x.GetIdsListByIds(
+            x.GetIdsListByIdsAsync(
                 It.IsAny<List<Guid>>(),
                 It.IsAny<CancellationToken>()
             )

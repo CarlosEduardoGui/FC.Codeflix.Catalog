@@ -52,7 +52,7 @@ public class UpdateGenre : IUpdateGenre
     private async Task ValidateCategoriesIds(UpdateGenreInput request, CancellationToken cancellationToken)
     {
         var IdsInPersistence = await _categoryRepository
-            .GetIdsListByIds(
+            .GetIdsListByIdsAsync(
                 request.CategoriesIds!,
                 cancellationToken
             );

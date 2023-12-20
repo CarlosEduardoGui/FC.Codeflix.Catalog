@@ -76,7 +76,7 @@ public class CategoryRepository : ICategoryRepository
         return orderedQuery;
     }
 
-    public async Task<IReadOnlyList<Guid>> GetIdsListByIds(List<Guid> ids, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<Guid>> GetIdsListByIdsAsync(List<Guid> ids, CancellationToken cancellationToken)
         =>
         (
             await _categories
@@ -86,4 +86,10 @@ public class CategoryRepository : ICategoryRepository
                 .ToListAsync(cancellationToken)
         )
         .AsReadOnly();
+
+    public async Task<IReadOnlyList<Category>> GetListByIdsAsync(List<Guid> ids, CancellationToken cancellationToken) =>
+        await _categories
+                .AsNoTracking()
+                .Where(category => ids.Contains(category.Id))
+                .ToListAsync(cancellationToken);
 }

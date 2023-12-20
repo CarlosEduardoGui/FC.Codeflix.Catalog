@@ -7,7 +7,6 @@ using Xunit;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
 
-
 namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.ListGenre;
 
 [Collection(nameof(ListGenreTestFixture))]
@@ -23,7 +22,8 @@ public class ListGenreTest
     public async Task List()
     {
         var genresExampleList = _fixture.GetExampleGenresList();
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var genreRepositoryMock = _fixture.GetRepositoryMock();
+        var categoryRepository = _fixture.GetCategoryRepositoryMock();
         var input = _fixture.GetExampleInput();
         var outputRepositorySearch = new SearchOutput<GenreEntity>(
             currentPage: input.Page,
@@ -31,7 +31,7 @@ public class ListGenreTest
             items: genresExampleList,
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.SearchAsync(
+        genreRepositoryMock.Setup(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -41,7 +41,7 @@ public class ListGenreTest
             ),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(outputRepositorySearch);
-        var userase = new UseCases.ListGenres(repositoryMock.Object);
+        var userase = new ListGenres(genreRepositoryMock.Object, categoryRepository.Object);
 
         ListGenresOutPut outPut = await userase.Handle(input, CancellationToken.None);
 
@@ -61,7 +61,7 @@ public class ListGenreTest
             foreach (var expectedId in repositoryGenre.Categories)
                 outputItem.Categories.Should().Contain(x => x.Id == expectedId);
         });
-        repositoryMock.Verify(x => x.SearchAsync(
+        genreRepositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -71,6 +71,17 @@ public class ListGenreTest
             ),
             It.IsAny<CancellationToken>()
         ), Times.Once);
+        var expectedIds = genresExampleList
+            .SelectMany(genre => genre.Categories)
+            .Distinct()
+            .ToList();
+        categoryRepository.Verify(x => x.GetListByIdsAsync(
+            It.Is<List<Guid>>(parameterList =>
+                expectedIds.All(id => parameterList.Contains(id)
+                && expectedIds.Count == parameterList.Count
+            )),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
     }
 
     [Fact(DisplayName = nameof(ListEmpty))]
@@ -78,7 +89,8 @@ public class ListGenreTest
     public async Task ListEmpty()
     {
         var genresExampleList = _fixture.GetExampleGenresList();
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var genreRepositoryMock = _fixture.GetRepositoryMock();
+        var categoryRepository = _fixture.GetCategoryRepositoryMock();
         var input = _fixture.GetExampleInput();
         var outputRepositorySearch = new SearchOutput<GenreEntity>(
             currentPage: input.Page,
@@ -86,7 +98,7 @@ public class ListGenreTest
             items: new List<GenreEntity>(),
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.SearchAsync(
+        genreRepositoryMock.Setup(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -96,7 +108,7 @@ public class ListGenreTest
             ),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(outputRepositorySearch);
-        var userase = new UseCases.ListGenres(repositoryMock.Object);
+        var userase = new ListGenres(genreRepositoryMock.Object, categoryRepository.Object);
 
         ListGenresOutPut outPut = await userase.Handle(input, CancellationToken.None);
 
@@ -105,7 +117,7 @@ public class ListGenreTest
         outPut.PerPage.Should().Be(outputRepositorySearch.PerPage);
         outPut.Total.Should().Be(outputRepositorySearch.Total);
         outPut.Items.Should().HaveCount(outputRepositorySearch.Items.Count);
-        repositoryMock.Verify(x => x.SearchAsync(
+        genreRepositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -122,22 +134,23 @@ public class ListGenreTest
     public async Task ListUsingDefaultInputValues()
     {
         var genresExampleList = _fixture.GetExampleGenresList();
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var genreRepositoryMock = _fixture.GetRepositoryMock();
+        var categoryRepository = _fixture.GetCategoryRepositoryMock();
         var outputRepositorySearch = new SearchOutput<GenreEntity>(
             currentPage: 1,
             perPage: 15,
             items: new List<GenreEntity>(),
             total: 0
         );
-        repositoryMock.Setup(x => x.SearchAsync(
+        genreRepositoryMock.Setup(x => x.SearchAsync(
             It.IsAny<SearchInput>(),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(outputRepositorySearch);
-        var userase = new UseCases.ListGenres(repositoryMock.Object);
+        var userase = new ListGenres(genreRepositoryMock.Object, categoryRepository.Object);
 
         ListGenresOutPut outPut = await userase.Handle(new UseCases.ListGenresInput(), CancellationToken.None);
 
-        repositoryMock.Verify(x => x.SearchAsync(
+        genreRepositoryMock.Verify(x => x.SearchAsync(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == 1
                 && searchInput.PerPage == 15
