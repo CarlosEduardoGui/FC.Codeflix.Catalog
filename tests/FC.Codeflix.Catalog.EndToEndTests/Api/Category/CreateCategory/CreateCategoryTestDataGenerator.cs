@@ -1,4 +1,4 @@
-﻿namespace FC.Codeflix.Catalog.EndToEndTests.Api.CreateCategory;
+﻿namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs()

@@ -7,7 +7,7 @@ using FluentAssertions;
 using System.Net;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.EndToEndTests.Api.ListCategories;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.ListCategories;
 
 [Collection(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTest : IDisposable

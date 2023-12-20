@@ -1,7 +1,8 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.EndToEndTests.Common;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
-namespace FC.Codeflix.Catalog.EndToEndTests.Api.Common;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
 public class CategoryBaseFixture : BaseFixture
 {
     public CategoryPersistence Persistence;
@@ -31,15 +32,15 @@ public class CategoryBaseFixture : BaseFixture
         return categoryDescription;
     }
 
-    public Category GetExampleCategory() =>
+    public CategoryEntity GetExampleCategory() =>
         new(
             GetValidCategoryName(),
             GetValidCategoryDescription(),
             GetRandomBoolean()
             );
 
-    public List<Category> GetExampleCategoriesList(int listLenght = 15)
-        => Enumerable.Range(1, listLenght).Select(_ => new Category(
+    public List<CategoryEntity> GetExampleCategoriesList(int listLenght = 15)
+        => Enumerable.Range(1, listLenght).Select(_ => new CategoryEntity(
             GetValidCategoryName(),
             GetValidCategoryDescription(),
             GetRandomBoolean()

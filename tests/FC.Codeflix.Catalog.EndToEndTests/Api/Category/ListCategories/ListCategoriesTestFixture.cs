@@ -1,10 +1,10 @@
 ﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.EndToEndTests.Api.Common;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
 using Xunit;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
 
-namespace FC.Codeflix.Catalog.EndToEndTests.Api.ListCategories;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.ListCategories;
 
 [CollectionDefinition(nameof(ListCategoriesTestFixture))]
 public class ListCategoriesTestFixtureCollection : ICollectionFixture<ListCategoriesTestFixture> { }

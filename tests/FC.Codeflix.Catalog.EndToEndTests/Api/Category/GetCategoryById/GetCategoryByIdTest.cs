@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.EndToEndTests.Api.GetCategoryById;
+namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.GetCategoryById;
 
 [Collection(nameof(GetCategoryByIdTestFixture))]
 public class GetCategoryByIdTest : IDisposable
