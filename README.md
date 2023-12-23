@@ -19,7 +19,7 @@ git clone https://github.com/CarlosEduardoGui/FC.Codefix.Catalog
 
 - Then run the solution file with Visual Studio 2022 or open using Visual Code.
 
-- If you are using a **Windows S.O.** you **SHOULD** change the string connection, but just the server, inside of the **appSettings.json**, **appSettings.Delevepment.json**, and **appSettings.EndToEndTest.json**
+- If you are using a **Windows S.O.** you **SHOULD** change the string connection, but just the server attribute, inside of the **appSettings.json**, **appSettings.Delevepment.json**, and **appSettings.EndToEndTest.json**
   
 Linux / MacOS:
 ```
@@ -57,7 +57,7 @@ Windows:
 - [Github Actions](https://docs.github.com/pt/actions/quickstart)
 - [RabbitMQ](https://www.rabbitmq.com)
 - [Kafka](https://kafka.apache.org/documentation/)
-- [Keycloack}(https://www.keycloak.org/documentation)
+- [Keycloack](https://www.keycloak.org/documentation)
 
 ### Concepts
 
@@ -65,8 +65,8 @@ Windows:
 - [Domain Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
 - [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [SOLID](https://en.wikipedia.org/wiki/SOLID)
-- Unit of work
-- Triple A (Arrange, Act, Assert)
+- [Unit of Work](https://learn.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application)
+- [Triple A (Arrange, Act, Assert)](https://martinfowler.com/articles/practical-test-pyramid.html#:~:text=There%27s%20a%20nice%20mnemonic%20to,and%20then%20the%20assertion%20part.)
 
 ## Complete application diagram.
 
