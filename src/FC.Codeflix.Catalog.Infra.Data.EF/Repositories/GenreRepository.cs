@@ -28,7 +28,7 @@ public class GenreRepository : IGenreRepository
                     new GenresCategories(categoryId, aggregate.Id)
                 );
 
-            await _genresCategories.AddRangeAsync(relations);
+            await _genresCategories.AddRangeAsync(relations, cancellationToken);
         }
     }
 
