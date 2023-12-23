@@ -33,6 +33,13 @@ public class ApiGlobalExceptionFilter : IExceptionFilter
             details.Type = "NotFound";
             details.Detail = exception.Message;
         }
+        else if (exception is RelatedAggregateException)
+        {
+            details.Title = "Not Found";
+            details.Status = (int)HttpStatusCode.UnprocessableEntity;
+            details.Type = "RelatedAggregate";
+            details.Detail = exception.Message;
+        }
         else
         {
             details.Title = "An unexpected error occurred";
