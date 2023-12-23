@@ -63,7 +63,7 @@ public class UpdateGenre : IUpdateGenre
                 .FindAll(x => !IdsInPersistence.Contains(x));
             var notFoundIdsAsString = string.Join(", ", notFoundIds);
             throw new RelatedAggregateException(
-                $"Related category id (or ids) not found: {notFoundIdsAsString}"
+                $"Related category Id (or Ids) not found: {notFoundIdsAsString}"
             );
         }
     }
