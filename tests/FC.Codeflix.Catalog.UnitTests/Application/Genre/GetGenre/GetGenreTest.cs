@@ -19,14 +19,20 @@ public class GetGenreTest
     public async Task GetGenreOk()
     {
         var genreRepositoryMock = _fixture.GetRepositoryMock();
+        var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
+        var exampleCategories = _fixture.GetExampleCategoriesList();
         var exampleGenre = _fixture.GetExampleGenre(
-            categoriesIds: _fixture.GetRandomIdsList()
+            categoriesIds: exampleCategories.Select(x => x.Id).ToList()
         );
         genreRepositoryMock.Setup(x =>
             x.GetByIdAsync(It.Is<Guid>(x => x == exampleGenre.Id), It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleGenre);
+        categoryRepositoryMock.Setup(x => 
+            x.GetListByIdsAsync(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
+        ).ReturnsAsync(exampleCategories);
         var useCase = new UseCases.GetGenre(
-            genreRepositoryMock.Object
+            genreRepositoryMock.Object,
+            categoryRepositoryMock.Object
         );
         var input = new UseCases.GetGenreInput(exampleGenre.Id);
 
@@ -38,7 +44,12 @@ public class GetGenreTest
         output.IsActive.Should().Be(exampleGenre.IsActive);
         output.CreatedAt.Should().BeSameDateAs(exampleGenre.CreatedAt);
         output.Categories.Should().HaveCount(exampleGenre.Categories.Count);
-        exampleGenre.Categories.ToList().ForEach(expectedId => output.Categories.Should().Contain(x => x.Id == expectedId));
+        foreach (var category in output.Categories)
+        {
+            var expectedCategory = exampleCategories.SingleOrDefault(x => x.Id == category.Id);
+            exampleCategories.Should().NotBeNull();
+            category.Name.Should().Be(expectedCategory!.Name);
+        }
         genreRepositoryMock.Verify(
             x => x.GetByIdAsync(
                 It.Is<Guid>(x => x == exampleGenre.Id),
@@ -52,12 +63,14 @@ public class GetGenreTest
     public async Task ThrowWhenNotFound()
     {
         var genreRepositoryMock = _fixture.GetRepositoryMock();
+        var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var randomGenreId = Guid.NewGuid();
         genreRepositoryMock.Setup(x =>
             x.GetByIdAsync(It.Is<Guid>(x => x == randomGenreId), It.IsAny<CancellationToken>())
         ).ThrowsAsync(new NotFoundException($"Genre '{randomGenreId}' not found."));
         var useCase = new UseCases.GetGenre(
-            genreRepositoryMock.Object
+            genreRepositoryMock.Object,
+            categoryRepositoryMock.Object
         );
         var input = new UseCases.GetGenreInput(randomGenreId);
 

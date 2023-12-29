@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.UnitTests.Commom;
 using Moq;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
+using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.Comon;
 public class GenreUseCaseBaseFixture : BaseFixture
@@ -33,4 +34,35 @@ public class GenreUseCaseBaseFixture : BaseFixture
 
         return categoryName;
     }
+
+    public string GetValidCategoryName()
+    {
+        var categoryName = "";
+        while (categoryName.Length < 3)
+            categoryName = Faker.Commerce.Categories(1)[0];
+        if (categoryName.Length > 255)
+            categoryName = categoryName[..255];
+        return categoryName;
+    }
+
+    public string GetValidCategoryDescription()
+    {
+        var categoryDescription =
+            Faker.Commerce.ProductDescription();
+        if (categoryDescription.Length > 10_000)
+            categoryDescription =
+                categoryDescription[..10_000];
+        return categoryDescription;
+    }
+
+    public CategoryEntity GetExampleCategory()
+        => new(
+            GetValidCategoryName(),
+            GetValidCategoryDescription(),
+            GetRandomBoolean()
+        );
+
+    public List<CategoryEntity> GetExampleCategoriesList(int count = 5)
+       => Enumerable.Range(0, count).Select(_ => GetExampleCategory())
+           .ToList();
 }
