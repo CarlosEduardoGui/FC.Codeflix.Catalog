@@ -10,7 +10,7 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.UpdateGenre;
 
 [Collection(nameof(UpdateGenreTestFixture))]
-public class UpdateGenreTest
+public class UpdateGenreTest : IDisposable
 {
     private readonly UpdateGenreTestFixture _fixture;
 
@@ -123,7 +123,6 @@ public class UpdateGenreTest
         output.Data.Id.Should().Be(targetGenre.Id);
         output.Data.Name.Should().Be(input.Name);
         output.Data.IsActive.Should().Be(input.IsActive!.Value);
-        output.Data.Categories.Should().HaveCount(newRelationsCount);
         var relatedCategoriesIds = output.Data.Categories.Select(relation => relation.Id).ToList();
         relatedCategoriesIds.Should().BeEquivalentTo(newRelatedCategoriesIds);
         var genreFromDb = await _fixture.Persistence.GetByIdAsync(output.Data.Id);
@@ -225,4 +224,6 @@ public class UpdateGenreTest
             .ToList();
         relatedCategoriesIdsFromDb.Should().BeEquivalentTo(targetGenre.Categories);
     }
+
+    public void Dispose() => _fixture.CleanPersistence();
 }

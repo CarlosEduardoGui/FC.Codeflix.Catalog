@@ -19,7 +19,11 @@ public class GenreBaseFixture : BaseFixture
     public List<GenreEntity> GetExampleListGenres(int count = 10)
         => Enumerable
             .Range(1, count)
-            .Select(_ => GetExampleGenre())
+            .Select(_ => 
+            {
+                Task.Delay(5).GetAwaiter().GetResult();
+                return GetExampleGenre();
+            })
             .ToList();
 
     public List<CategoryEntity> GetExampleCategoriesList(int lengh = 10) =>

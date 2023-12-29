@@ -9,7 +9,7 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.CreateGenre;
 
 [Collection(nameof(CreateGenreTestFixture))]
-public class CreateGenreTest
+public class CreateGenreTest : IDisposable
 {
     private readonly CreateGenreTestFixture _fixture;
 
@@ -117,4 +117,7 @@ public class CreateGenreTest
         output!.Type.Should().Be("RelatedAggregate");
         output.Detail.Should().Be($"Related category Id (or Ids) not found: {invalidCategoryId}");
     }
+
+    public void Dispose()
+        => _fixture.CleanPersistence(); 
 }
