@@ -11,7 +11,7 @@ using ListCategoriesUseCase = FC.Codeflix.Catalog.Application.UseCases.Category.
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.ListCategory;
 
 [Collection(nameof(ListCategoryTestFixture))]
-public class ListCategoryTest : CategoryUseCaseBaseFixture
+public class ListCategoryTest
 {
     private readonly ListCategoryTestFixture _fixture;
 
