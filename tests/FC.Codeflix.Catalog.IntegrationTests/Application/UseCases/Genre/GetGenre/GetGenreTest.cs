@@ -26,7 +26,8 @@ public class GetGenreTest
         await dbArrangeContext.Genres.AddRangeAsync(genresExampleList);
         await dbArrangeContext.SaveChangesAsync();
         var genreRepository = new GenreRepository(_fixture.CreateDbContext(true));
-        var useCase = new GetGenreUseCase(genreRepository);
+        var categoryRepository = new CategoryRepository(_fixture.CreateDbContext(true));
+        var useCase = new GetGenreUseCase(genreRepository, categoryRepository);
         var input = new GetGenreInput(expectedGenre.Id);
 
         var output = await useCase.Handle(input, CancellationToken.None);
@@ -48,7 +49,8 @@ public class GetGenreTest
         await dbArrangeContext.Genres.AddRangeAsync(genresExampleList);
         await dbArrangeContext.SaveChangesAsync();
         var genreRepository = new GenreRepository(_fixture.CreateDbContext(true));
-        var useCase = new GetGenreUseCase(genreRepository);
+        var categoryRepository = new CategoryRepository(_fixture.CreateDbContext(true));
+        var useCase = new GetGenreUseCase(genreRepository, categoryRepository);
         var input = new GetGenreInput(randomGuid);
 
         var action = async () => await useCase.Handle(input, CancellationToken.None);
@@ -72,11 +74,12 @@ public class GetGenreTest
             .AddRangeAsync(
                 expectedGenre
                 .Categories
-                .Select(categoryId => new GenresCategories(categoryId, expectedGenre.Id))
+                    .Select(categoryId => new GenresCategories(categoryId, expectedGenre.Id))
         );
         await dbArrangeContext.SaveChangesAsync();
         var genreRepository = new GenreRepository(_fixture.CreateDbContext(true));
-        var useCase = new GetGenreUseCase(genreRepository);
+        var categoryRepository = new CategoryRepository(_fixture.CreateDbContext(true));
+        var useCase = new GetGenreUseCase(genreRepository, categoryRepository);
         var input = new GetGenreInput(expectedGenre.Id);
 
         var output = await useCase.Handle(input, CancellationToken.None);
@@ -90,7 +93,9 @@ public class GetGenreTest
         output.Categories.ToList().ForEach(relationModel =>
         {
             expectedGenre.Categories.Should().Contain(relationModel.Id);
-            relationModel.Name.Should().BeNull();
+            var category = categoriesExampleList.FirstOrDefault(x => x.Id == relationModel.Id);
+            category.Should().NotBeNull();
+            relationModel.Name.Should().Be(category!.Name);
         });
     }
 }
