@@ -1,6 +1,8 @@
 ﻿using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FluentAssertions;
+using FC.Codeflix.Catalog.Domain.Validation;
+using FC.Codeflix.Catalog.Domain.Exceptions;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.CastMember;
 
@@ -28,5 +30,23 @@ public class CastMemberTest
         castMember.CastMemberType.Should().Be(type);
         (castMember.CreatedAt >= dateTimeBefore).Should().BeTrue();
         (castMember.CreatedAt <= dateTimeAfter).Should().BeTrue();
+    }
+
+    [Trait("Domain", "CastMember - Aggregates")]
+    [Theory(DisplayName = nameof(ThrowsErrorWhenNameIsInvalid))]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(null)]
+    public void ThrowsErrorWhenNameIsInvalid(string? name)
+    {
+        var dateTimeBefore = DateTime.Now.AddSeconds(-1);
+        var type = _fixture.GetRandomCastMemberType();
+
+        var action = () => new DomainEntity.CastMember(name!, type);
+
+        action
+            .Should()
+            .ThrowExactly<EntityValidationException>()
+            .WithMessage("Name should not be empty or null.");
     }
 }

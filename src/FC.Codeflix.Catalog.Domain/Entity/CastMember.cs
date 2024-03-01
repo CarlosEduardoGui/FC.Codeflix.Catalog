@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Domain.Enum;
 using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.Domain.Validation;
 
 namespace FC.Codeflix.Catalog.Domain.Entity;
 public class CastMember : AggregateRoot
@@ -19,6 +20,6 @@ public class CastMember : AggregateRoot
 
     private void Validate()
     {
-
+        DomainValidation.NotNullOrEmpty(Name, nameof(Name));
     }
 }
