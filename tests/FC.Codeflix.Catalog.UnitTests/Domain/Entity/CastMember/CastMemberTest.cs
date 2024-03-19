@@ -62,4 +62,22 @@ public class CastMemberTest
         castMember.Name.Should().Be(newName);
         castMember.CastMemberType.Should().Be(newType);
     }
+
+    [Trait("Domain", "CastMember - Aggregates")]
+    [Theory(DisplayName = nameof(UpdateThrowsErrorWhenNameIsInvalid))]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(null)]
+    public void UpdateThrowsErrorWhenNameIsInvalid(string invalidName)
+    {
+        var newType = _fixture.GetRandomCastMemberType();
+        var castMember = _fixture.GetValidCastMember();
+
+        var action = () => castMember.Update(invalidName, newType);
+
+        action
+            .Should()
+            .ThrowExactly<EntityValidationException>()
+            .WithMessage("Name should not be empty or null.");
+    }
 }
