@@ -1,7 +1,6 @@
 ﻿using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Domain.Validation;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.CastMember;
@@ -48,5 +47,19 @@ public class CastMemberTest
             .Should()
             .ThrowExactly<EntityValidationException>()
             .WithMessage("Name should not be empty or null.");
+    }
+
+    [Trait("Domain", "CastMember - Aggregates")]
+    [Fact(DisplayName = nameof(Update))]
+    public void Update()
+    {
+        var newName = _fixture.GetValidName();
+        var newType = _fixture.GetRandomCastMemberType();
+        var castMember = _fixture.GetValidCastMember();
+
+        castMember.Update(newName, newType);
+        
+        castMember.Name.Should().Be(newName);
+        castMember.CastMemberType.Should().Be(newType);
     }
 }
