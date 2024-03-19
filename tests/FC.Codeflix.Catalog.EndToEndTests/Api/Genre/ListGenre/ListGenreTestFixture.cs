@@ -12,7 +12,7 @@ public class ListGenreTestFixture : GenreBaseFixture
 {
     public List<GenreEntity> GetExampleListGenresByNames(List<string> names)
     => names
-       .Select(name => 
+       .Select(name =>
        {
            Task.Delay(5).GetAwaiter().GetResult();
            return GetExampleGenre(name: name);

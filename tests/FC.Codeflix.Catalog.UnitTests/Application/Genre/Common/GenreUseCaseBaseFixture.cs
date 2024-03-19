@@ -1,10 +1,10 @@
 ﻿using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Commom;
 using Moq;
-using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
+using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.Comon;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.Common;
 public class GenreUseCaseBaseFixture : BaseFixture
 {
     public Mock<IGenreRepository> GetRepositoryMock() => new();

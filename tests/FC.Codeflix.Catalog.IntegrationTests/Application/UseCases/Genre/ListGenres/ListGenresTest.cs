@@ -1,9 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
-using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Xunit;
 using ListGenresUseCase = FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre.ListGenres;
 

@@ -1,6 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.UnitTests.Application.Genre.Comon;
+using FC.Codeflix.Catalog.UnitTests.Application.Genre.Common;
 using Xunit;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 

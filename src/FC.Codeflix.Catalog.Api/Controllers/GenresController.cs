@@ -1,14 +1,14 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.DeleteGenre;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.UpdateGenre;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
-using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.GetGenre;
-using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
+﻿using FC.Codeflix.Catalog.Api.ApiModels.Genre;
 using FC.Codeflix.Catalog.Api.ApiModels.Response;
-using FC.Codeflix.Catalog.Api.ApiModels.Genre;
-using Microsoft.AspNetCore.Mvc;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.DeleteGenre;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.GetGenre;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.ListGenre;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.UpdateGenre;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FC.Codeflix.Catalog.Api.Controllers;
 

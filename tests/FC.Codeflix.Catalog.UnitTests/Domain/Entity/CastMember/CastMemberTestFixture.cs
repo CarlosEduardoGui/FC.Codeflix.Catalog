@@ -1,7 +1,7 @@
-﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Domain.Enum;
+﻿using FC.Codeflix.Catalog.Domain.Enum;
 using FC.Codeflix.Catalog.UnitTests.Commom;
 using Xunit;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.CastMember;
 

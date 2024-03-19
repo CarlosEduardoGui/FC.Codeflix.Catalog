@@ -1,7 +1,7 @@
-﻿using Xunit;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Domain.Exceptions;
+using Xunit;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.CastMember;
 
@@ -26,7 +26,7 @@ public class CastMemberTest
         var dateTimeAfter = DateTime.Now.AddSeconds(1);
         castMember.Id.Should().NotBeEmpty();
         castMember.Name.Should().Be(name);
-        castMember.CastMemberType.Should().Be(type);
+        castMember.Type.Should().Be(type);
         (castMember.CreatedAt >= dateTimeBefore).Should().BeTrue();
         (castMember.CreatedAt <= dateTimeAfter).Should().BeTrue();
     }
@@ -58,9 +58,9 @@ public class CastMemberTest
         var castMember = _fixture.GetValidCastMember();
 
         castMember.Update(newName, newType);
-        
+
         castMember.Name.Should().Be(newName);
-        castMember.CastMemberType.Should().Be(newType);
+        castMember.Type.Should().Be(newType);
     }
 
     [Trait("Domain", "CastMember - Aggregates")]

@@ -27,7 +27,7 @@ public class GetGenreTest
         genreRepositoryMock.Setup(x =>
             x.GetByIdAsync(It.Is<Guid>(x => x == exampleGenre.Id), It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleGenre);
-        categoryRepositoryMock.Setup(x => 
+        categoryRepositoryMock.Setup(x =>
             x.GetListByIdsAsync(It.IsAny<List<Guid>>(), It.IsAny<CancellationToken>())
         ).ReturnsAsync(exampleCategories);
         var useCase = new UseCases.GetGenre(

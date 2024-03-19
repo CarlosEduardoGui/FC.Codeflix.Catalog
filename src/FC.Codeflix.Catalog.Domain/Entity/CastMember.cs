@@ -6,13 +6,13 @@ namespace FC.Codeflix.Catalog.Domain.Entity;
 public class CastMember : AggregateRoot
 {
     public string Name { get; private set; }
-    public CastMemberType CastMemberType { get; private set; }
+    public CastMemberType Type { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
     public CastMember(string name, CastMemberType castMemberType)
     {
         Name = name;
-        CastMemberType = castMemberType;
+        Type = castMemberType;
         CreatedAt = DateTime.Now;
 
         Validate();
@@ -21,7 +21,7 @@ public class CastMember : AggregateRoot
     public void Update(string newName, CastMemberType newType)
     {
         Name = newName;
-        CastMemberType = newType;
+        Type = newType;
 
         Validate();
     }

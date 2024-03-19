@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
-using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.DeleteCategory;
 

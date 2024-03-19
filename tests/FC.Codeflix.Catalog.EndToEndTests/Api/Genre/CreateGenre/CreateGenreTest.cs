@@ -1,8 +1,8 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
+﻿using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
-using FC.Codeflix.Catalog.Api.ApiModels.Response;
-using Microsoft.AspNetCore.Mvc;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
@@ -119,5 +119,5 @@ public class CreateGenreTest : IDisposable
     }
 
     public void Dispose()
-        => _fixture.CleanPersistence(); 
+        => _fixture.CleanPersistence();
 }

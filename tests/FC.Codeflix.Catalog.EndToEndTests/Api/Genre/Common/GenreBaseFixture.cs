@@ -1,7 +1,7 @@
-﻿using FC.Codeflix.Catalog.EndToEndTests.Common;
-using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
+﻿using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
+using FC.Codeflix.Catalog.EndToEndTests.Common;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
-using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
+using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
 public class GenreBaseFixture : BaseFixture
@@ -9,7 +9,7 @@ public class GenreBaseFixture : BaseFixture
     public GenrePersistence Persistence;
     public CategoryPersistence CategoriesPersistence;
 
-    public GenreBaseFixture() : base() 
+    public GenreBaseFixture() : base()
     {
         var dbContext = CreateDbContext();
         Persistence = new GenrePersistence(dbContext);
@@ -19,7 +19,7 @@ public class GenreBaseFixture : BaseFixture
     public List<GenreEntity> GetExampleListGenres(int count = 10)
         => Enumerable
             .Range(1, count)
-            .Select(_ => 
+            .Select(_ =>
             {
                 Task.Delay(5).GetAwaiter().GetResult();
                 return GetExampleGenre();

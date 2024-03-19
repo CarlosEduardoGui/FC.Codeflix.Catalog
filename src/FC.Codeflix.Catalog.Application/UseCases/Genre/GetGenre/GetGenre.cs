@@ -8,7 +8,7 @@ public class GetGenre : IGetGenre
     private readonly ICategoryRepository _categoryRepository;
 
     public GetGenre(
-        IGenreRepository genreRepository, 
+        IGenreRepository genreRepository,
         ICategoryRepository categoryRepository)
     {
         _genreRepository = genreRepository;

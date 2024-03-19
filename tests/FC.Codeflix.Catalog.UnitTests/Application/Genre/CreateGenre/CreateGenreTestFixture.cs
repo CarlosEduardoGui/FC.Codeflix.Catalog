@@ -1,5 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
-using FC.Codeflix.Catalog.UnitTests.Application.Genre.Comon;
+using FC.Codeflix.Catalog.UnitTests.Application.Genre.Common;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.CreateGenre;

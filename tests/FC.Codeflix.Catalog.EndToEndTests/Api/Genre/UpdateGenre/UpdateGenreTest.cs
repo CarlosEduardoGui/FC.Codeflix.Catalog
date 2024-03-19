@@ -1,9 +1,9 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
+﻿using FC.Codeflix.Catalog.Api.ApiModels.Genre;
 using FC.Codeflix.Catalog.Api.ApiModels.Response;
+using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
-using FC.Codeflix.Catalog.Api.ApiModels.Genre;
-using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 

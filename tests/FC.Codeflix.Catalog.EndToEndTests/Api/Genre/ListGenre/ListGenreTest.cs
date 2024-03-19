@@ -4,7 +4,6 @@ using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.EndToEndTests.ApiModels;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using Xunit;
 
