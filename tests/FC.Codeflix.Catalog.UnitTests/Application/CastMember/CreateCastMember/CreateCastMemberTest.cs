@@ -1,6 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.CreateCastMember;
-using FC.Codeflix.Catalog.Domain.Enum;
+using FC.Codeflix.Catalog.Domain.Exceptions;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FluentAssertions;
 using Moq;
@@ -46,6 +46,39 @@ public class CreateCastMemberTest
                 It.Is<DomainEntity.CastMember>(x => x.Name == input.Name && x.Type == input.Type),
                 It.IsAny<CancellationToken>()
             ), Times.Once
+        );
+    }
+
+    [Trait("Use Cases", "CreateCastMember - Use Cases")]
+    [Theory(DisplayName = nameof(ThrowsWhenInvalidName))]
+    [InlineData("")]
+    [InlineData("  ")]
+    [InlineData(null)]
+    public async Task ThrowsWhenInvalidName(string invalidName)
+    {
+        var input = new CreateCastMemberInput(
+            invalidName,
+            _fixture.GetRandomCastMemberType()
+        );
+        var repositoryMock = new Mock<ICastMemberRepository>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        var useCase = new UseCase.CreateCastMember(
+            repositoryMock.Object,
+            unitOfWorkMock.Object
+        );
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<EntityValidationException>()
+            .WithMessage("Name should not be empty or null.");
+        unitOfWorkMock.Verify(x =>
+            x.CommitAsync(It.IsAny<CancellationToken>()), Times.Never);
+        repositoryMock.Verify(x => x.InsertAsync(
+                It.Is<DomainEntity.CastMember>(x => x.Name == input.Name && x.Type == input.Type),
+                It.IsAny<CancellationToken>()
+            ), Times.Never
         );
     }
 }
