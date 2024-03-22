@@ -6,6 +6,7 @@ using Moq;
 using Xunit;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Application.Exceptions;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CastMember.DeleteCastMember;
 
@@ -43,6 +44,30 @@ public class DeleteCastMemberTest
             It.IsAny<CancellationToken>()
         ), Times.Once);
         unitOfWorkMock.Verify(x => x.CommitAsync(
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+    }
+
+    [Trait("Use Cases", "DeleteCastMember - Use Cases")]
+    [Fact(DisplayName = nameof(ThrowsWhenNotFound))]
+    public async Task ThrowsWhenNotFound()
+    {
+        var repositoryMock = new Mock<ICastMemberRepository>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        repositoryMock.Setup(
+                x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()
+            )
+        ).ThrowsAsync(new NotFoundException(""));
+        var input = new DeleteCastMemberInput(Guid.NewGuid());
+        var useCase = new UseCase.DeleteCastMember(repositoryMock.Object, unitOfWorkMock.Object);
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<NotFoundException>();
+        repositoryMock.Verify(x => x.GetByIdAsync(
+            It.Is<Guid>(x => x == input.Id),
             It.IsAny<CancellationToken>()
         ), Times.Once);
     }
