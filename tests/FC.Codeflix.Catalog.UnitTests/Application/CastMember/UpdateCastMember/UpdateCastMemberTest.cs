@@ -6,6 +6,7 @@ using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMe
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 using FluentAssertions;
+using FC.Codeflix.Catalog.Application.Exceptions;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CastMember.UpdateCastMember;
 
@@ -59,6 +60,47 @@ public class UpdateCastMemberTest
                 ),
                 It.IsAny<CancellationToken>()
             ), Times.Once
+        );
+    }
+
+    [Trait("Use Cases", "UpdateCastMember - Use Cases")]
+    [Fact(DisplayName = nameof(ThrowsWhenNotFound))]
+    public async Task ThrowsWhenNotFound()
+    {
+        var repositoryMock = new Mock<ICastMemberRepository>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        var newName = _fixture.GetValidName();
+        var newType = _fixture.GetRandomCastMemberType();
+        var input = new UpdateCastMemberInput(
+            Guid.NewGuid(),
+            newName,
+            newType
+        );
+        repositoryMock.Setup(x => x.GetByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ThrowsAsync(new NotFoundException(""));
+        var useCase = new UseCase.UpdateCastMember(repositoryMock.Object, unitOfWorkMock.Object);
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<NotFoundException>();
+        unitOfWorkMock.Verify(x =>
+            x.CommitAsync(It.IsAny<CancellationToken>()
+            ), Times.Never
+        );
+        repositoryMock.Verify(x => x.GetByIdAsync(
+                It.Is<Guid>(x => x == input.Id),
+                It.IsAny<CancellationToken>()
+            ), Times.Once
+        );
+        repositoryMock.Verify(x => x.UpdateAsync(
+                It.IsAny<DomainEntity.CastMember>(),
+                It.IsAny<CancellationToken>()
+            ), Times.Never
         );
     }
 }
