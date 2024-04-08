@@ -13,7 +13,7 @@ public class GetCastMemberTest
 {
     private readonly GetCastMemberTestFixture _fixture;
 
-    public GetCastMemberTest(GetCastMemberTestFixture fixture) 
+    public GetCastMemberTest(GetCastMemberTestFixture fixture)
         => _fixture = fixture;
 
     [Trait("Use Cases", "GetCastMember - Use Cases")]
@@ -22,7 +22,7 @@ public class GetCastMemberTest
     {
         var repositoryMock = new Mock<ICastMemberRepository>();
         var castMemberExample = _fixture.GetExampleCastMember();
-        repositoryMock.Setup(x => 
+        repositoryMock.Setup(x =>
             x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())
         ).ReturnsAsync(castMemberExample);
         var input = new GetCastMemberInput(castMemberExample.Id);

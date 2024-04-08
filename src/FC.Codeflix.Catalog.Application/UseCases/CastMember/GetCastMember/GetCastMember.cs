@@ -6,7 +6,7 @@ public class GetCastMember : IGetCastMember
 {
     private readonly ICastMemberRepository _repository;
 
-    public GetCastMember(ICastMemberRepository repository) 
+    public GetCastMember(ICastMemberRepository repository)
         => _repository = repository;
 
     public async Task<CastMemberModelOutput> Handle(GetCastMemberInput request, CancellationToken cancellationToken)

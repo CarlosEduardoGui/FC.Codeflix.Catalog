@@ -23,7 +23,7 @@ public class CreateCastMemberTest
     public async Task Create()
     {
         var input = new CreateCastMemberInput(
-            _fixture.GetValidName(), 
+            _fixture.GetValidName(),
             _fixture.GetRandomCastMemberType()
         );
         var repositoryMock = new Mock<ICastMemberRepository>();

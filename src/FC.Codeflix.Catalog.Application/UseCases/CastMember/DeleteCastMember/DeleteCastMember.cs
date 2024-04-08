@@ -9,7 +9,7 @@ public class DeleteCastMember : IDeleteCastMember
     private readonly IUnitOfWork _unitOfWork;
 
     public DeleteCastMember(
-        ICastMemberRepository repository, 
+        ICastMemberRepository repository,
         IUnitOfWork unitOfWork)
     {
         _repository = repository;

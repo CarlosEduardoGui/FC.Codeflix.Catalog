@@ -1,5 +1,5 @@
-﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Domain.Enum;
+﻿using FC.Codeflix.Catalog.Domain.Enum;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.CastMember.Common;
 public class CastMemberModelOutput

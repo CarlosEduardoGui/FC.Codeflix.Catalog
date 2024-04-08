@@ -1,12 +1,12 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Application.Exceptions;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CastMember.DeleteCastMember;
 
@@ -15,7 +15,7 @@ public class DeleteCastMemberTest
 {
     private readonly DeleteCastMemberTestFixture _fixture;
 
-    public DeleteCastMemberTest(DeleteCastMemberTestFixture fixture) 
+    public DeleteCastMemberTest(DeleteCastMemberTestFixture fixture)
         => _fixture = fixture;
 
     [Trait("Use Cases", "DeleteCastMember - Use Cases")]
@@ -36,11 +36,11 @@ public class DeleteCastMemberTest
 
         await action.Should().NotThrowAsync();
         repositoryMock.Verify(x => x.GetByIdAsync(
-            It.Is<Guid>(x => x == input.Id), 
+            It.Is<Guid>(x => x == input.Id),
             It.IsAny<CancellationToken>()
         ), Times.Once);
         repositoryMock.Verify(x => x.DeleteAsync(
-            It.Is<DomainEntity.CastMember>(x => x.Id == input.Id), 
+            It.Is<DomainEntity.CastMember>(x => x.Id == input.Id),
             It.IsAny<CancellationToken>()
         ), Times.Once);
         unitOfWorkMock.Verify(x => x.CommitAsync(

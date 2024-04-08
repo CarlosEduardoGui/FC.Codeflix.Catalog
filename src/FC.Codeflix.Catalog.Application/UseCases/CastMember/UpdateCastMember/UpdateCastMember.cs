@@ -9,7 +9,7 @@ public class UpdateCastMember : IUpdateCastMember
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateCastMember(
-        ICastMemberRepository castMemberRepository, 
+        ICastMemberRepository castMemberRepository,
         IUnitOfWork unitOfWork)
     {
         _castMemberRepository = castMemberRepository;

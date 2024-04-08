@@ -1,13 +1,13 @@
-﻿using FC.Codeflix.Catalog.Application.Interfaces;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
+using FC.Codeflix.Catalog.Domain.Exceptions;
 using FC.Codeflix.Catalog.Domain.Repository;
+using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
-using FluentAssertions;
-using FC.Codeflix.Catalog.Application.Exceptions;
-using FC.Codeflix.Catalog.Domain.Exceptions;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.CastMember.UpdateCastMember;
 
@@ -16,7 +16,7 @@ public class UpdateCastMemberTest
 {
     private readonly UpdateCastMemberTestFixture _fixture;
 
-    public UpdateCastMemberTest(UpdateCastMemberTestFixture fixture) 
+    public UpdateCastMemberTest(UpdateCastMemberTestFixture fixture)
         => _fixture = fixture;
 
     [Trait("Use Cases", "UpdateCastMember - Use Cases")]
@@ -50,13 +50,13 @@ public class UpdateCastMemberTest
         unitOfWorkMock.Verify(x =>
             x.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
         repositoryMock.Verify(x => x.GetByIdAsync(
-                It.Is<Guid>(x => x == input.Id), 
+                It.Is<Guid>(x => x == input.Id),
                 It.IsAny<CancellationToken>()
             ), Times.Once
         );
         repositoryMock.Verify(x => x.UpdateAsync(
                 It.Is<DomainEntity.CastMember>(
-                    x => x.Name == input.Name 
+                    x => x.Name == input.Name
                     && x.Type == input.Type
                 ),
                 It.IsAny<CancellationToken>()
