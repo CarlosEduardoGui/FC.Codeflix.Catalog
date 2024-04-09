@@ -1,7 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-susing Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 public class CastMemberRepository : ICastMemberRepository

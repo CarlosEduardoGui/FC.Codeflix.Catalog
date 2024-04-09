@@ -5,6 +5,11 @@ using FC.Codeflix.Catalog.Domain.Validation;
 namespace FC.Codeflix.Catalog.Domain.Entity;
 public class CastMember : AggregateRoot
 {
+    /// <summary>
+    /// Created just for EF Framework
+    /// </summary>
+    private CastMember() { }
+
     public string Name { get; private set; }
     public CastMemberType Type { get; private set; }
     public DateTime CreatedAt { get; private set; }
