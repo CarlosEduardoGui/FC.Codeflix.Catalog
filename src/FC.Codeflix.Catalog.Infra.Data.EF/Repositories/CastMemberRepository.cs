@@ -40,7 +40,5 @@ public class CastMemberRepository : ICastMemberRepository
     }
 
     public Task UpdateAsync(CastMember aggregate, CancellationToken cancellation)
-    {
-        throw new NotImplementedException();
-    }
+        => Task.FromResult(_castMembers.Update(aggregate));
 }
