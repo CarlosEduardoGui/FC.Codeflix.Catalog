@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 using Repository = FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
@@ -29,7 +30,51 @@ public class CastMemberRepositoryTest
             .CastMembers
             .AsNoTracking()
             .FirstOrDefault(x => x.Id == castMemberExample.Id);
-        castMemberExample.Name.Should().Be(castMemberExample.Name);
-        castMemberExample.Type.Should().Be(castMemberExample.Type);
+        castMemberFromDb.Should().NotBeNull();
+        castMemberFromDb!.Name.Should().Be(castMemberExample.Name);
+        castMemberFromDb.Type.Should().Be(castMemberExample.Type);
+    }
+
+    [Trait("Integration/Infra.Data", "CastMemberRepository - Repositories")]
+    [Fact(DisplayName = nameof(Get))]
+    public async Task Get()
+    {
+        var castMemberExampleList = _fixture.GetExampleCastMembersList(5);
+        var castMemberExample = castMemberExampleList[3];
+        var arrangeContext = _fixture.CreateDbContext();
+        await arrangeContext.AddRangeAsync(castMemberExampleList);
+        await arrangeContext.SaveChangesAsync();
+        var repository = new Repository.CastMemberRepository(_fixture.CreateDbContext(true));
+
+        var itemFromRepository = await repository.GetByIdAsync(
+            castMemberExample.Id,
+            CancellationToken.None
+        );
+
+        itemFromRepository.Should().NotBeNull();
+        itemFromRepository!.Name.Should().Be(castMemberExample.Name);
+        itemFromRepository.Type.Should().Be(castMemberExample.Type);
+    }
+
+    [Trait("Integration/Infra.Data", "CastMemberRepository - Repositories")]
+    [Fact(DisplayName = nameof(GetThrowsWhenNotFound))]
+    public async Task GetThrowsWhenNotFound()
+    {
+        var castMemberExampleList = _fixture.GetExampleCastMembersList(5);
+        var castMemberRandomGuid = Guid.NewGuid();
+        var arrangeContext = _fixture.CreateDbContext();
+        await arrangeContext.AddRangeAsync(castMemberExampleList);
+        await arrangeContext.SaveChangesAsync();
+        var repository = new Repository.CastMemberRepository(_fixture.CreateDbContext(true));
+
+        var action = async () => await repository.GetByIdAsync(
+            castMemberRandomGuid,
+            CancellationToken.None
+        );
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<NotFoundException>()
+            .WithMessage($"CastMember '{castMemberRandomGuid}' not found.");
     }
 }
