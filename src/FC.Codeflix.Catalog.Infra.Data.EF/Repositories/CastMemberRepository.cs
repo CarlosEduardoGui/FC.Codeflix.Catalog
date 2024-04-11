@@ -15,9 +15,7 @@ public class CastMemberRepository : ICastMemberRepository
         => _dbContext = dbContext;
 
     public Task DeleteAsync(CastMember aggregate, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+        => Task.FromResult(_castMembers.Remove(aggregate));
 
     public async Task<CastMember> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {

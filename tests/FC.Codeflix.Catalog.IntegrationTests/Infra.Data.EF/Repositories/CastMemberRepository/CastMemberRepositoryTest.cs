@@ -77,4 +77,31 @@ public class CastMemberRepositoryTest
             .ThrowExactlyAsync<NotFoundException>()
             .WithMessage($"CastMember '{castMemberRandomGuid}' not found.");
     }
+
+    [Trait("Integration/Infra.Data", "CastMemberRepository - Repositories")]
+    [Fact(DisplayName = nameof(Delete))]
+    public async Task Delete()
+    {
+        var castMemberExampleList = _fixture.GetExampleCastMembersList(5);
+        var castMemberExample = castMemberExampleList[3];
+        var arrangeContext = _fixture.CreateDbContext();
+        await arrangeContext.AddRangeAsync(castMemberExampleList);
+        await arrangeContext.SaveChangesAsync();
+        var actDbContext = _fixture.CreateDbContext(true);
+        var repository = new Repository.CastMemberRepository(actDbContext);
+
+        await repository.DeleteAsync(
+            castMemberExample,
+            CancellationToken.None
+        );
+        await actDbContext.SaveChangesAsync();
+
+        var assertionContext = _fixture.CreateDbContext(true);
+        var castMemberFromDb = assertionContext
+            .CastMembers
+            .AsNoTracking()
+            .ToList();
+        castMemberFromDb.Should().HaveCount(castMemberExampleList.Count - 1);
+        castMemberFromDb.Should().NotContain(castMemberExample);
+    }
 }
