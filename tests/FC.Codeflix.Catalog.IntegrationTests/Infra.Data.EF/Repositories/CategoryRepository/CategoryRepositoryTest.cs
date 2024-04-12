@@ -341,7 +341,7 @@ public class CategoryRepositoryTest
         var categoryRepository = new Repository.CategoryRepository(dbContext);
         var searchOrder = order == "asc" ? SearchOrder.ASC : SearchOrder.DESC;
         var searchInput = new SearchInput(1, 20, "", orderby, searchOrder);
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(CancellationToken.None);
 
         var output = await categoryRepository.SearchAsync(searchInput, CancellationToken.None);
 
