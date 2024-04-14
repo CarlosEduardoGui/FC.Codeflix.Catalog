@@ -5,8 +5,7 @@ name: .NET
 
 env:
   AZURE_WEBAPP_NAME: codeflixadm
-  AZURE_WEBAPP_PACKAGE_NAME: "./publish"
-  AZURE_WEBAPP_PACKAGE_PATH: "" 
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 on:
   push:
