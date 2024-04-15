@@ -31,13 +31,13 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    # - name: Start containers
-    #   run: docker-compose -f "tests/FC.Codeflix.Catalog.EndToEndTests/docker-compose.yml" up -d --build 
+    - name: Start containers
+      run: docker-compose -f "tests/FC.Codeflix.Catalog.EndToEndTests/docker-compose.yml" up -d --build 
 
-    # - name: Sleep for 30 seconds to wait SQL base be ready
-    #   uses: jakejarvis/wait-action@master
-    #   with:
-    #     time: '30s'
+    - name: Sleep for 30 seconds to wait SQL base to be ready
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s'
     
     - name: Restore dependencies
       run: dotnet restore 
@@ -45,8 +45,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     
-    # - name: Test
-    #   run: dotnet test --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
 
     - name: Publish
       run: dotnet publish --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
