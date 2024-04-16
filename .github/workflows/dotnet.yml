@@ -48,7 +48,7 @@ jobs:
     #   run: dotnet test --no-build --verbosity normal
 
     - name: Publish
-      run: dotnet publish src/FC.Codeflix.Catalog.Api/FC.Codeflix.Catalog.Api.csproj --configuration Release --no-build --output ./publish
+      run: dotnet publish src/FC.Codeflix.Catalog.Api/FC.Codeflix.Catalog.Api.csproj --configuration Release --output ./publish
 
     - name: Deployment
       uses: azure/webapps-deploy@v2
