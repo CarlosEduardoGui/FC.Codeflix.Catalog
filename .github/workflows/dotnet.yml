@@ -5,7 +5,6 @@ name: .NET
 
 env:
   AZURE_WEBAPP_NAME: codeflixadm
-  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 on:
   push:
@@ -49,11 +48,11 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Publish
-      run: dotnet publish FC.Codeflix.Catalog.Api --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+      run: dotnet publish ./FC.Codeflix.Catalog.Api/FC.Codeflix.Catalog.Api.csproj --c Release --no-build --output ./publish
 
     - name: Deployment
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+        package: ./publish
