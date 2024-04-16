@@ -20,7 +20,10 @@ public static class ConnectionsConfiguration
         {
             options.UseSqlServer(
                 connectionString,
-                b => b.MigrationsAssembly("FC.Codeflix.Catalog.Api")
+                b => {
+                    b.MigrationsAssembly("FC.Codeflix.Catalog.Api");
+                    b.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                }
             );
         });
 
