@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 using UoW = FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
-using FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
-using Microsoft.EntityFrameworkCore;
-using FluentAssertions;
-using FC.Codeflix.Catalog.Application.Exceptions;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.DeleteCastMember;
 
@@ -14,7 +14,7 @@ public class DeleteCastMemberTest
 {
     private readonly CastMemberUseCaseBaseFixture _fixture;
 
-    public DeleteCastMemberTest(CastMemberUseCaseBaseFixture fixture) 
+    public DeleteCastMemberTest(CastMemberUseCaseBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("Integration/Application", "DeleteCastMember - Use Cases")]

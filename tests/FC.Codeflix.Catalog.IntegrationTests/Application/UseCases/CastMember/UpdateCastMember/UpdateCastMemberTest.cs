@@ -1,13 +1,11 @@
-﻿using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
-using Xunit;
-using UoW = FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
-using FC.Codeflix.Catalog.Application.Exceptions;
-using System;
+using Xunit;
+using UoW = FC.Codeflix.Catalog.Infra.Data.EF.UnitOfWork.UnitOfWork;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.UpdateCastMember;
 

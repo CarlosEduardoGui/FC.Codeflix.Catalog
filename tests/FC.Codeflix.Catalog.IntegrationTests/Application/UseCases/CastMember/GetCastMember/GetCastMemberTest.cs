@@ -1,9 +1,9 @@
-﻿using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.GetCastMember;
-using Xunit;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.GetCastMember;
+using FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.Common;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Application.Exceptions;
+using Xunit;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.GetCastMember;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.GetCastMember;
 
@@ -12,7 +12,7 @@ public class GetCastMemberTest
 {
     private readonly CastMemberUseCaseBaseFixture _fixture;
 
-    public GetCastMemberTest(CastMemberUseCaseBaseFixture fixture) 
+    public GetCastMemberTest(CastMemberUseCaseBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("Integration/Application", "GetCastMember - Use Cases")]

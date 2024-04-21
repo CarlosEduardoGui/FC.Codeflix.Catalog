@@ -31,7 +31,7 @@ public class CastMemberUseCaseBaseFixture : BaseFixture
         .Select(_ => GetExampleCastMember())
         .ToList();
 
-    public List<Entity.CastMember> GetExampleCategoriesListWithNames(List<string> names) =>
+    public List<Entity.CastMember> GetExampleCastMembersListWithNames(List<string> names) =>
     names.Select(name =>
     {
         var castMember = GetExampleCastMember();

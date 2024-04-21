@@ -1,8 +1,8 @@
-﻿using Xunit;
+﻿using FC.Codeflix.Catalog.Application.UseCases.CastMember.CreateCastMember;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Application.UseCases.CastMember.CreateCastMember;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.CreateCastMember;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.CreateCastMember;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.CastMember.CreateCastMember;
 

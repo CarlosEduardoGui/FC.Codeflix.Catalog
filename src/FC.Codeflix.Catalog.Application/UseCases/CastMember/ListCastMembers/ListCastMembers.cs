@@ -11,7 +11,7 @@ public class ListCastMembers : IListCastMembers
     public async Task<ListCastMembersOutput> Handle(ListCastMembersInput request, CancellationToken cancellationToken)
     {
         var castMembers = await _castMemberRepository.SearchAsync(request.ToSearchInput(), cancellationToken);
-        
+
         return ListCastMembersOutput.FromSearchOutput(castMembers);
     }
 }

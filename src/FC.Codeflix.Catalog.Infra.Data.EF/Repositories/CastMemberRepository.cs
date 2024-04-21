@@ -54,9 +54,9 @@ public class CastMemberRepository : ICastMemberRepository
         var count = await query.CountAsync(cancellationToken);
 
         return new SearchOutput<CastMember>(
-            input.Page, 
-            input.PerPage, 
-            castMembers, 
+            input.Page,
+            input.PerPage,
+            castMembers,
             count
         );
     }
