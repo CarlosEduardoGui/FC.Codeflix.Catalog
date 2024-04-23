@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.Common;
+using FC.Codeflix.Catalog.Application.UseCases.CastMember.DeleteCastMember;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.GetCastMember;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,5 +26,14 @@ public class CastMembersController : ControllerBase
         var result = await _mediator.Send(new GetCastMemberInput(id), cancellationToken);
 
         return Ok(new ApiResponse<CastMemberModelOutput>(result));
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<CastMemberModelOutput>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteById([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteCastMemberInput(id), cancellationToken);
+        return NoContent();
     }
 }
