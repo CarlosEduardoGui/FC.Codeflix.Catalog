@@ -5,6 +5,8 @@ using FC.Codeflix.Catalog.Application.UseCases.CastMember.Common;
 using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
+using FC.Codeflix.Catalog.Api.ApiModels.CastMember;
 
 namespace FC.Codeflix.Catalog.Api.Controllers;
 
@@ -46,5 +48,21 @@ public class CastMembersController : ControllerBase
     {
         await _mediator.Send(new DeleteCastMemberInput(id), cancellationToken);
         return NoContent();
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<CastMemberModelOutput>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> PutById(
+        [FromRoute] Guid id,
+        [FromBody] UpdateCastMemberApiInput apiInput,
+        CancellationToken cancellationToken)
+    {
+        var input = new UpdateCastMemberInput(id, apiInput.Name, apiInput.Type);
+
+        var output = await _mediator.Send(input, cancellationToken);
+        return Ok(new ApiResponse<CastMemberModelOutput>(output));
     }
 }
