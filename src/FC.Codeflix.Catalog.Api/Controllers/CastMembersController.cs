@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 using FC.Codeflix.Catalog.Api.ApiModels.CastMember;
+using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
+using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
+using FC.Codeflix.Catalog.Application.UseCases.CastMember.ListCastMembers;
 
 namespace FC.Codeflix.Catalog.Api.Controllers;
 
@@ -64,5 +68,30 @@ public class CastMembersController : ControllerBase
 
         var output = await _mediator.Send(input, cancellationToken);
         return Ok(new ApiResponse<CastMemberModelOutput>(output));
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseList<CastMemberModelOutput>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] int? page = null,
+        [FromQuery(Name = "per_page")] int? perPage = null,
+        [FromQuery] string? search = null,
+        [FromQuery] string? sort = null,
+        [FromQuery] SearchOrder? dir = null
+    )
+    {
+        var input = new ListCastMembersInput();
+        if (page is not null) input.Page = page.Value;
+        if (perPage is not null) input.PerPage = perPage.Value;
+        if (string.IsNullOrEmpty(search) is false) input.Search = search;
+        if (string.IsNullOrEmpty(sort) is false) input.Sort = sort;
+        if (dir is not null) input.Dir = dir.Value;
+
+        var result = await _mediator.Send(input, cancellationToken);
+
+        var response = new ApiResponseList<CastMemberModelOutput>(result);
+
+        return Ok(response);
     }
 }
