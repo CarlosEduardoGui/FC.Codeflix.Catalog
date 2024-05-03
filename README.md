@@ -1,4 +1,5 @@
 [![.NET](https://github.com/CarlosEduardoGui/FC.Codeflix.Catalog/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/CarlosEduardoGui/FC.Codeflix.Catalog/actions/workflows/dotnet.yml)
+[![wakatime](https://wakatime.com/badge/user/762df926-6bf4-4121-b965-04d194712171/project/018af31e-d951-40c8-ac94-7a9eb719c274.svg)](https://wakatime.com/badge/user/762df926-6bf4-4121-b965-04d194712171/project/018af31e-d951-40c8-ac94-7a9eb719c274)
 
 ## Necessary tools.
 
