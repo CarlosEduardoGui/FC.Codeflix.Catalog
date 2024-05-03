@@ -8,11 +8,11 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.ListCastMembers;
 
 [Collection(nameof(CastMemberBaseFixture))]
-public class ListCastMembersTest
+public class ListCastMembersTest : IDisposable
 {
     private readonly CastMemberBaseFixture _fixture;
 
-    public ListCastMembersTest(CastMemberBaseFixture fixture) 
+    public ListCastMembersTest(CastMemberBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/API", "CastMember/ListCastMember - Endpoints")]
@@ -39,5 +39,10 @@ public class ListCastMembersTest
             item.Should().NotBeNull();
             item.Should().BeEquivalentTo(outputItem);
         });
+    }
+
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Api.ApiModels.Genre;
 using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.Genre.Common;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,12 @@ using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.UpdateGenre;
 
-[Collection(nameof(UpdateGenreTestFixture))]
+[Collection(nameof(GenreBaseFixture))]
 public class UpdateGenreTest : IDisposable
 {
-    private readonly UpdateGenreTestFixture _fixture;
+    private readonly GenreBaseFixture _fixture;
 
-    public UpdateGenreTest(UpdateGenreTestFixture fixture)
+    public UpdateGenreTest(GenreBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/API", "Genre/UpdateGenre - Endpoints")]

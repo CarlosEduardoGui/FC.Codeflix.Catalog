@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
 using FC.Codeflix.Catalog.EndToEndTests.Extensions.Date;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,12 @@ using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.GetCategoryById;
 
-[Collection(nameof(GetCategoryByIdTestFixture))]
+[Collection(nameof(CategoryBaseFixture))]
 public class GetCategoryByIdTest : IDisposable
 {
-    private readonly GetCategoryByIdTestFixture _fixture;
+    private readonly CategoryBaseFixture _fixture;
 
-    public GetCategoryByIdTest(GetCategoryByIdTestFixture fixture) =>
+    public GetCategoryByIdTest(CategoryBaseFixture fixture) =>
         _fixture = fixture;
 
     [Trait("EndToEnd/API", "Category/GetCategory - Endpoints")]

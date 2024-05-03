@@ -4,18 +4,17 @@ using FC.Codeflix.Catalog.Application.UseCases.CastMember.Common;
 using FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.Common;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.Net;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.UpdateCastMember;
 
 [Collection(nameof(CastMemberBaseFixture))]
-public class UpdateCastMemberTest
+public class UpdateCastMemberTest : IDisposable
 {
     private readonly CastMemberBaseFixture _fixture;
 
-    public UpdateCastMemberTest(CastMemberBaseFixture fixture) 
+    public UpdateCastMemberTest(CastMemberBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/API", "CastMember/UpdateCastMember - Endpoints")]
@@ -97,5 +96,10 @@ public class UpdateCastMemberTest
         output!.Status.Should().Be((int)HttpStatusCode.UnprocessableEntity);
         output.Title.Should().Be("One or more validation errors occurred");
         output.Detail.Should().Be($"Name should not be empty or null.");
+    }
+
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }

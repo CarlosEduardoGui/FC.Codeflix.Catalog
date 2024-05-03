@@ -1,9 +1,14 @@
 ﻿using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
 using FC.Codeflix.Catalog.EndToEndTests.Common;
+using Xunit;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 using GenreEntity = FC.Codeflix.Catalog.Domain.Entity.Genre;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
+
+[CollectionDefinition(nameof(GenreBaseFixture))]
+public class GenreBaseFixtureCollection : ICollectionFixture<GenreBaseFixture> { }
+
 public class GenreBaseFixture : BaseFixture
 {
     public GenrePersistence Persistence;

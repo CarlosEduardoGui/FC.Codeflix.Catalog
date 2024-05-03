@@ -1,17 +1,18 @@
-﻿using FluentAssertions;
+﻿using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.DeleteCategory;
 
-[Collection(nameof(DeleteCategoryTestFixture))]
+[Collection(nameof(CategoryBaseFixture))]
 public class DeleteCategoryTest : IDisposable
 {
-    private readonly DeleteCategoryTestFixture _fixture;
+    private readonly CategoryBaseFixture _fixture;
 
-    public DeleteCategoryTest(DeleteCategoryTestFixture fixture) =>
-        _fixture = fixture;
+    public DeleteCategoryTest(CategoryBaseFixture fixture) 
+        => _fixture = fixture;
 
     [Trait("EndToEnd/Api", "Category/Delete - Endpoints")]
     [Fact(DisplayName = nameof(DeleteCategoryOk))]

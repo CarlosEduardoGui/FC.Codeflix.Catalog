@@ -9,7 +9,7 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.DeleteCastMember;
 
 [Collection(nameof(CastMemberBaseFixture))]
-public class DeleteCastMemberTest
+public class DeleteCastMemberTest : IDisposable
 {
     private readonly CastMemberBaseFixture _fixture;
 
@@ -56,5 +56,10 @@ public class DeleteCastMemberTest
         output.Type.Should().Be("NotFound");
         var castMemberFomDb = await _fixture.Persistence.GetByIdAsync(exampleCastMember);
         castMemberFomDb.Should().BeNull();
+    }
+
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }

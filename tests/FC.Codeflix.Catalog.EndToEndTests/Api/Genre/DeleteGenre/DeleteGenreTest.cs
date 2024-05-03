@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Infra.Data.EF.Models;
+﻿using FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
+using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -6,12 +7,12 @@ using Xunit;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.DeleteCategory;
 
-[Collection(nameof(DeleteGenreTestFixture))]
+[Collection(nameof(GenreBaseFixture))]
 public class DeleteGenreTest : IDisposable
 {
-    private readonly DeleteGenreTestFixture _fixture;
+    private readonly GenreBaseFixture _fixture;
 
-    public DeleteGenreTest(DeleteGenreTestFixture fixture)
+    public DeleteGenreTest(GenreBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/Api", "Genre/Delete - Endpoints")]

@@ -10,11 +10,11 @@ using Xunit;
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.CreateCastMember;
 
 [Collection(nameof(CastMemberBaseFixture))]
-public class CreateCastMemberTest
+public class CreateCastMemberTest : IDisposable
 {
     private readonly CastMemberBaseFixture _fixture;
 
-    public CreateCastMemberTest(CastMemberBaseFixture fixture) 
+    public CreateCastMemberTest(CastMemberBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/API", "CastMember/CreateCastMember - Endpoints")]
@@ -24,7 +24,7 @@ public class CreateCastMemberTest
         var example = _fixture.GetExampleCastMember();
         var input = new CreateCastMemberInput(example.Name, example.Type);
 
-        var (response, output) = 
+        var (response, output) =
             await _fixture
             .ApiClient
             .Post<ApiResponse<CastMemberModelOutput>>("/cast_members", input);
@@ -65,5 +65,10 @@ public class CreateCastMemberTest
         output.Type.Should().Be("UnprocessableEntity");
         output.Status.Should().Be((int)HttpStatusCode.UnprocessableEntity);
         output.Detail.Should().Be("Name should not be empty or null.");
+    }
+
+    public void Dispose()
+    {
+        _fixture.CleanPersistence();
     }
 }

@@ -1,7 +1,12 @@
 ﻿using FC.Codeflix.Catalog.EndToEndTests.Common;
+using Xunit;
 using CategoryEntity = FC.Codeflix.Catalog.Domain.Entity.Category;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
+
+[CollectionDefinition(nameof(CategoryBaseFixture))]
+public class CategoryBaseFixtureCollection : ICollectionFixture<CategoryBaseFixture> { }
+
 public class CategoryBaseFixture : BaseFixture
 {
     public CategoryPersistence Persistence;
