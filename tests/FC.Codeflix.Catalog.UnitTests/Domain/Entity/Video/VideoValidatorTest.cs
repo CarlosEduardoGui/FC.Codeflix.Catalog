@@ -79,4 +79,56 @@ public class VideoValidatorTest
             .First()
             .Message.Should().Be("Title should not be empty.");
     }
+
+    [Trait("Domain", "Video Validator - Aggregate")]
+    [Fact(DisplayName = nameof(ReturnsErrorWhenDescriptionEmpty))]
+    public void ReturnsErrorWhenDescriptionEmpty()
+    {
+        var validVideo = new DomainEntity.Video(
+            _fixture.GetValidTitle(),
+            string.Empty,
+            _fixture.GetValidYearLauched(),
+            _fixture.GetRandomBoolean(),
+            _fixture.GetRandomBoolean(),
+            _fixture.GetValidDuration()
+        );
+        var notificationValidationHandler = new NotificationValidationHandler();
+        var videoValidator = new VideoValidator(validVideo, notificationValidationHandler);
+
+        videoValidator.Validate();
+
+        notificationValidationHandler.HasErrors().Should().BeTrue();
+        notificationValidationHandler.Errors.Should().HaveCount(1);
+        notificationValidationHandler
+            .Errors
+            .ToList()
+            .First()
+            .Message.Should().Be("Description should not be empty.");
+    }
+
+    [Trait("Domain", "Video Validator - Aggregate")]
+    [Fact(DisplayName = nameof(ReturnsErrorWhenDescriptionTooLong))]
+    public void ReturnsErrorWhenDescriptionTooLong()
+    {
+        var validVideo = new DomainEntity.Video(
+            _fixture.GetValidTitle(),
+            _fixture.GetTooLongDescription(),
+            _fixture.GetValidYearLauched(),
+            _fixture.GetRandomBoolean(),
+            _fixture.GetRandomBoolean(),
+            _fixture.GetValidDuration()
+        );
+        var notificationValidationHandler = new NotificationValidationHandler();
+        var videoValidator = new VideoValidator(validVideo, notificationValidationHandler);
+
+        videoValidator.Validate();
+
+        notificationValidationHandler.HasErrors().Should().BeTrue();
+        notificationValidationHandler.Errors.Should().HaveCount(1);
+        notificationValidationHandler
+            .Errors
+            .ToList()
+            .First()
+            .Message.Should().Be("Description should be less or equal 4000 characters long.");
+    }
 }

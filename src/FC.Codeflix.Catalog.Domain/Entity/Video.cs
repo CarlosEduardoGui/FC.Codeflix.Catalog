@@ -1,4 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.Domain.Validation;
+using FC.Codeflix.Catalog.Domain.Validator;
 
 namespace FC.Codeflix.Catalog.Domain.Entity;
 public class Video : AggregateRoot
@@ -11,7 +13,14 @@ public class Video : AggregateRoot
     public bool Published { get; private set; }
     public int Duration { get; private set; }
     public DateTime CreatedAt { get; private set; }
-    public Video(string title, string description, int yearLaunched, bool opened, bool published, int duration)
+    public Video(
+        string title, 
+        string description, 
+        int yearLaunched, 
+        bool opened, 
+        bool published, 
+        int duration
+    )
     {
         Title = title;
         Description = description;
@@ -20,5 +29,25 @@ public class Video : AggregateRoot
         Published = published;
         Duration = duration;
         CreatedAt = DateTime.Now;
+    }
+
+    public void Validate(ValidationHandler handler) 
+        => new VideoValidator(this, handler).Validate();
+
+    public void Update(
+        string title,
+        string description,
+        int yearLaunched,
+        bool opened,
+        bool published,
+        int duration
+    )
+    {
+        Title = title;
+        Description = description;
+        YearLaunched = yearLaunched;
+        Opened = opened;
+        Published = published;
+        Duration = duration;
     }
 }
