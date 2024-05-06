@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Domain.SeedWork;
+﻿using FC.Codeflix.Catalog.Domain.Enum;
+using FC.Codeflix.Catalog.Domain.SeedWork;
 using FC.Codeflix.Catalog.Domain.Validation;
 using FC.Codeflix.Catalog.Domain.Validator;
 
@@ -13,13 +14,16 @@ public class Video : AggregateRoot
     public bool Published { get; private set; }
     public int Duration { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    public Rating Rating { get; private set; }
+
     public Video(
         string title, 
         string description, 
         int yearLaunched, 
         bool opened, 
         bool published, 
-        int duration
+        int duration,
+        Rating rating
     )
     {
         Title = title;
@@ -28,6 +32,7 @@ public class Video : AggregateRoot
         Opened = opened;
         Published = published;
         Duration = duration;
+        Rating = rating;
         CreatedAt = DateTime.Now;
     }
 
