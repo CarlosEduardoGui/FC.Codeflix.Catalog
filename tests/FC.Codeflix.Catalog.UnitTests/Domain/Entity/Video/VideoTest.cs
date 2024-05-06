@@ -23,6 +23,7 @@ public class VideoTest
         var expectedOpened = _fixture.GetRandomBoolean();
         var expectedPublished = _fixture.GetRandomBoolean();
         var expectedDuration = _fixture.GetValidDuration();
+        var expectedRating = _fixture.GetRandomRating();
 
         var video = new DomainEntity.Video(
             expectedTitle,
@@ -30,7 +31,8 @@ public class VideoTest
             expectedYearLaunched,
             expectedOpened,
             expectedPublished,
-            expectedDuration
+            expectedDuration,
+            expectedRating
         );
 
         video.Title.Should().Be(expectedTitle);
@@ -39,6 +41,7 @@ public class VideoTest
         video.Opened.Should().Be(expectedOpened);
         video.Published.Should().Be(expectedPublished);
         video.Duration.Should().Be(expectedDuration);
+        video.Rating.Should().Be(expectedRating);
     }
 
     [Trait("Domain", "Video - Aggregate")]
@@ -93,7 +96,8 @@ public class VideoTest
             _fixture.GetValidYearLauched(),
             _fixture.GetRandomBoolean(),
             _fixture.GetRandomBoolean(),
-            _fixture.GetValidDuration()
+            _fixture.GetValidDuration(),
+            _fixture.GetRandomRating()
         );
         var notificationHandler = new NotificationValidationHandler();
 
