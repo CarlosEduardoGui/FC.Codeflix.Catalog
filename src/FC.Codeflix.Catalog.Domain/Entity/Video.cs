@@ -18,6 +18,8 @@ public class Video : AggregateRoot
     public Image? Thumb { get; private set; }
     public Image? ThumbHalf { get; private set; }
     public Image? Banner { get; private set; }
+    public Media? Media { get; private set; }
+    public Media? Trailer { get; private set; }
 
     public Video(
         string title, 
@@ -67,4 +69,30 @@ public class Video : AggregateRoot
 
     public void UpdateBanner(string imagePath)
         => Banner = new(imagePath);
+
+    public void UpdateMedia(string mediaPath)
+        => Media = new Media(mediaPath);
+
+    public void UpdateTrailer(string mediaPath)
+        => Trailer = new(mediaPath);
+
+    public void UpdateAsSentToEncode()
+    {
+        if (Media is null)
+            throw new EntityValidationException(
+                string.Format(ConstantsMessages.FIELD_NOT_NULL, nameof(Media))
+            );
+
+        Media!.UpdateAsSentToEncode();
+    }
+
+    public void UpdateAsEncoded(string encodedPath)
+    {
+        if (Media is null)
+            throw new EntityValidationException(
+                string.Format(ConstantsMessages.FIELD_NOT_NULL, nameof(Media))
+            );
+
+        Media.UpdateAsEncoded(encodedPath);
+    }
 }

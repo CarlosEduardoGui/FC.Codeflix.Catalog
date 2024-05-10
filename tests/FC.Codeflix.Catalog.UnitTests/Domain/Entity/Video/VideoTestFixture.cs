@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Domain.Enum;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Domain.Enum;
 using FC.Codeflix.Catalog.UnitTests.Commom;
 using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
@@ -51,4 +52,20 @@ public class VideoTestFixture : BaseFixture
 
     public string GetValidImagePath()
         => Faker.Image.PlaceImgUrl();
+
+    public string GetValidMediaPath()
+    {
+        var exampleMedias = new string[]
+        {
+            "https://wwww.googlestorage.com/file-example.mp4",
+            "https://wwww.storage.com/file-example.mp4",
+            "https://wwww.s3.com/file-example.mp4"
+        };
+
+        var random = new Random();
+        return exampleMedias[random.Next(exampleMedias.Length)];
+    }
+
+    public Media GetValidMedia()
+        => new(GetValidMediaPath());
 }

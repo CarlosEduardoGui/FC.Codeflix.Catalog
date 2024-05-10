@@ -1,4 +1,6 @@
-﻿using FC.Codeflix.Catalog.Domain.Validation;
+﻿using FC.Codeflix.Catalog.Domain.Enum;
+using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.Domain.Validation;
 using FluentAssertions;
 using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
@@ -45,6 +47,8 @@ public class VideoTest
         video.Thumb.Should().BeNull();
         video.ThumbHalf.Should().BeNull();
         video.Banner.Should().BeNull();
+        video.Media.Should().BeNull();
+        video.Trailer.Should().BeNull();
     }
 
     [Trait("Domain", "Video - Aggregate")]
@@ -209,5 +213,91 @@ public class VideoTest
 
         video.Banner.Should().NotBeNull();
         video.Banner!.Path.Should().Be(validImagePath);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateMedia))]
+    public void UpdateMedia()
+    {
+        var video = _fixture.GetValidVideo();
+        var validMediaPath = _fixture.GetValidMediaPath();
+
+        video.UpdateMedia(validMediaPath);
+
+        video.Media.Should().NotBeNull();
+        video.Media!.FilePath.Should().Be(validMediaPath);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateTrailer))]
+    public void UpdateTrailer()
+    {
+        var video = _fixture.GetValidVideo();
+        var validMediaPath = _fixture.GetValidMediaPath();
+
+        video.UpdateTrailer(validMediaPath);
+
+        video.Trailer.Should().NotBeNull();
+        video.Trailer!.FilePath.Should().Be(validMediaPath);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateAsSentToEncode))]
+    public void UpdateAsSentToEncode()
+    {
+        var video = _fixture.GetValidVideo();
+        var validMediaPath = _fixture.GetValidMediaPath();
+        video.UpdateMedia(validMediaPath);
+
+        video.UpdateAsSentToEncode();
+
+        video.Media.Should().NotBeNull();
+        video.Media!.Status.Should().Be(MediaStatus.Processing);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateAsSentToEncodeThrowsWhenThereIsNoMedia))]
+    public void UpdateAsSentToEncodeThrowsWhenThereIsNoMedia()
+    {
+        var video = _fixture.GetValidVideo();
+
+        var action = () => video.UpdateAsSentToEncode();
+
+        action
+            .Should()
+            .ThrowExactly<EntityValidationException>()
+            .WithMessage("Media should not be null.");
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateAsEncoded))]
+    public void UpdateAsEncoded()
+    {
+        var video = _fixture.GetValidVideo();
+        var validMediaPath = _fixture.GetValidMediaPath();
+        video.UpdateMedia(validMediaPath);
+        var validEncodedPath = _fixture.GetValidMediaPath();
+
+        video.UpdateAsEncoded(validEncodedPath);
+
+        video.Media.Should().NotBeNull();
+        video.Media!.EncodedPath.Should().Be(validEncodedPath);
+        video.Media.Status.Should().Be(MediaStatus.Completed);
+    }
+
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateAsEncodedThrowsThereIsNoMedia))]
+    public void UpdateAsEncodedThrowsThereIsNoMedia()
+    {
+        var video = _fixture.GetValidVideo();
+        var validEncodedPath = _fixture.GetValidMediaPath();
+
+        var action = () =>video.UpdateAsEncoded(validEncodedPath);
+
+        action
+            .Should()
+            .ThrowExactly<EntityValidationException>()
+            .WithMessage("Media should not be null.");
     }
 }
