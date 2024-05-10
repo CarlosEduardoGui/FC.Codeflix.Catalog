@@ -51,6 +51,7 @@ public class VideoTest
         video.Trailer.Should().BeNull();
         video.Categories.Should().BeEmpty();
         video.Genres.Should().BeEmpty();
+        video.CastMembers.Should().BeEmpty();
     }
 
     [Trait("Domain", "Video - Aggregate")]
@@ -391,9 +392,56 @@ public class VideoTest
         video.AddGenre(genreIdOne);
         video.AddGenre(genreIdTwo);
 
-        video.RemoveGenres(genreIdOne);
+        video.RemoveAllGenres(genreIdOne);
 
         video.Should().NotBeNull();
         video.Genres.Should().BeEmpty();
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(AddCastMemberValid))]
+    public void AddCastMemberValid()
+    {
+        var video = _fixture.GetValidVideo();
+        var castMemberId = Guid.NewGuid();
+
+        video.AddCastMember(castMemberId);
+
+        video.Should().NotBeNull();
+        video.CastMembers.Should().HaveCount(1);
+        video.CastMembers[0].Should().Be(castMemberId);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveCastMember))]
+    public void RemoveCastMember()
+    {
+        var video = _fixture.GetValidVideo();
+        var castMemberIdOne = Guid.NewGuid();
+        var castMemberIdTwo = Guid.NewGuid();
+        video.AddCastMember(castMemberIdOne);
+        video.AddCastMember(castMemberIdTwo);
+
+        video.RemoveCastMember(castMemberIdOne);
+
+        video.Should().NotBeNull();
+        video.CastMembers.Should().HaveCount(1);
+        video.CastMembers[0].Should().Be(castMemberIdTwo);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveAllCastMember))]
+    public void RemoveAllCastMember()
+    {
+        var video = _fixture.GetValidVideo();
+        var castMemberIdOne = Guid.NewGuid();
+        var castMemberIdTwo = Guid.NewGuid();
+        video.AddCastMember(castMemberIdOne);
+        video.AddCastMember(castMemberIdTwo);
+
+        video.RemoveAllCastMembers();
+
+        video.Should().NotBeNull();
+        video.CastMembers.Should().BeEmpty();
     }
 }
