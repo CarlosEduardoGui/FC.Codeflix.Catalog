@@ -1,4 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Domain.Enum;
+using FC.Codeflix.Catalog.Domain.Exceptions;
 using FC.Codeflix.Catalog.Domain.SeedWork;
 using FC.Codeflix.Catalog.Domain.Validation;
 using FC.Codeflix.Catalog.Domain.Validator;
@@ -20,13 +21,15 @@ public class Video : AggregateRoot
     public Image? Banner { get; private set; }
     public Media? Media { get; private set; }
     public Media? Trailer { get; private set; }
+    public List<Guid> _categories;
+    public IReadOnlyList<Guid> Categories => _categories.AsReadOnly();
 
     public Video(
-        string title, 
-        string description, 
-        int yearLaunched, 
-        bool opened, 
-        bool published, 
+        string title,
+        string description,
+        int yearLaunched,
+        bool opened,
+        bool published,
         int duration,
         Rating rating
     )
@@ -39,9 +42,11 @@ public class Video : AggregateRoot
         Duration = duration;
         Rating = rating;
         CreatedAt = DateTime.Now;
+
+        _categories = new List<Guid>();
     }
 
-    public void Validate(ValidationHandler handler) 
+    public void Validate(ValidationHandler handler)
         => new VideoValidator(this, handler).Validate();
 
     public void Update(
@@ -95,4 +100,13 @@ public class Video : AggregateRoot
 
         Media.UpdateAsEncoded(encodedPath);
     }
+
+    public void AddCategory(Guid categoryId)
+        => _categories.Add(categoryId);
+
+    public void RemoveCategory(Guid categoryIdOne)
+        => _categories.Remove(categoryIdOne);
+
+    public void RemoveAllCategories()
+        => _categories.Clear();
 }

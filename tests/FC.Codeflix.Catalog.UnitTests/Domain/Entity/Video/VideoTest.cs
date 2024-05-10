@@ -49,6 +49,7 @@ public class VideoTest
         video.Banner.Should().BeNull();
         video.Media.Should().BeNull();
         video.Trailer.Should().BeNull();
+        video.Categories.Should().BeEmpty();
     }
 
     [Trait("Domain", "Video - Aggregate")]
@@ -299,5 +300,52 @@ public class VideoTest
             .Should()
             .ThrowExactly<EntityValidationException>()
             .WithMessage("Media should not be null.");
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(AddCategoryValid))]
+    public void AddCategoryValid()
+    {
+        var video = _fixture.GetValidVideo();
+        var categoryId = Guid.NewGuid();
+
+        video.AddCategory(categoryId);
+
+        video.Should().NotBeNull();
+        video.Categories.Should().HaveCount(1);
+        video.Categories[0].Should().Be(categoryId);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveCategory))]
+    public void RemoveCategory()
+    {
+        var video = _fixture.GetValidVideo();
+        var categoryIdOne = Guid.NewGuid();
+        var categoryIdTwo = Guid.NewGuid();
+        video.AddCategory(categoryIdOne);
+        video.AddCategory(categoryIdTwo);
+
+        video.RemoveCategory(categoryIdOne);
+
+        video.Should().NotBeNull();
+        video.Categories.Should().HaveCount(1);
+        video.Categories[0].Should().Be(categoryIdTwo);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveAllCategories))]
+    public void RemoveAllCategories()
+    {
+        var video = _fixture.GetValidVideo();
+        var categoryIdOne = Guid.NewGuid();
+        var categoryIdTwo = Guid.NewGuid();
+        video.AddCategory(categoryIdOne);
+        video.AddCategory(categoryIdTwo);
+
+        video.RemoveAllCategories();
+
+        video.Should().NotBeNull();
+        video.Categories.Should().BeEmpty();
     }
 }
