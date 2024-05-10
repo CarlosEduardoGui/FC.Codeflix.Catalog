@@ -50,6 +50,7 @@ public class VideoTest
         video.Media.Should().BeNull();
         video.Trailer.Should().BeNull();
         video.Categories.Should().BeEmpty();
+        video.Genres.Should().BeEmpty();
     }
 
     [Trait("Domain", "Video - Aggregate")]
@@ -347,5 +348,52 @@ public class VideoTest
 
         video.Should().NotBeNull();
         video.Categories.Should().BeEmpty();
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(AddGenreValid))]
+    public void AddGenreValid()
+    {
+        var video = _fixture.GetValidVideo();
+        var genreId = Guid.NewGuid();
+
+        video.AddGenre(genreId);
+
+        video.Should().NotBeNull();
+        video.Genres.Should().HaveCount(1);
+        video.Genres[0].Should().Be(genreId);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveGenre))]
+    public void RemoveGenre()
+    {
+        var video = _fixture.GetValidVideo();
+        var genreIdOne = Guid.NewGuid();
+        var genreIdTwo = Guid.NewGuid();
+        video.AddGenre(genreIdOne);
+        video.AddGenre(genreIdTwo);
+
+        video.RemoveGenre(genreIdOne);
+
+        video.Should().NotBeNull();
+        video.Genres.Should().HaveCount(1);
+        video.Genres[0].Should().Be(genreIdTwo);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(RemoveAllGenres))]
+    public void RemoveAllGenres()
+    {
+        var video = _fixture.GetValidVideo();
+        var genreIdOne = Guid.NewGuid();
+        var genreIdTwo = Guid.NewGuid();
+        video.AddGenre(genreIdOne);
+        video.AddGenre(genreIdTwo);
+
+        video.RemoveGenres(genreIdOne);
+
+        video.Should().NotBeNull();
+        video.Genres.Should().BeEmpty();
     }
 }
