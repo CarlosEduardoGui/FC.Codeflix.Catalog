@@ -5,4 +5,5 @@ using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 namespace FC.Codeflix.Catalog.Domain.Repository;
 public interface IGenreRepository : IGenericRepository<Genre>, ISearchableRepository<Genre>
 {
+    Task<IReadOnlyList<Guid>> GetIdsListByIdsAsync(List<Guid> guids, CancellationToken cancellationToken);
 }

@@ -1,10 +1,10 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
-using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Validation;
+﻿using FC.Codeflix.Catalog.Domain.Validation;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FC.Codeflix.Catalog.Domain.Repository;
-using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 
@@ -70,8 +70,17 @@ public class CreateVideo : ICreateVideo
                 .ForEach(video.AddCategory);
         }
 
-        if((request.GenresIds?.Count ?? 0) > 0)
+        if ((request.GenresIds?.Count ?? 0) > 0)
         {
+            var persistenceIds = await _genreRepository.GetIdsListByIdsAsync(
+                request.GenresIds!.ToList(), cancellationToken);
+            if (persistenceIds.Count < request.GenresIds!.Count)
+            {
+                var notFoundIds = request.GenresIds!.ToList()
+                    .FindAll(id => !persistenceIds.Contains(id));
+                throw new RelatedAggregateException(
+                    $"Related genre id (or ids) not found: {string.Join(',', notFoundIds)}.");
+            }
             request.GenresIds!.ToList().ForEach(video.AddGenre);
         }
 
