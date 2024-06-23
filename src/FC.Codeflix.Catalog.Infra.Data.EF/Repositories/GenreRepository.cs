@@ -137,4 +137,9 @@ public class GenreRepository : IGenreRepository
 
         return orderedQuery;
     }
+
+    public Task<IReadOnlyList<Guid>> GetIdsListByIdsAsync(List<Guid> guids, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
