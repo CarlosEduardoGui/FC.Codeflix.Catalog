@@ -75,4 +75,6 @@ public class VideoUseCaseBaseFixture : BaseFixture
 
     public Mock<IGenreRepository> GetGenreRepository()
         => new();
+
+    public Mock<ICastMemberRepository> GetCastMemberRepository() => new();
 }

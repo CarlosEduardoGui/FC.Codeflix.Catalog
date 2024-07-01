@@ -28,6 +28,7 @@ public class CreateVideoTest
             repositoryMock.Object,
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput();
@@ -73,6 +74,7 @@ public class CreateVideoTest
             repositoryMock.Object,
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
 
@@ -113,6 +115,7 @@ public class CreateVideoTest
             repositoryMock.Object,
             catetoryRepositoryMock.Object,
             Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(categoriesIds);
@@ -164,9 +167,10 @@ public class CreateVideoTest
         var videoRepositoryMock = _fixture.GetRepository();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var useCase = new UseCase.CreateVideo(
-            videoRepositoryMock.Object, 
+            videoRepositoryMock.Object,
             categoryRepositoryMock.Object,
             Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(categoriesIds);
@@ -204,6 +208,7 @@ public class CreateVideoTest
             repositoryMock.Object,
             Mock.Of<ICategoryRepository>(),
             genreRepositoryMock.Object,
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(genresIds: genresIds);
@@ -259,6 +264,7 @@ public class CreateVideoTest
             repositoryMock.Object,
             Mock.Of<ICategoryRepository>(),
             genreRepositoryMock.Object,
+            Mock.Of<ICastMemberRepository>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(genresIds: genresIds);
@@ -269,5 +275,94 @@ public class CreateVideoTest
             .Should()
             .ThrowExactlyAsync<RelatedAggregateException>()
             .WithMessage($"Related genre Id (or Ids) not found: {removedId}.");
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(CreateVideoWithCastMembersIds))]
+    public async Task CreateVideoWithCastMembersIds()
+    {
+        var castMemberRepositoryMock = _fixture.GetCastMemberRepository();
+        var castMembersIds = Enumerable
+            .Range(1, 5)
+            .Select(_ => Guid.NewGuid())
+            .ToList();
+        castMemberRepositoryMock.Setup(x => x.GetIdsListByIdsAsync(
+            It.IsAny<List<Guid>>(),
+            It.IsAny<CancellationToken>())
+        ).ReturnsAsync(castMembersIds);
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            castMemberRepositoryMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInput(castMembersIds: castMembersIds);
+
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        repositoryMock.Verify(x => x.InsertAsync(
+            It.Is<DomainEntity.Video>(video =>
+                video.Id != Guid.Empty
+                && video.Title == input.Title
+                && video.Description == input.Description
+                && video.Duration == input.Duration
+                && video.Rating == input.Rating
+                && video.Opened == input.Opened
+                && video.Published == input.Published
+                && video.YearLaunched == input.YearLaunched
+                && video.CastMembers.All(castMemberId => castMembersIds.Contains(castMemberId))
+            ),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+        castMemberRepositoryMock.VerifyAll();
+        unitOfWorkMock.Verify(x => x.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
+        output.Should().NotBeNull();
+        output.Id.Should().NotBeEmpty();
+        output.Title.Should().Be(input.Title);
+        output.Description.Should().Be(input.Description);
+        output.Duration.Should().Be(input.Duration);
+        output.Rating.Should().Be(input.Rating);
+        output.Opened.Should().Be(input.Opened);
+        output.Published.Should().Be(input.Published);
+        output.YearLaunched.Should().Be(input.YearLaunched);
+        output.CategoriesIds.Should().BeNullOrEmpty();
+        output.GenresIds.Should().BeNullOrEmpty();
+        output.CastMembersIds.Should().BeEquivalentTo(castMembersIds);
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(ThrowsWhenInvalidCastMemberId))]
+    public async Task ThrowsWhenInvalidCastMemberId()
+    {
+        var castMemberRepositoryMock = _fixture.GetCastMemberRepository();
+        var castMembersIds = Enumerable
+            .Range(1, 5)
+            .Select(_ => Guid.NewGuid())
+            .ToList();
+        var removedId = castMembersIds[3];
+        castMemberRepositoryMock.Setup(x => x.GetIdsListByIdsAsync(
+            It.IsAny<List<Guid>>(),
+            It.IsAny<CancellationToken>())
+        ).ReturnsAsync(castMembersIds.FindAll(x => x != removedId));
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            castMemberRepositoryMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInput(castMembersIds: castMembersIds);
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action.Should()
+            .ThrowExactlyAsync<RelatedAggregateException>()
+            .WithMessage($"Related cast member Id (or Ids) not found: {removedId}.");
+        castMemberRepositoryMock.VerifyAll();
     }
 }

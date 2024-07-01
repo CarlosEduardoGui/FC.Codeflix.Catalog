@@ -11,7 +11,8 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
 {
     public CreateVideoInput GetValidVideoInput(
         List<Guid>? categoriesIds = null,
-        List<Guid>? genresIds = null
+        List<Guid>? genresIds = null,
+        List<Guid>? castMembersIds = null
     )
         => new(
             GetValidTitle(),
@@ -22,6 +23,7 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
             GetValidYearLauched(),
             GetRandomBoolean(),
             CategoriesIds: categoriesIds,
-            GenresIds: genresIds
+            GenresIds: genresIds,
+            CastMembersIds: castMembersIds
         );
 }

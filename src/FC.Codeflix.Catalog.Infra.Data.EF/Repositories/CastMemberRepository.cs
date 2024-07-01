@@ -83,4 +83,9 @@ public class CastMemberRepository : ICastMemberRepository
 
         return orderedQuery;
     }
+
+    public Task<IReadOnlyList<Guid>> GetIdsListByIdsAsync(List<Guid> guids, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

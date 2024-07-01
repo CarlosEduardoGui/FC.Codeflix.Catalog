@@ -13,7 +13,8 @@ public record VideoModelOutput(
     bool Opened,
     DateTime CreatedAt,
     IReadOnlyCollection<Guid>? CategoriesIds = null,
-    IReadOnlyCollection<Guid>? GenresIds = null
+    IReadOnlyCollection<Guid>? GenresIds = null,
+    IReadOnlyCollection<Guid>? CastMembersIds = null
 )
 {
     public static VideoModelOutput FromVideo(DomainEntity.Video video)
@@ -28,6 +29,7 @@ public record VideoModelOutput(
             video.Opened,
             video.CreatedAt,
             video.Categories,
-            video.Genres
+            video.Genres,
+            video.CastMembers
         );
 }

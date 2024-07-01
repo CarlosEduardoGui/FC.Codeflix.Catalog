@@ -12,5 +12,6 @@ public record CreateVideoInput(
     int YearLaunched,
     bool Opened,
     IReadOnlyCollection<Guid>? CategoriesIds = null,
-    IReadOnlyCollection<Guid>? GenresIds = null
+    IReadOnlyCollection<Guid>? GenresIds = null,
+    IReadOnlyCollection<Guid>? CastMembersIds = null
 ) : IRequest<VideoModelOutput>;
