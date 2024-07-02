@@ -14,7 +14,8 @@ public record VideoModelOutput(
     DateTime CreatedAt,
     IReadOnlyCollection<Guid>? CategoriesIds = null,
     IReadOnlyCollection<Guid>? GenresIds = null,
-    IReadOnlyCollection<Guid>? CastMembersIds = null
+    IReadOnlyCollection<Guid>? CastMembersIds = null,
+    string? Thumb = null
 )
 {
     public static VideoModelOutput FromVideo(DomainEntity.Video video)
@@ -30,6 +31,7 @@ public record VideoModelOutput(
             video.CreatedAt,
             video.Categories,
             video.Genres,
-            video.CastMembers
+            video.CastMembers,
+            video.Thumb?.Path
         );
 }

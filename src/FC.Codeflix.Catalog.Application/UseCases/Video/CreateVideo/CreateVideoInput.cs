@@ -13,5 +13,6 @@ public record CreateVideoInput(
     bool Opened,
     IReadOnlyCollection<Guid>? CategoriesIds = null,
     IReadOnlyCollection<Guid>? GenresIds = null,
-    IReadOnlyCollection<Guid>? CastMembersIds = null
+    IReadOnlyCollection<Guid>? CastMembersIds = null,
+    FileInput? Thumb = null
 ) : IRequest<VideoModelOutput>;

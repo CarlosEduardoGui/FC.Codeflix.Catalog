@@ -14,6 +14,7 @@ public class CreateVideo : ICreateVideo
     private readonly ICategoryRepository _categoryRepository;
     private readonly IGenreRepository _genreRepository;
     private readonly ICastMemberRepository _castMemberRepository;
+    private readonly IStorageService _storageService;
     private readonly IUnitOfWork _uow;
 
     public CreateVideo(
@@ -21,6 +22,7 @@ public class CreateVideo : ICreateVideo
         ICategoryRepository categoryRepository,
         IGenreRepository genreRepository,
         ICastMemberRepository castMemberRepository,
+        IStorageService storageService,
         IUnitOfWork uow)
     {
         _repository = repository;
@@ -28,6 +30,7 @@ public class CreateVideo : ICreateVideo
         _categoryRepository = categoryRepository;
         _genreRepository = genreRepository;
         _castMemberRepository = castMemberRepository;
+        _storageService = storageService;
     }
 
     public async Task<VideoModelOutput> Handle(CreateVideoInput request, CancellationToken cancellationToken)
@@ -73,7 +76,17 @@ public class CreateVideo : ICreateVideo
             request.CastMembersIds!.ToList().ForEach(video.AddCastMember);
         }
 
+        if(request.Thumb is not null)
+        {
+            var fileName = $"{video.Id}-thumb.{request.Thumb.Extension}";
+
+            var urlThumb = await _storageService.UploadAsync(fileName, request.Thumb.FileStream, cancellationToken);
+
+            video.UpdateThumb(urlThumb);
+        }
+
         await _repository.InsertAsync(video, cancellationToken);
+        
         await _uow.CommitAsync(cancellationToken);
 
         return VideoModelOutput.FromVideo(video);

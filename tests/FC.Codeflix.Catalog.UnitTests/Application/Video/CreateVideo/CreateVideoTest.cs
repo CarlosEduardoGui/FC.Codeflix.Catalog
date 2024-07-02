@@ -1,12 +1,15 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
-using FC.Codeflix.Catalog.Domain.Exceptions;
-using Xunit;
-using FluentAssertions;
-using Moq;
+using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Domain.Repository;
+using FC.Codeflix.Catalog.Domain.Exceptions;
+using FluentAssertions;
+using System.Text;
+using Xunit;
+using Moq;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
+using FC.Codeflix.Catalog.Application.Interfaces;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.CreateVideo;
 
@@ -29,6 +32,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput();
@@ -61,6 +65,59 @@ public class CreateVideoTest
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(CreateVideoWithThumb))]
+    public async Task CreateVideoWithThumb()
+    {
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var storageServicekMock = _fixture.GetStorageService();
+        var thumbExample = new FileInput("jpeg", new MemoryStream(Encoding.ASCII.GetBytes("test")));
+        var expectedThumbName = $"thumb.{thumbExample.Extension}";
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ReturnsAsync(expectedThumbName);
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
+            storageServicekMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInput(thumb: thumbExample);
+
+        var output = await useCase.Handle(input, CancellationToken.None);
+        
+        repositoryMock.Verify(x => x.InsertAsync(
+            It.Is<DomainEntity.Video>(video =>
+                video.Id != Guid.Empty
+                && video.Title == input.Title
+                && video.Description == input.Description
+                && video.Duration == input.Duration
+                && video.Rating == input.Rating
+                && video.Opened == input.Opened
+                && video.Published == input.Published
+                && video.YearLaunched == input.YearLaunched
+            ),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+        unitOfWorkMock.Verify(x => x.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
+        output.Should().NotBeNull();
+        output.Id.Should().NotBeEmpty();
+        output.Title.Should().Be(input.Title);
+        output.Description.Should().Be(input.Description);
+        output.Duration.Should().Be(input.Duration);
+        output.Rating.Should().Be(input.Rating);
+        output.Opened.Should().Be(input.Opened);
+        output.Published.Should().Be(input.Published);
+        output.YearLaunched.Should().Be(input.YearLaunched);
+        output.Thumb.Should().Contain(expectedThumbName);
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
     [Theory(DisplayName = nameof(CreateVideoThrowsIfInvalidInput))]
     [ClassData(typeof(CreateVideoTestDataGenerator))]
     public async Task CreateVideoThrowsIfInvalidInput(
@@ -75,6 +132,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
 
@@ -116,6 +174,7 @@ public class CreateVideoTest
             catetoryRepositoryMock.Object,
             Mock.Of<IGenreRepository>(),
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(categoriesIds);
@@ -171,6 +230,7 @@ public class CreateVideoTest
             categoryRepositoryMock.Object,
             Mock.Of<IGenreRepository>(),
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(categoriesIds);
@@ -209,6 +269,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             genreRepositoryMock.Object,
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(genresIds: genresIds);
@@ -265,6 +326,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             genreRepositoryMock.Object,
             Mock.Of<ICastMemberRepository>(),
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(genresIds: genresIds);
@@ -297,6 +359,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
             castMemberRepositoryMock.Object,
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(castMembersIds: castMembersIds);
@@ -354,6 +417,7 @@ public class CreateVideoTest
             Mock.Of<ICategoryRepository>(),
             Mock.Of<IGenreRepository>(),
             castMemberRepositoryMock.Object,
+            Mock.Of<IStorageService>(),
             unitOfWorkMock.Object
         );
         var input = _fixture.GetValidVideoInput(castMembersIds: castMembersIds);
