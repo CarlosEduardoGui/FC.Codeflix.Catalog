@@ -1,9 +1,11 @@
 ﻿using FC.Codeflix.Catalog.Application.Interfaces;
+using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Enum;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Commom;
 using Moq;
+using System.Text;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.Common;
@@ -67,6 +69,9 @@ public class VideoUseCaseBaseFixture : BaseFixture
 
     public Media GetValidMedia()
         => new(GetValidMediaPath());
+
+    public FileInput GetValidImageFileInput()
+       => new("jpeg", new MemoryStream(Encoding.ASCII.GetBytes("test")));
 
     public Mock<IVideoRepository> GetRepository()
         => new();

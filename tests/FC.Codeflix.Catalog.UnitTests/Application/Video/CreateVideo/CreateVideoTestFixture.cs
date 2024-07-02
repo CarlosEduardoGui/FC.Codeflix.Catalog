@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using FC.Codeflix.Catalog.UnitTests.Application.Video.Common;
 using Xunit;
+using System.Text;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.CreateVideo;
 
@@ -14,7 +15,8 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
         List<Guid>? categoriesIds = null,
         List<Guid>? genresIds = null,
         List<Guid>? castMembersIds = null,
-        FileInput? thumb = null)
+        FileInput? thumb = null,
+        FileInput? banner = null)
         => new(
             GetValidTitle(),
             GetValidDescription(),
@@ -26,6 +28,7 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
             CategoriesIds: categoriesIds,
             GenresIds: genresIds,
             CastMembersIds: castMembersIds,
-            Thumb: thumb
+            Thumb: thumb,
+            Banner: banner
         );
 }

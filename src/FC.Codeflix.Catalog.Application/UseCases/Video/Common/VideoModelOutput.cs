@@ -15,7 +15,8 @@ public record VideoModelOutput(
     IReadOnlyCollection<Guid>? CategoriesIds = null,
     IReadOnlyCollection<Guid>? GenresIds = null,
     IReadOnlyCollection<Guid>? CastMembersIds = null,
-    string? Thumb = null
+    string? Thumb = null,
+    string? Banner = null
 )
 {
     public static VideoModelOutput FromVideo(DomainEntity.Video video)
@@ -32,6 +33,7 @@ public record VideoModelOutput(
             video.Categories,
             video.Genres,
             video.CastMembers,
-            video.Thumb?.Path
+            video.Thumb?.Path,
+            video.Banner?.Path
         );
 }

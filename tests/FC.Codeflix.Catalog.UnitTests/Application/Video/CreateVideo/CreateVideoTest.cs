@@ -71,8 +71,8 @@ public class CreateVideoTest
         var repositoryMock = _fixture.GetRepository();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var storageServicekMock = _fixture.GetStorageService();
-        var thumbExample = new FileInput("jpeg", new MemoryStream(Encoding.ASCII.GetBytes("test")));
-        var expectedThumbName = $"thumb.{thumbExample.Extension}";
+        var validFileInput = _fixture.GetValidImageFileInput();
+        var expectedThumbName = $"thumb.{validFileInput.Extension}";
         storageServicekMock.Setup(x => x.UploadAsync(
                 It.IsAny<string>(),
                 It.IsAny<Stream>(),
@@ -87,7 +87,7 @@ public class CreateVideoTest
             storageServicekMock.Object,
             unitOfWorkMock.Object
         );
-        var input = _fixture.GetValidVideoInput(thumb: thumbExample);
+        var input = _fixture.GetValidVideoInput(thumb: validFileInput);
 
         var output = await useCase.Handle(input, CancellationToken.None);
         
@@ -114,7 +114,60 @@ public class CreateVideoTest
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Thumb.Should().Contain(expectedThumbName);
+        output.Thumb.Should().Be(expectedThumbName);
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(CreateVideoWithBanner))]
+    public async Task CreateVideoWithBanner()
+    {
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var storageServicekMock = _fixture.GetStorageService();
+        var validFileInput = _fixture.GetValidImageFileInput();
+        var expectedThumbName = $"banner.{validFileInput.Extension}";
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ReturnsAsync(expectedThumbName);
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
+            storageServicekMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInput(banner: validFileInput);
+
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        repositoryMock.Verify(x => x.InsertAsync(
+            It.Is<DomainEntity.Video>(video =>
+                video.Id != Guid.Empty
+                && video.Title == input.Title
+                && video.Description == input.Description
+                && video.Duration == input.Duration
+                && video.Rating == input.Rating
+                && video.Opened == input.Opened
+                && video.Published == input.Published
+                && video.YearLaunched == input.YearLaunched
+            ),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+        unitOfWorkMock.Verify(x => x.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
+        output.Should().NotBeNull();
+        output.Id.Should().NotBeEmpty();
+        output.Title.Should().Be(input.Title);
+        output.Description.Should().Be(input.Description);
+        output.Duration.Should().Be(input.Duration);
+        output.Rating.Should().Be(input.Rating);
+        output.Opened.Should().Be(input.Opened);
+        output.Published.Should().Be(input.Published);
+        output.YearLaunched.Should().Be(input.YearLaunched);
+        output.Banner.Should().Be(expectedThumbName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
