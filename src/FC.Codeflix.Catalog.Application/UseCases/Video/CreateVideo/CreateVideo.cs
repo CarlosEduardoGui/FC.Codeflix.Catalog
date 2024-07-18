@@ -53,6 +53,49 @@ public class CreateVideo : ICreateVideo
                 validationHandler.Errors
             );
 
+        await ValidateAndAddRelations(request, video, cancellationToken);
+        
+        await UploadImagesMedia(request, video, cancellationToken);
+
+        await _repository.InsertAsync(video, cancellationToken);
+
+        await _uow.CommitAsync(cancellationToken);
+
+        return VideoModelOutput.FromVideo(video);
+    }
+
+    private async Task UploadImagesMedia(CreateVideoInput request, DomainEntity.Video video, CancellationToken cancellationToken)
+    {
+        if (request.Thumb is not null)
+        {
+            var fileName = $"{video.Id}-thumb.{request.Thumb.Extension}";
+
+            var urlThumb = await _storageService.UploadAsync(fileName, request.Thumb.FileStream, cancellationToken);
+
+            video.UpdateThumb(urlThumb);
+        }
+
+        if (request.Banner is not null)
+        {
+            var fileName = $"{video.Id}-banner.{request.Banner.Extension}";
+
+            var urlBanner = await _storageService.UploadAsync(fileName, request.Banner.FileStream, cancellationToken);
+
+            video.UpdateBanner(urlBanner);
+        }
+
+        if (request.ThumbHalf is not null)
+        {
+            var fileName = $"{video.Id}-thumbhalf.{request.ThumbHalf.Extension}";
+
+            var urlBanner = await _storageService.UploadAsync(fileName, request.ThumbHalf.FileStream, cancellationToken);
+
+            video.UpdateThumbHalf(urlBanner);
+        }
+    }
+
+    private async Task ValidateAndAddRelations(CreateVideoInput request, DomainEntity.Video video, CancellationToken cancellationToken)
+    {
         if ((request.CategoriesIds?.Count ?? 0) > 0)
         {
             await ValidateCategoriesIds(request, cancellationToken);
@@ -75,30 +118,6 @@ public class CreateVideo : ICreateVideo
 
             request.CastMembersIds!.ToList().ForEach(video.AddCastMember);
         }
-
-        if(request.Thumb is not null)
-        {
-            var fileName = $"{video.Id}-thumb.{request.Thumb.Extension}";
-
-            var urlThumb = await _storageService.UploadAsync(fileName, request.Thumb.FileStream, cancellationToken);
-
-            video.UpdateThumb(urlThumb);
-        }
-
-        if (request.Banner is not null)
-        {
-            var fileName = $"{video.Id}-banner.{request.Banner.Extension}";
-
-            var urlBanner = await _storageService.UploadAsync(fileName, request.Banner.FileStream, cancellationToken);
-
-            video.UpdateBanner(urlBanner);
-        }
-
-        await _repository.InsertAsync(video, cancellationToken);
-        
-        await _uow.CommitAsync(cancellationToken);
-
-        return VideoModelOutput.FromVideo(video);
     }
 
     private async Task ValidatedCastMembersIds(CreateVideoInput request, CancellationToken cancellationToken)

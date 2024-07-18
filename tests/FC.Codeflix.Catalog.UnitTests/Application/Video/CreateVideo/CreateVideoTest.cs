@@ -171,6 +171,59 @@ public class CreateVideoTest
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(CreateVideoWithThumbHalf))]
+    public async Task CreateVideoWithThumbHalf()
+    {
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var storageServicekMock = _fixture.GetStorageService();
+        var validFileInput = _fixture.GetValidImageFileInput();
+        var expectedThumbName = $"thumbhalf.{validFileInput.Extension}";
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ReturnsAsync(expectedThumbName);
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
+            storageServicekMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInput(thumbHalf: validFileInput);
+
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        repositoryMock.Verify(x => x.InsertAsync(
+            It.Is<DomainEntity.Video>(video =>
+                video.Id != Guid.Empty
+                && video.Title == input.Title
+                && video.Description == input.Description
+                && video.Duration == input.Duration
+                && video.Rating == input.Rating
+                && video.Opened == input.Opened
+                && video.Published == input.Published
+                && video.YearLaunched == input.YearLaunched
+            ),
+            It.IsAny<CancellationToken>()
+        ), Times.Once);
+        unitOfWorkMock.Verify(x => x.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
+        output.Should().NotBeNull();
+        output.Id.Should().NotBeEmpty();
+        output.Title.Should().Be(input.Title);
+        output.Description.Should().Be(input.Description);
+        output.Duration.Should().Be(input.Duration);
+        output.Rating.Should().Be(input.Rating);
+        output.Opened.Should().Be(input.Opened);
+        output.Published.Should().Be(input.Published);
+        output.YearLaunched.Should().Be(input.YearLaunched);
+        output.ThumbHalf.Should().Be(expectedThumbName);
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
     [Theory(DisplayName = nameof(CreateVideoThrowsIfInvalidInput))]
     [ClassData(typeof(CreateVideoTestDataGenerator))]
     public async Task CreateVideoThrowsIfInvalidInput(

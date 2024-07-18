@@ -16,7 +16,8 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
         List<Guid>? genresIds = null,
         List<Guid>? castMembersIds = null,
         FileInput? thumb = null,
-        FileInput? banner = null)
+        FileInput? banner = null,
+        FileInput? thumbHalf = null)
         => new(
             GetValidTitle(),
             GetValidDescription(),
@@ -29,6 +30,7 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
             GenresIds: genresIds,
             CastMembersIds: castMembersIds,
             Thumb: thumb,
-            Banner: banner
+            Banner: banner,
+            ThumbHalf: thumbHalf
         );
 }
