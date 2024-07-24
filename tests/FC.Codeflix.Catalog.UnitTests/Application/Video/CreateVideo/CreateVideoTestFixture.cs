@@ -2,7 +2,6 @@
 using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using FC.Codeflix.Catalog.UnitTests.Application.Video.Common;
 using Xunit;
-using System.Text;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.CreateVideo;
 
@@ -32,5 +31,19 @@ public class CreateVideoTestFixture : VideoUseCaseBaseFixture
             Thumb: thumb,
             Banner: banner,
             ThumbHalf: thumbHalf
+        );
+
+    public CreateVideoInput GetValidVideoInputWithAllImages()
+        => new(
+            GetValidTitle(),
+            GetValidDescription(),
+            GetRandomBoolean(),
+            GetValidDuration(),
+            GetRandomRating(),
+            GetValidYearLauched(),
+            GetRandomBoolean(),
+            Thumb: GetValidImageFileInput(),
+            Banner: GetValidImageFileInput(),
+            ThumbHalf: GetValidImageFileInput()
         );
 }

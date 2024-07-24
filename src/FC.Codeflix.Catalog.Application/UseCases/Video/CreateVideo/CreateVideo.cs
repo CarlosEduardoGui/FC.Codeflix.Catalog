@@ -54,14 +54,34 @@ public class CreateVideo : ICreateVideo
             );
 
         await ValidateAndAddRelations(request, video, cancellationToken);
-        
-        await UploadImagesMedia(request, video, cancellationToken);
+        try
+        {
+            await UploadImagesMedia(request, video, cancellationToken);
 
-        await _repository.InsertAsync(video, cancellationToken);
+            await _repository.InsertAsync(video, cancellationToken);
 
-        await _uow.CommitAsync(cancellationToken);
+            await _uow.CommitAsync(cancellationToken);
 
-        return VideoModelOutput.FromVideo(video);
+            return VideoModelOutput.FromVideo(video);
+        }
+        catch (Exception)
+        {
+            await ClearStorage(video, cancellationToken);
+
+            throw;
+        }
+    }
+
+    private async Task ClearStorage(DomainEntity.Video video, CancellationToken cancellationToken)
+    {
+        if (video.Thumb is not null)
+            await _storageService.DeleteAsync(video.Thumb.Path, cancellationToken);
+
+        if (video.ThumbHalf is not null)
+            await _storageService.DeleteAsync(video.ThumbHalf.Path, cancellationToken);
+
+        if (video.Banner is not null)
+            await _storageService.DeleteAsync(video.Banner.Path, cancellationToken);
     }
 
     private async Task UploadImagesMedia(CreateVideoInput request, DomainEntity.Video video, CancellationToken cancellationToken)
